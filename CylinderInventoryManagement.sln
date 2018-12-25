@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CylinderInventoryManagement", "CylinderInventoryManagement\CylinderInventoryManagement.csproj", "{3C221F7D-4D45-4738-BF2C-1A7612362A68}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C221F7D-4D45-4738-BF2C-1A7612362A68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C221F7D-4D45-4738-BF2C-1A7612362A68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C221F7D-4D45-4738-BF2C-1A7612362A68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C221F7D-4D45-4738-BF2C-1A7612362A68}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6FD2AD8D-A473-4355-97C5-B68BC6CD0EBC}
+	EndGlobalSection
+EndGlobal
