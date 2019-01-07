@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CylinderInventoryManagement", "CylinderInventoryManagement\CylinderInventoryManagement.csproj", "{3C221F7D-4D45-4738-BF2C-1A7612362A68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIM.BusinessLayer", "CIM.BusinessLayer\CIM.BusinessLayer.csproj", "{C0BAB2FD-CC56-4A3A-92AC-C5E7AF8FA0A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIM.Entities", "CIM.Entities\CIM.Entities.csproj", "{DE4B27C9-2FF1-4430-A0AE-09C1CFEB32C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{3C221F7D-4D45-4738-BF2C-1A7612362A68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C221F7D-4D45-4738-BF2C-1A7612362A68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C221F7D-4D45-4738-BF2C-1A7612362A68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0BAB2FD-CC56-4A3A-92AC-C5E7AF8FA0A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0BAB2FD-CC56-4A3A-92AC-C5E7AF8FA0A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0BAB2FD-CC56-4A3A-92AC-C5E7AF8FA0A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0BAB2FD-CC56-4A3A-92AC-C5E7AF8FA0A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE4B27C9-2FF1-4430-A0AE-09C1CFEB32C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE4B27C9-2FF1-4430-A0AE-09C1CFEB32C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE4B27C9-2FF1-4430-A0AE-09C1CFEB32C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE4B27C9-2FF1-4430-A0AE-09C1CFEB32C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
