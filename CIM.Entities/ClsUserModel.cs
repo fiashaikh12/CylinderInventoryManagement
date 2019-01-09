@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BusinessEntities
 {
-    public class ClsUserModel
+    public class ClsUserRegistrationModel
     {
         public string UserId { get; set; }
         public string Name { get; set; }
@@ -22,5 +22,11 @@ namespace BusinessEntities
         public DateTime? ModifiedOn { get; set; }
         public int DeletedOn { get; set; }
         public DateTime? DeletedBy { get; set; }
+    }
+
+    public class ClsUserLoginModel
+    {
+        public string  MobileNumber { get; set; }
+        public string Password { get; set; }
     }
 }

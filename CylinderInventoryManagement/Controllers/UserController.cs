@@ -1,22 +1,26 @@
-﻿using BusinessEntities;
-using BusinessLayer.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using CIM.Filter;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 namespace CylinderInventoryManagement.Controllers
 {
+    [SessionTimeout]
     public class UserController : Controller
     {
         // GET: User
-        public async Task<ActionResult> Index()
+        public ActionResult Login()
         {
-            UserRepository user = new UserRepository();
-            ClsUserModel model = new ClsUserModel();
-            await user.RegisterUser(model);
+            return View();
+        }
+        [HttpPost]
+        public async Task<ActionResult> Login(HttpPostedFileBase httpPostedFile)
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult Register()
+        {
             return View();
         }
     }

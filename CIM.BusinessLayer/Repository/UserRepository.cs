@@ -19,28 +19,28 @@ namespace BusinessLayer.Repository
             this._dbContext = GetConnection();
         }
 
-        public ClsResponseModel AuthenticateUser(ClsUserModel clsUserModel)
+        public ClsResponseModel AuthenticateUser(ClsUserLoginModel clsUserModel)
         {
             ClsResponseModel clsResponse = new ClsResponseModel();
-            using (var response = _dbContext.QueryMultiple("Usp_ValidateUser", new { username = clsUserModel.Mobile, password = clsUserModel.Password }, commandType: CommandType.StoredProcedure))
+            using (var response = _dbContext.QueryMultiple("Usp_ValidateUser", new { username = clsUserModel.MobileNumber, password = clsUserModel.Password }, commandType: CommandType.StoredProcedure))
             {
 
             }
             return clsResponse;
         }
 
-        public async Task<ClsResponseModel> RegisterUser(ClsUserModel responseModel)
+        public async Task<ClsResponseModel> RegisterUser(ClsUserRegistrationModel responseModel)
         {
             ClsResponseModel clsResponse = new ClsResponseModel();
             var parameters = new DynamicParameters();
-            parameters.Add("@Name", "Firoz");
-            parameters.Add("@Password", "123");
-            parameters.Add("@Mobile", "9892978625");
-            parameters.Add("@CompanyName", "ABC");
-            parameters.Add("@TypeId", 1);
-            parameters.Add("@BusinessId",1);
-            parameters.Add("@GSTNo", "XYZ123");
-            parameters.Add("@Address", "Khar");
+            parameters.Add("@Name", responseModel.Name);
+            parameters.Add("@Password", responseModel.Password);
+            parameters.Add("@Mobile", responseModel.Mobile);
+            parameters.Add("@CompanyName", responseModel.CompanyName);
+            parameters.Add("@TypeId", responseModel.TypeId);
+            parameters.Add("@BusinessId", responseModel.BusinessId);
+            parameters.Add("@GSTNo", responseModel.GSTNo);
+            parameters.Add("@Address", responseModel.Address);
             parameters.Add("@CreatedOn", DateTime.Now);;
             int returnValue = await this._dbContext.ExecuteAsync("Usp_RegisterUser", parameters, commandType: CommandType.StoredProcedure);
             if (returnValue > 0)

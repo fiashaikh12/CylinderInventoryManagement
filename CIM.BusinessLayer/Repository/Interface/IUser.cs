@@ -8,7 +8,7 @@ namespace BusinessLayer.Repository.Interface
 {
     public interface IUser
     {
-        ClsResponseModel AuthenticateUser(ClsUserModel clsUserModel);
-        Task<ClsResponseModel> RegisterUser(ClsUserModel responseModel);
+        ClsResponseModel AuthenticateUser(ClsUserLoginModel clsUserModel);
+        Task<ClsResponseModel> RegisterUser(ClsUserRegistrationModel responseModel);
     }
 }
