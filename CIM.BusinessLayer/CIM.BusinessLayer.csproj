@@ -50,16 +50,17 @@
     <Compile Include="Repository\Interface\ILog.cs" />
     <Compile Include="Repository\Interface\IMasters.cs" />
     <Compile Include="Repository\Interface\IUser.cs" />
+    <Compile Include="Repository\MasterRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CIM.Entities\CIM.Entities.csproj">
       <Project>{DE4B27C9-2FF1-4430-A0AE-09C1CFEB32C6}</Project>
       <Name>CIM.Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

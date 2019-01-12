@@ -22,12 +22,9 @@ namespace CIM.Entities
     {
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public int CreatedBy { get; set; }
-        public DateTime? CreatedOn { get; set; }
-        public int ModifiedBy { get; set; }
-        public DateTime? ModifiedOn { get; set; }
-        public int DeletedBy { get; set; }
-        public DateTime? DeletedOn { get; set; }
+        public int UserId { get; set; }
+        public string flag { get; set; }
+        public int IsActive { get; set; }
     }
     public class ClsSubCategoryMasterModel
     {

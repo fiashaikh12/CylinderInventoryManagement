@@ -1,0 +1,77 @@
+﻿@model IEnumerable<CIM.Entities.ClsCategoryMasterModel>
+
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Category List</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CategoryId)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CategoryName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.IsActive)
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CategoryId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CategoryName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IsActive)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.CategoryId }) |
+                                        @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.CategoryId })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CategoryId)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CategoryName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.IsActive)
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
