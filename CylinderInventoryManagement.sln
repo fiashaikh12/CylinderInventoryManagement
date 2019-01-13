@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIM.BusinessLayer", "CIM.Bu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIM.Entities", "CIM.Entities\CIM.Entities.csproj", "{DE4B27C9-2FF1-4430-A0AE-09C1CFEB32C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIM.DataLayer", "CIM.DataLayer\CIM.DataLayer.csproj", "{65D41A37-7E5F-4F09-860E-517C20A5F7DA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{DE4B27C9-2FF1-4430-A0AE-09C1CFEB32C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE4B27C9-2FF1-4430-A0AE-09C1CFEB32C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE4B27C9-2FF1-4430-A0AE-09C1CFEB32C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{65D41A37-7E5F-4F09-860E-517C20A5F7DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65D41A37-7E5F-4F09-860E-517C20A5F7DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65D41A37-7E5F-4F09-860E-517C20A5F7DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65D41A37-7E5F-4F09-860E-517C20A5F7DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

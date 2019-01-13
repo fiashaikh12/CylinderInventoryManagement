@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using System.Threading.Tasks;
 using BusinessEntities;
-using BusinessLayer.DbContext;
+using DbContext;
 using BusinessLayer.Repository.Interface;
 using Dapper;
+using CIM.Entities;
 
 namespace BusinessLayer.Repository
 {
@@ -19,17 +18,17 @@ namespace BusinessLayer.Repository
             this._dbContext = GetConnection();
         }
 
-        public ClsResponseModel AuthenticateUser(ClsUserLoginModel clsUserModel)
+        public async Task<ClsResponseModel> AuthenticateUserAsync(ClsUserLoginModel clsUserModel)
         {
             ClsResponseModel clsResponse = new ClsResponseModel();
-            using (var response = _dbContext.QueryMultiple("Usp_ValidateUser", new { username = clsUserModel.MobileNumber, password = clsUserModel.Password }, commandType: CommandType.StoredProcedure))
+            using (var response = await _dbContext.QueryMultipleAsync("Usp_ValidateUser", new { username = clsUserModel.MobileNumber, password = clsUserModel.Password }, commandType: CommandType.StoredProcedure))
             {
 
             }
             return clsResponse;
         }
 
-        public async Task<ClsResponseModel> RegisterUser(ClsUserRegistrationModel responseModel)
+        public async Task<ClsResponseModel> RegisterUserAsync(ClsUserRegistrationModel responseModel)
         {
             ClsResponseModel clsResponse = new ClsResponseModel();
             var parameters = new DynamicParameters();
@@ -47,6 +46,7 @@ namespace BusinessLayer.Repository
             {
                 clsResponse.IsSuccess = true;
                 clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Success";
             }
             return clsResponse;
         }

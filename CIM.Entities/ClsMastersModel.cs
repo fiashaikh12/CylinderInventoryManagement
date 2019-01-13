@@ -26,7 +26,7 @@ namespace CIM.Entities
         public string flag { get; set; }
         public int IsActive { get; set; }
     }
-    public class ClsSubCategoryMasterModel
+    public class ClsSubCategoryMasterModel: ClsCommonModel
     {
         public int SubCategoryId { get; set; }
         public int CategoryId { get; set; }

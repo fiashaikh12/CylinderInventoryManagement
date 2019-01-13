@@ -2,14 +2,27 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace BusinessLayer.DbContext
+namespace DbContext
 {
     public class DbContextBase
     {
-        private static IDbConnection _dbContext;
-        public static IDbConnection GetConnection()
+        private IDbConnection _dbContext;
+
+        protected IDbConnection GetConnection()
         {
             return _dbContext = new SqlConnection(ConfigurationManager.AppSettings["dbContext"]);
+        }
+
+        protected bool CloseConnection()
+        {
+            bool IsConnectionClosed = false;
+            if (_dbContext.State == ConnectionState.Open)
+            {
+                _dbContext.Close();
+                _dbContext.Dispose();
+                IsConnectionClosed = true;
+            }
+            return IsConnectionClosed;
         }
     }
 }

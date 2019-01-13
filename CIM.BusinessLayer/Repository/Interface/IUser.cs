@@ -1,14 +1,12 @@
 ﻿using BusinessEntities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using CIM.Entities;
 using System.Threading.Tasks;
 
 namespace BusinessLayer.Repository.Interface
 {
     public interface IUser
     {
-        ClsResponseModel AuthenticateUser(ClsUserLoginModel clsUserModel);
-        Task<ClsResponseModel> RegisterUser(ClsUserRegistrationModel responseModel);
+        Task<ClsResponseModel> AuthenticateUserAsync(ClsUserLoginModel clsUserModel);
+        Task<ClsResponseModel> RegisterUserAsync(ClsUserRegistrationModel responseModel);
     }
 }

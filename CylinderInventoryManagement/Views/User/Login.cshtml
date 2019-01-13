@@ -1,84 +1,28 @@
-﻿<section class="content">
+﻿@model BusinessEntities.ClsUserLoginModel
+<section class="content">
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <div class="box box-info">
-                    <form class="form-horizontal">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
                         <div class="box-body">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="form-group">
-                                <label for="Name" class="col-sm-2 control-label">Name</label>
+                                @Html.LabelFor(model => model.MobileNumber, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="Name" placeholder="Name">
+                                    @Html.EditorFor(model => model.MobileNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="Password" class="col-sm-2 control-label">Password</label>
+                                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-sm-2" })
 
                                 <div class="col-sm-10">
-                                    <input type="password" class="form-control" id="Password" placeholder="Password">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="mobilenumber" class="col-sm-2 control-label">Mobile Number</label>
-
-                                <div class="col-sm-10">
-                                    <input type="password" class="form-control" id="mobilenumber" placeholder="Mobile Number">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Company Name</label>
-                                <div class="col-sm-10">
-                                    <select class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                                        <option selected="selected">Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Type</label>
-                                <div class="col-sm-10">
-                                    <select class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                                        <option selected="selected">Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Business</label>
-                                <div class="col-sm-10">
-                                    <select class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                                        <option selected="selected">Type Id</option>
-                                        <option>Alaska</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Address</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="gstnumber" class="col-sm-2 control-label">GST No</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="gstnumber" placeholder="GST Number">
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -88,10 +32,9 @@
                             <button type="submit" class="btn btn-info pull-right">Register</button>
                         </div>
                         <!-- /.box-footer -->
-                    </form>
+                    }
                 </div>
             </div>
         </div>
     </div>
 </section>
-

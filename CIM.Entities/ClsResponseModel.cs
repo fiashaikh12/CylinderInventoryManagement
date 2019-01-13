@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BusinessEntities
+namespace CIM.Entities
 {
     public class ClsResponseModel
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace BusinessEntities
@@ -26,7 +27,9 @@ namespace BusinessEntities
 
     public class ClsUserLoginModel
     {
+        [Required(ErrorMessage ="Please provide mobile number")]
         public string  MobileNumber { get; set; }
+        [Required(ErrorMessage = "Please provide password")]
         public string Password { get; set; }
     }
 }
