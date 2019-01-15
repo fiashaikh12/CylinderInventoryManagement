@@ -53,16 +53,54 @@ namespace CIM.BusinessLayer.Repository
             throw new System.NotImplementedException();
         }
 
-        public ClsResponseModel Get_Category()
+        public IEnumerable<ClsCategoryMasterModel> Get_Category()
+        {
+            // ClsResponseModel<IEnumerable<ClsCategoryMasterModel>> clsResponse = new ClsResponseModel<IEnumerable<ClsCategoryMasterModel>>();
+            IEnumerable<ClsCategoryMasterModel> clsResponse = new List<ClsCategoryMasterModel>();
+            var parameters = new DynamicParameters();
+            parameters.Add("@flag", "S");
+            //IEnumerable<ClsCategoryMasterModel> response = _dbContext.Query<ClsCategoryMasterModel>("USP_CategoryMaster", parameters, commandType: CommandType.StoredProcedure);
+            //clsResponse.IsSuccess = true;
+            //clsResponse.ErrorCode = 200;
+            //clsResponse.Message = "Success";
+            //clsResponse.Data = response;
+            clsResponse = _dbContext.Query<ClsCategoryMasterModel>("USP_CategoryMaster", parameters, commandType: CommandType.StoredProcedure);
+            return clsResponse;
+        }
+
+        public async Task<ClsResponseModel> Add_Category(ClsCategoryMasterModel data)
         {
             ClsResponseModel<IEnumerable<ClsCategoryMasterModel>> clsResponse = new ClsResponseModel<IEnumerable<ClsCategoryMasterModel>>();
+
             var parameters = new DynamicParameters();
-            parameters.Add("@flag", "");
-            IEnumerable<ClsCategoryMasterModel>  response = _dbContext.Query<ClsCategoryMasterModel>("USP_CategoryMaster", parameters, commandType: CommandType.StoredProcedure);
-            .clsResponse.IsSuccess = true;
+            parameters.Add("@flag", "I");
+            parameters.Add("@CategoryName", data.CategoryName);
+            parameters.Add("@UserId", 1);
+            
+            
+            IEnumerable<ClsCategoryMasterModel> models = await _dbContext.QueryAsync<ClsCategoryMasterModel>("USP_CategoryMaster", parameters, commandType: CommandType.StoredProcedure);
+            clsResponse.IsSuccess = true;
+            clsResponse.Message = "Message";
             clsResponse.ErrorCode = 200;
-            clsResponse.Message = "Success";
-            clsResponse.Data = response;
+            clsResponse.Data = models;
+            return clsResponse;
+        }
+
+        public async Task<ClsResponseModel> Delete_Category(int Categoryid)
+        {
+            ClsResponseModel<IEnumerable<ClsCategoryMasterModel>> clsResponse = new ClsResponseModel<IEnumerable<ClsCategoryMasterModel>>();
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@flag", "D");
+            parameters.Add("@Categoryid", Categoryid);
+            parameters.Add("@UserId", 1);
+            parameters.Add("@IsActive", 0);
+
+            IEnumerable<ClsCategoryMasterModel> models = await _dbContext.QueryAsync<ClsCategoryMasterModel>("USP_CategoryMaster", parameters, commandType: CommandType.StoredProcedure);
+            clsResponse.IsSuccess = true;
+            clsResponse.Message = "Message";
+            clsResponse.ErrorCode = 200;
+            clsResponse.Data = models;
             return clsResponse;
         }
 

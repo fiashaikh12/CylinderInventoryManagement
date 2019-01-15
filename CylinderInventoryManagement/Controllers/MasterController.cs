@@ -19,13 +19,14 @@ namespace CylinderInventoryManagement.Controllers
         }
         // GET: Master
         public ActionResult CreateSubCategory()
-        {            
+        {
             return View();
         }
         [HttpPost]
         public async Task<ActionResult> CreateSubCategory(ClsSubCategoryMasterModel clsSubCategoryMaster)
         {
-            if (ModelState.IsValid) {
+            if (ModelState.IsValid)
+            {
                 ClsResponseModel response = await this._masters.Create_SubCategoryAsync(clsSubCategoryMaster);
                 if (response.IsSuccess)
                 {
@@ -43,7 +44,7 @@ namespace CylinderInventoryManagement.Controllers
                 return View();
             }
         }
-        
+
         // GET: Master/Details/5
         public ActionResult Details(int id)
         {
@@ -115,5 +116,52 @@ namespace CylinderInventoryManagement.Controllers
                 return View();
             }
         }
+
+
+
+        //Category Code
+        public ActionResult CategoryList()
+        {
+
+            IEnumerable<ClsCategoryMasterModel> response = _masters.Get_Category();
+            if (response.Count() > 0)
+            {
+                TempData["ErrorMsg"] = "Success:";
+                return View(response);
+            }
+            else
+            {
+                TempData["ErrorMsg"] = "Error:";
+                return View(response);
+            }
+        }
+
+        public ActionResult AddCategory()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddCategory(ClsCategoryMasterModel form)
+        {
+            if (ModelState.IsValid)
+            {
+                var obj = _masters.Add_Category(form);
+                return RedirectToAction("CategoryList");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        public ActionResult Deletecategory(int id)
+        {
+            var obj = _masters.Delete_Category(id);
+            return RedirectToAction("CategoryList");
+        }
+
+        
+
     }
 }

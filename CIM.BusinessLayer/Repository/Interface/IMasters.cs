@@ -10,7 +10,9 @@ namespace CIM.BusinessLayer.Repository.Interface
 {
     public interface IMasters
     {
-        ClsResponseModel Get_Category();
+        IEnumerable<ClsCategoryMasterModel> Get_Category();
+        Task<ClsResponseModel> Add_Category(ClsCategoryMasterModel data);
+        Task<ClsResponseModel> Delete_Category(int Categoryid);
         Task<ClsResponseModel> Get_SubCategoryAsync();
         Task <ClsResponseModel> Create_SubCategoryAsync(ClsSubCategoryMasterModel clsSubCategoryMaster);
         Task<ClsResponseModel> Delete_SubCategoryAsync(ClsSubCategoryMasterModel clsSubCategoryMaster);

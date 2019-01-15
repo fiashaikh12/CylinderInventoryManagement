@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace CIM.Entities
     public class ClsCategoryMasterModel
     {
         public int CategoryId { get; set; }
+        [Required]
         public string CategoryName { get; set; }
         public int UserId { get; set; }
         public string flag { get; set; }

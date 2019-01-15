@@ -1,0 +1,42 @@
+﻿@model CIM.Entities.ClsCategoryMasterModel
+
+@{
+    ViewBag.Title = "AddCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="box box-info">
+                    @using (Html.BeginForm("AddCategory", "Master", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="Name" class="col-sm-2 control-label">Category</label>
+                                <div class="col-sm-10">
+                                    @Html.TextBoxFor(m => m.CategoryName, new { @class = "form-control", @placeholder = "Category Name" })
+                                    <span class="help-block">
+                                        @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-info pull-right">Submit</button>
+                        </div>
+                        <!-- /.box-footer -->
+                    }
+                    <div>
+                        @Html.ActionLink("Back to category List", "CategoryList")
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
