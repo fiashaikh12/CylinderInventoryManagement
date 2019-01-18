@@ -17,11 +17,12 @@ namespace CIM.Entities
         public int SubCategoryId { get; set; }
         public int UserId { get; set; }
         [Required(ErrorMessage = "Please provide quantity")]
+        [Range(1,999,ErrorMessage ="Quantity cannot be less than 1")]
         public int Quantity { get; set; }
-        [Required(ErrorMessage = "Please select deposit allowed")]
+        //[Required(ErrorMessage = "Please select deposit allowed")]
         [Display(Name = "Deposit Allowed")]
         public bool IsDepositAllowed { get; set; }
-        [Required(ErrorMessage = "Please select exchange allowed")]
+        //[Range(typeof(bool),"true","true",ErrorMessage = "Please tick exchange allowed")]
         [Display(Name = "Exchange Allowed")]
         public bool IsExchangeAllowed { get; set; }
         [Display(Name = "Price")]

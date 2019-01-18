@@ -8,6 +8,6 @@ namespace CIM.Entities
 {
     public class ClsStatus
     {
-        public string LoginStatus { get; set; }
+        public int UserId { get; set; }
     }
 }

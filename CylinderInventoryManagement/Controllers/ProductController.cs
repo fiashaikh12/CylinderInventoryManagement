@@ -13,12 +13,16 @@ namespace CylinderInventoryManagement.Controllers
     public class ProductController : Controller
     {
         private readonly IMasters _masters;
+        private readonly ClsResponseModel<List<ClsSubCategoryMasterModel>> clsResponseModel;
+        private readonly ClsResponseModel<List<ClsCategoryMasterModel>> clsResponse;
+        private readonly IProduct _product;
+
         public ProductController()
         {
             this._masters = new MasterRepository();
-            ClsResponseModel<List<ClsSubCategoryMasterModel>> clsResponseModel = (ClsResponseModel<List<ClsSubCategoryMasterModel>>)this._masters.Get_SubCategory();
-            ClsResponseModel<List<ClsCategoryMasterModel>> clsResponse = (ClsResponseModel<List<ClsCategoryMasterModel>>)this._masters.Get_Category();
-
+            this.clsResponseModel = (ClsResponseModel<List<ClsSubCategoryMasterModel>>)this._masters.Get_SubCategory();
+            this.clsResponse = (ClsResponseModel<List<ClsCategoryMasterModel>>)this._masters.Get_Category();
+            this._product = new ProductRepository();
             ViewBag.Category = clsResponse.Data.Select(x => new SelectListItem
             {
                 Text = Convert.ToString(x.CategoryName),
@@ -41,6 +45,15 @@ namespace CylinderInventoryManagement.Controllers
         {
             if (ModelState.IsValid)
             {
+                ClsResponseModel clsResponseModel =await this._product.AddProductAsync(clsProduct);
+                if (clsResponseModel.IsSuccess)
+                {
+                    TempData["Message"] = clsResponseModel.Message;
+                }
+                else
+                {
+                    TempData["Message"] = clsResponseModel.Message;
+                }
                 return View("Index");
             }
             else

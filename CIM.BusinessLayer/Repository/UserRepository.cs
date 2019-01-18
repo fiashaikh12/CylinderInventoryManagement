@@ -25,7 +25,7 @@ namespace BusinessLayer.Repository
             parameters.Add("@Mobile", clsUserModel.Mobile);
             parameters.Add("@Password", clsUserModel.Password);
             ClsStatus clsStatus = await _dbContext.QuerySingleAsync<ClsStatus>("Usp_UserLogin", parameters, commandType: CommandType.StoredProcedure);
-            if (clsStatus.LoginStatus == "1")
+            if (clsStatus.UserId == 2)
             {
                 clsResponse.IsSuccess = true;
                 clsResponse.ErrorCode = 200;
