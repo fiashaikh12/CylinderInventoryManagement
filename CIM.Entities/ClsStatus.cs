@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CIM.DataLayer
+namespace CIM.Entities
 {
-    public class Class1
+    public class ClsStatus
     {
+        public string LoginStatus { get; set; }
     }
 }

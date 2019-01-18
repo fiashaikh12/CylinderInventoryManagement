@@ -18,12 +18,25 @@ namespace BusinessLayer.Repository
             this._dbContext = GetConnection();
         }
 
-        public async Task<ClsResponseModel> AuthenticateUserAsync(ClsUserLoginModel clsUserModel)
+        public async Task<ClsResponseModel<ClsStatus>> AuthenticateUserAsync(ClsUserLoginModel clsUserModel)
         {
-            ClsResponseModel clsResponse = new ClsResponseModel();
-            using (var response = await _dbContext.QueryMultipleAsync("Usp_ValidateUser", new { username = clsUserModel.MobileNumber, password = clsUserModel.Password }, commandType: CommandType.StoredProcedure))
+            ClsResponseModel<ClsStatus> clsResponse = new ClsResponseModel<ClsStatus>();
+            var parameters = new DynamicParameters();
+            parameters.Add("@Mobile", clsUserModel.Mobile);
+            parameters.Add("@Password", clsUserModel.Password);
+            ClsStatus clsStatus = await _dbContext.QuerySingleAsync<ClsStatus>("Usp_UserLogin", parameters, commandType: CommandType.StoredProcedure);
+            if (clsStatus.LoginStatus == "1")
             {
-
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Success";
+                clsResponse.Data = clsStatus;
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed";
             }
             return clsResponse;
         }

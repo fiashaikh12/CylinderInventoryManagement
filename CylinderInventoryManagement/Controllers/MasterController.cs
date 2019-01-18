@@ -1,6 +1,7 @@
 ﻿using CIM.BusinessLayer.Repository;
 using CIM.BusinessLayer.Repository.Interface;
 using CIM.Entities;
+using CIM.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +11,29 @@ using System.Web.Mvc;
 
 namespace CylinderInventoryManagement.Controllers
 {
+    [SessionTimeout]
     public class MasterController : Controller
     {
         private IMasters _masters;
+        private ClsResponseModel<List<ClsCategoryMasterModel>> clsResponse;
         public MasterController()
         {
             this._masters = new MasterRepository();
+           this.clsResponse = (ClsResponseModel<List<ClsCategoryMasterModel>>)this._masters.Get_Category();
+            ViewBag.Category = clsResponse.Data.Select(x =>
+             new SelectListItem
+             {
+                 Text = x.CategoryName,
+                 Value = Convert.ToString(x.CategoryId)
+             }
+           ).ToList();
         }
         // GET: Master
-        public ActionResult CreateSubCategory()
+        public ActionResult SubCategory()
         {
             return View();
         }
-        [HttpPost]
+        [HttpPost,ActionName("SubCategory")]
         public async Task<ActionResult> CreateSubCategory(ClsSubCategoryMasterModel clsSubCategoryMaster)
         {
             if (ModelState.IsValid)
@@ -30,12 +41,12 @@ namespace CylinderInventoryManagement.Controllers
                 ClsResponseModel response = await this._masters.Create_SubCategoryAsync(clsSubCategoryMaster);
                 if (response.IsSuccess)
                 {
-                    TempData["ErrorMsg"] = "Success:";
+                    TempData["ErrorMsg"] = response.Message;
                     return View();
                 }
                 else
                 {
-                    TempData["ErrorMsg"] = "Error:";
+                    TempData["ErrorMsg"] = response.Message;
                     return View();
                 }
             }
@@ -122,17 +133,15 @@ namespace CylinderInventoryManagement.Controllers
         //Category Code
         public ActionResult CategoryList()
         {
-
-            IEnumerable<ClsCategoryMasterModel> response = _masters.Get_Category();
-            if (response.Count() > 0)
+            if (clsResponse.Data.Count > 0)
             {
                 TempData["ErrorMsg"] = "Success:";
-                return View(response);
+                return View(clsResponse.Data);
             }
             else
             {
                 TempData["ErrorMsg"] = "Error:";
-                return View(response);
+                return View(clsResponse.Data);
             }
         }
 

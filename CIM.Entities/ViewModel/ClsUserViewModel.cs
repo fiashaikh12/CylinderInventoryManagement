@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BusinessEntities
 {
-    public class ClsUserRegistrationModel
+    public class ClsUserRegistrationViewModel
     {
         public string UserId { get; set; }
         public string Name { get; set; }
@@ -25,10 +25,14 @@ namespace BusinessEntities
         public DateTime? DeletedBy { get; set; }
     }
 
-    public class ClsUserLoginModel
+    public class ClsLoginViewModel
     {
+        [Display(Name ="Mobile Number")]
+        [Required(ErrorMessage ="Please provide mobile number")]
         public string  Mobile { get; set; }
+        [Required(ErrorMessage = "Please provide password")]
         public string Password { get; set; }
+        [Display(Name = "Remember Me")]
         public bool RememberMe { get; set; }
     }
 }

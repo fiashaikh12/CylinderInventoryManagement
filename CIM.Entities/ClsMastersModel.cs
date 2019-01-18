@@ -31,7 +31,9 @@ namespace CIM.Entities
     public class ClsSubCategoryMasterModel: ClsCommonModel
     {
         public int SubCategoryId { get; set; }
+        [Required(ErrorMessage = "Please select category"),Display(Name ="Category Id")]
         public int CategoryId { get; set; }
+        [Required(ErrorMessage = "Please provide sub category"),Display(Name = "Sub Category")]
         public string SubCategoryName { get; set; }
         public int CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }

@@ -1,0 +1,65 @@
+﻿@model CIM.Entities.ClsSubCategoryMasterModel
+@{ 
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @{
+                string cssClass = "";
+                if (TempData["ErrorMsg"] != null)
+                {
+
+                    if (TempData["ErrorMsg"].ToString().Contains("Success"))
+                    {
+                        cssClass = "success";
+                    }
+                    else if (TempData["ErrorMsg"].ToString().Contains("Error"))
+                    {
+                        cssClass = "danger";
+                    }
+                }
+                <div class="col-md-6 callout callout-@cssClass">
+                    <p class="text-center">
+                        @TempData["ErrorMsg"]
+                    </p>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="box box-info">
+
+                    @using (Html.BeginForm("SubCategory", "Master", FormMethod.Post, new { htmlAttributes = new { @class = "form-horizontal" } }))
+                    {
+                        @Html.AntiForgeryToken()
+                    <div class="box-body">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Category Id</label>
+                            <div class="col-sm-10">
+                                @Html.DropDownListFor(model => model.CategoryId, (List<SelectListItem>)ViewBag.Category, "Select category", new { @class = "form-control select2 select2-hidden-accessible", @tabindex = "-1" })                                
+                                <span class="help-block"></span>
+                                @Html.ValidationMessageFor(model => model.CategoryId,"", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="subcategory" class="col-sm-2 control-label">Sub Category</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.SubCategoryName,new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.SubCategoryName,"", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                        <div class="box-footer">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

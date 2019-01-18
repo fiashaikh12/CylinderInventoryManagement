@@ -1,3 +1,19 @@
 ﻿@{
-    Layout = "/Views/Shared/_Layout.cshtml";
+    string setLayout = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Controller"]).ToLower();
+    dynamic Layout;
+    switch (setLayout)
+    {
+        case "user":
+            Layout = "/Views/Shared/_LoginLayout.cshtml";
+            break;
+        case "master":
+            Layout = "/Views/Shared/_Layout.cshtml";
+            break;
+        case "dashboard":
+            Layout = "/Views/Shared/_Layout.cshtml";
+            break;
+        case "product":
+            Layout = "/Views/Shared/_Layout.cshtml";
+            break;
+    }
 }

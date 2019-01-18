@@ -1,6 +1,7 @@
 ﻿using BusinessEntities;
 using BusinessLayer.Repository;
 using BusinessLayer.Repository.Interface;
+using CIM.Entities;
 using CIM.Filter;
 using System.Threading.Tasks;
 using System.Web;
@@ -26,12 +27,19 @@ namespace CylinderInventoryManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                ClsResponseModel clsResponse = await this._user.AuthenticateUser(clsUserLoginModel);
-                return View();
+                ClsResponseModel<ClsStatus> clsResponse =(ClsResponseModel<ClsStatus>) await this._user.AuthenticateUserAsync(clsUserLoginModel);
+                if (clsResponse.IsSuccess)
+                {
+                    Session["authstatus"] = clsResponse.Data;
+                    return View("Index","Dashboard");
+                }
+                else
+                {
+                    return View();
+                }
             }
             else
             {
-                ModelState.AddModelError("", "");
                 return View();
             }
         }

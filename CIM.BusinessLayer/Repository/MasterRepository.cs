@@ -6,6 +6,7 @@ using Dapper;
 using CIM.Entities;
 using System.Threading.Tasks;
 using System;
+using System.Linq;
 
 namespace CIM.BusinessLayer.Repository
 {
@@ -25,20 +26,20 @@ namespace CIM.BusinessLayer.Repository
                 var parameters = new DynamicParameters();
                 parameters.Add("@Categoryid", clsSubCategoryMaster.CategoryId);
                 parameters.Add("@SubCategoryName", clsSubCategoryMaster.SubCategoryName);
-                parameters.Add("@UserId", clsSubCategoryMaster.UserId);
+                parameters.Add("@UserId", clsSubCategoryMaster.UserId=1);
                 parameters.Add("@flag", "I");
-                int returnValue = await  this._dbContext.ExecuteAsync("USP_SubCategoryMaster", parameters, commandType: CommandType.StoredProcedure);
-                if (returnValue > 0)
+                int affectedRows =  await this._dbContext.ExecuteAsync("USP_SubCategoryMaster", parameters, commandType: CommandType.StoredProcedure);
+                if (affectedRows > 0)
                 {
                     clsResponse.IsSuccess = true;
                     clsResponse.ErrorCode = 200;
-                    clsResponse.Message = "Success";
+                    clsResponse.Message = "Success: Successfully created";
                 }
                 else
                 {
                     clsResponse.IsSuccess = false;
                     clsResponse.ErrorCode = 400;
-                    clsResponse.Message = "Failed";
+                    clsResponse.Message = "Error: Failed to create sub-category";
                 }
             }
             catch(Exception ex)
@@ -53,18 +54,19 @@ namespace CIM.BusinessLayer.Repository
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<ClsCategoryMasterModel> Get_Category()
+        public ClsResponseModel Get_Category()
         {
-            // ClsResponseModel<IEnumerable<ClsCategoryMasterModel>> clsResponse = new ClsResponseModel<IEnumerable<ClsCategoryMasterModel>>();
-            IEnumerable<ClsCategoryMasterModel> clsResponse = new List<ClsCategoryMasterModel>();
+            ClsResponseModel<List<ClsCategoryMasterModel>> clsResponse = new ClsResponseModel<List<ClsCategoryMasterModel>>();
             var parameters = new DynamicParameters();
             parameters.Add("@flag", "S");
-            //IEnumerable<ClsCategoryMasterModel> response = _dbContext.Query<ClsCategoryMasterModel>("USP_CategoryMaster", parameters, commandType: CommandType.StoredProcedure);
-            //clsResponse.IsSuccess = true;
-            //clsResponse.ErrorCode = 200;
-            //clsResponse.Message = "Success";
-            //clsResponse.Data = response;
-            clsResponse = _dbContext.Query<ClsCategoryMasterModel>("USP_CategoryMaster", parameters, commandType: CommandType.StoredProcedure);
+            List<ClsCategoryMasterModel> response = _dbContext.Query<ClsCategoryMasterModel>("USP_CategoryMaster", parameters, commandType: CommandType.StoredProcedure).ToList();
+            if (response.Count > 0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Success";
+                clsResponse.Data = response;
+            }
             return clsResponse;
         }
 
@@ -104,17 +106,19 @@ namespace CIM.BusinessLayer.Repository
             return clsResponse;
         }
 
-        public async Task<ClsResponseModel> Get_SubCategoryAsync()
+        public ClsResponseModel Get_SubCategory()
         {
-            ClsResponseModel<IEnumerable<ClsSubCategoryMasterModel>> clsResponse = new ClsResponseModel<IEnumerable < ClsSubCategoryMasterModel >> ();
+            ClsResponseModel<List<ClsSubCategoryMasterModel>> clsResponse = new ClsResponseModel<List<ClsSubCategoryMasterModel>> ();
             var parameters = new DynamicParameters();
             parameters.Add("@flag", "S");
-
-            IEnumerable<ClsSubCategoryMasterModel> models = await _dbContext.QueryAsync<ClsSubCategoryMasterModel>("USP_CategoryMaster", parameters, commandType: CommandType.StoredProcedure);
-            clsResponse.IsSuccess = true;
-            clsResponse.Message = "Message";
-            clsResponse.ErrorCode = 200;
-            clsResponse.Data = models;
+            List<ClsSubCategoryMasterModel> clsSubCategories = this._dbContext.Query<ClsSubCategoryMasterModel>("USP_SubCategoryMaster", parameters, commandType: CommandType.StoredProcedure).ToList();
+            if (clsSubCategories.Count > 0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.Message = "Success";
+                clsResponse.ErrorCode = 200;
+                clsResponse.Data = clsSubCategories;
+            }
             return clsResponse;
         }
 
