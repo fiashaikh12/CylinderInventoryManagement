@@ -50,6 +50,7 @@
     <Compile Include="ClsStatus.cs" />
     <Compile Include="ClsUserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResponseModel\ClsLoginResponse.cs" />
     <Compile Include="ViewModel\ClsUserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

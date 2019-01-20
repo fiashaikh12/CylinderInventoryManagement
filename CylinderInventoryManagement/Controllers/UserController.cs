@@ -2,6 +2,7 @@
 using BusinessLayer.Repository;
 using BusinessLayer.Repository.Interface;
 using CIM.Entities;
+using CIM.Entities.ResponseModel;
 using CIM.Filter;
 using System.Threading.Tasks;
 using System.Web;
@@ -9,7 +10,6 @@ using System.Web.Mvc;
 
 namespace CylinderInventoryManagement.Controllers
 {
-    [SessionTimeout]
     public class UserController : Controller
     {
         private readonly IUser _user;
@@ -22,15 +22,16 @@ namespace CylinderInventoryManagement.Controllers
         {
             return View();
         }
-        [HttpPost]
+        [HttpPost,ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(ClsUserLoginModel clsUserLoginModel)
         {
             if (ModelState.IsValid)
             {
-                ClsResponseModel<ClsStatus> clsResponse =(ClsResponseModel<ClsStatus>) await this._user.AuthenticateUserAsync(clsUserLoginModel);
+                ClsResponseModel<ClsLoginResponse> clsResponse = await this._user.AuthenticateUserAsync(clsUserLoginModel);
                 if (clsResponse.IsSuccess)
                 {
-                    Session["authstatus"] = clsResponse.Data;
+                    Session["authstatus"] = clsResponse.Data.UserId;
+                    Session["businessId"] = clsResponse.Data.BusinessId;
                     return View("Index","Dashboard");
                 }
                 else

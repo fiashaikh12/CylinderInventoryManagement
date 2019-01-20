@@ -1,10 +1,10 @@
-﻿@model BusinessEntities.ClsLoginViewModel
+﻿@model BusinessEntities.ClsUserLoginModel
 @{
     Layout = "/Views/Shared/_LoginLayout.cshtml";
 }
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><b>Admin</b>LTE</a>
+        <a href="#"><b>Admin</b></a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
@@ -54,6 +54,8 @@
 <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="../../plugins/iCheck/icheck.min.js"></script>
+<script src="~/Content/Js/jquery.validate.js"></script>
+<script src="~/Content/Js/jquery.validate.unobtrusive.js"></script>
 <script>
     $(function () {
         $('input').iCheck({

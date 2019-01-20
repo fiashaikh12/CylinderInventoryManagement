@@ -61,5 +61,24 @@ namespace CylinderInventoryManagement.Controllers
                 return View("Index");
             }
         }
+
+        //[HttpGet]
+        //public ActionResult ViewProduct()
+        //{
+        //    return View();
+        //}
+        [HttpGet]//[ActionName("GetAllProduct")]
+        public  ActionResult ViewProduct(int businessId)
+        {
+                ClsResponseModel<List<ClsProductDetailModel>> clsResponseModel =(ClsResponseModel<List<ClsProductDetailModel>>)this._product.GetAllProduct(businessId);
+                if (clsResponseModel.IsSuccess)
+                {
+                    return View("ViewProduct",clsResponseModel.Data);
+                }
+                else
+                {
+                    return View();
+                }
+        }
     }
 }
