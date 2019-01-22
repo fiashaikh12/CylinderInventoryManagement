@@ -6593,6 +6593,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -7096,6 +7097,9 @@
     <Content Include="Views\Master\SubCategory.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Master\AddCategory.cshtml" />
+    <Content Include="Views\Master\CategoryList.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
