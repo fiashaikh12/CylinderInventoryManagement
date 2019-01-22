@@ -27,7 +27,8 @@
     <link rel="stylesheet" href="~/bower_components/bootstrap-daterangepicker/daterangepicker.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="~/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/bower_components/select2/dist/css/select2.min.css">
 
     <link href="~/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -77,7 +78,7 @@
                             <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
                         </ul>
                     </li>
-                    <li class="active treeview">
+                    <li class="treeview">
                         <a href="#">
                             <i class="fa fa-dashboard"></i> <span>Master</span>
                             <span class="pull-right-container">
@@ -85,10 +86,10 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="active"><a href="@Url.Action("CategoryList", "Master")"><i class="fa fa-circle-o"></i> Category</a></li>
+                            <li><a href="@Url.Action("CategoryList", "Master")"><i class="fa fa-circle-o"></i> Category</a></li>
                         </ul>
                     </li>
-                    <li class="active treeview">
+                    <li class="treeview">
                         <a href="#">
                             <i class="fa fa-dashboard"></i> <span>Product</span>
                             <span class="pull-right-container">
@@ -96,7 +97,18 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="active"><a href="@Url.Action("Index", "Product")"><i class="fa fa-circle-o"></i> Add new product</a></li>
+                            <li class=""><a href="@Url.Action("Index", "Product")"><i class="fa fa-circle-o"></i> Add new product</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-dashboard"></i> <span>Customer</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class=""><a href="@Url.Action("Index", "Customer")"><i class="fa fa-circle-o"></i>Search Customer</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -135,6 +147,8 @@
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>$.widget.bridge('uibutton', $.ui.button);</script>
     <!-- Bootstrap 3.3.7 -->
+    <!-- Select2 -->
+    <script src="~/bower_components/select2/dist/js/select2.full.min.js"></script>
     <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Morris.js charts -->
     <script src="~/bower_components/raphael/raphael.min.js"></script>
@@ -157,6 +171,13 @@
     <script src="~/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <!-- FastClick -->
     <script src="~/bower_components/fastclick/lib/fastclick.js"></script>
+
+    <!-- InputMask -->
+    <script src="~/plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="~/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="~/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+    <!-- iCheck 1.0.1 -->
+    <script src="~/plugins/iCheck/icheck.min.js"></script>
     <!-- AdminLTE App -->
     <script src="~/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -177,6 +198,74 @@
                 'ordering': true,
                 'info': true,
                 'autoWidth': false
+            })
+        })
+
+
+
+        $(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+
+            //Datemask dd/mm/yyyy
+            $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+            //Datemask2 mm/dd/yyyy
+            $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+            //Money Euro
+            $('[data-mask]').inputmask()
+
+            //Date range picker
+            $('#reservation').daterangepicker()
+            //Date range picker with time picker
+            $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+            //Date range as a button
+            $('#daterange-btn').daterangepicker(
+                {
+                    ranges: {
+                        'Today': [moment(), moment()],
+                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    },
+                    startDate: moment().subtract(29, 'days'),
+                    endDate: moment()
+                },
+                function (start, end) {
+                    $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+                }
+            )
+
+            //Date picker
+            $('#datepicker').datepicker({
+                autoclose: true
+            })
+
+            ////iCheck for checkbox and radio inputs
+            //$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+            //    checkboxClass: 'icheckbox_minimal-blue',
+            //    radioClass: 'iradio_minimal-blue'
+            //})
+            ////Red color scheme for iCheck
+            //$('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+            //    checkboxClass: 'icheckbox_minimal-red',
+            //    radioClass: 'iradio_minimal-red'
+            //})
+            ////Flat red color scheme for iCheck
+            //$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+            //    checkboxClass: 'icheckbox_flat-green',
+            //    radioClass: 'iradio_flat-green'
+            //})
+
+            //Colorpicker
+            $('.my-colorpicker1').colorpicker()
+            //color picker with addon
+            $('.my-colorpicker2').colorpicker()
+
+            //Timepicker
+            $('.timepicker').timepicker({
+                showInputs: false
             })
         })
     </script>

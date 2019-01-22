@@ -3,17 +3,25 @@
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
+
 <section class="content">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <div class="box box-info">
-                    @using (Html.BeginForm("CreateProduct", "Product", FormMethod.Post, new { @class = "form-horizontal" }))
+    <!-- SELECT2 EXAMPLE -->
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Add Cylinder</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    @using (Html.BeginForm("CreateProduct", "Product", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
-                    <div class="box-body">
-                        @{
+
+                        {
                             string cssClass = "";
                             string visibility = "none";
                             if (TempData["Message"] != null)
@@ -29,67 +37,50 @@
                                 }
                                 visibility = "block";
                             }
-                            <div class="alert alert-@cssClass alert-dismissible" style="display:@visibility">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <h4><i class="icon fa fa-info"></i> Alert!</h4>
-                                @TempData["Message"]
-                            </div>
+                    <div class="alert alert-@cssClass alert-dismissible" style="display:@visibility">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4><i class="icon fa fa-info"></i> Alert!</h4>
+                        @TempData["Message"]
+                    </div>
                         }
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                         <div class="form-group">
-                            @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownListFor(model => model.CategoryId, ViewBag.Category as List<SelectListItem>, "Select category", new { @class = "form-control select2 select2-hidden-accessible", @tabindex = "-1" })
-                                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
-                            </div>
+                            @Html.LabelFor(model => model.CategoryId)
+                            @Html.DropDownListFor(model => model.CategoryId, ViewBag.Category as List<SelectListItem>, "Select category", new { @class = "form-control select2", @tabindex = "-1" })
+                            @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.SubCategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownListFor(model => model.SubCategoryId, ViewBag.SubCategory as List<SelectListItem>, "Select subcategory", new { @class = "form-control select2 select2-hidden-accessible", @tabindex = "-1" })
-                                @Html.ValidationMessageFor(model => model.SubCategoryId, "", new { @class = "text-danger" })
-                            </div>
+                            @Html.LabelFor(model => model.SubCategoryId)
+                            @Html.DropDownListFor(model => model.SubCategoryId, ViewBag.SubCategory as List<SelectListItem>, "Select subcategory", new { @class = "form-control select2", @tabindex = "-1" })
+                            @Html.ValidationMessageFor(model => model.SubCategoryId, "", new { @class = "text-danger" })
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Quantity)
+                            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
-                            </div>
+                            @Html.LabelFor(model => model.IsDepositAllowed)
+                            @Html.CheckBoxFor(model => model.IsDepositAllowed, htmlAttributes: new { @class = "minimal-red" })
+                            @Html.ValidationMessageFor(model => model.IsDepositAllowed, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.IsDepositAllowed, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                <div class="checkbox">
-                                    @Html.CheckBoxFor(model => model.IsDepositAllowed)
-                                    @Html.ValidationMessageFor(model => model.IsDepositAllowed, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
+                            @Html.LabelFor(model => model.IsExchangeAllowed)
+                            @Html.CheckBoxFor(model => model.IsExchangeAllowed, htmlAttributes: new { @class = "minimal-red" })
+                            @Html.ValidationMessageFor(model => model.IsExchangeAllowed, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.IsExchangeAllowed, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                <div class="checkbox">
-                                    <div class="icheckbox_flat-green checked" aria-checked="true" aria-disabled="false" style="position: relative;">
-                                        @*<input type="checkbox" class="flat-red" style="position: absolute; opacity: 0;">*@
-                                        @Html.CheckBoxFor(model => model.IsExchangeAllowed)
-                                        <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-                                    </div>
-                                    @Html.ValidationMessageFor(model => model.IsExchangeAllowed, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @placeholder = "Price" } })
-                                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-                            </div>
+                            @Html.LabelFor(model => model.Price)
+                            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @placeholder = "Price" } })
+                            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group">
@@ -97,10 +88,11 @@
                                 <input type="submit" value="Create" class="btn btn-default" />
                             </div>
                         </div>
-                    </div>
                     }
                 </div>
             </div>
+            <!-- /.row -->
         </div>
     </div>
+    <!-- /.box -->
 </section>
