@@ -11,17 +11,17 @@ namespace CIM.Filter
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            //HttpSessionStateBase session = filterContext.HttpContext.Session;
-            //if (filterContext.Controller is Controller controller)
-            //{
-            //    if (session != null && session["authstatus"] == null)
-            //    {
-            //        filterContext.Result =
-            //               new RedirectToRouteResult(
-            //                   new RouteValueDictionary{{ "controller", "User" }, { "action", "Login" }
-            //                   });
-            //    }
-            //}
+            HttpSessionStateBase session = filterContext.HttpContext.Session;
+            if (filterContext.Controller is Controller controller)
+            {
+                if (session != null && session["authstatus"] == null)
+                {
+                    filterContext.Result =
+                           new RedirectToRouteResult(
+                               new RouteValueDictionary{{ "controller", "User" }, { "action", "Login" }
+                               });
+                }
+            }
             base.OnActionExecuting(filterContext);
         }
     }

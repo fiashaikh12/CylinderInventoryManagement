@@ -6376,6 +6376,7 @@
     <Content Include="bower_components\select2\tests\vendor\qunit-1.23.1.css" />
     <Content Include="bower_components\select2\tests\vendor\qunit-1.23.1.js" />
     <Content Include="bower_components\select2\vendor\jquery-2.1.0.js" />
+    <Content Include="Content\Css\developer.css" />
     <Content Include="dist\css\AdminLTE.css" />
     <Content Include="dist\css\AdminLTE.min.css" />
     <Content Include="dist\css\alt\AdminLTE-bootstrap-social.css" />
@@ -6592,6 +6593,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -7087,6 +7089,8 @@
     <Content Include="bower_components\select2\src\scss\_dropdown.scss" />
     <Content Include="bower_components\select2\src\scss\_multiple.scss" />
     <Content Include="bower_components\select2\src\scss\_single.scss" />
+    <Content Include="Content\Js\jquery.validate.js" />
+    <Content Include="Content\Js\jquery.validate.unobtrusive.js" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="plugins\input-mask\phone-codes\phone-be.json" />
@@ -7100,6 +7104,7 @@
     <Content Include="Views\Master\AddCategory.cshtml" />
     <Content Include="Views\Master\CategoryList.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Product\ViewProduct.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

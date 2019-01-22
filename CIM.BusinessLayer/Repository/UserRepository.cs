@@ -6,6 +6,7 @@ using DbContext;
 using BusinessLayer.Repository.Interface;
 using Dapper;
 using CIM.Entities;
+using CIM.Entities.ResponseModel;
 
 namespace BusinessLayer.Repository
 {
@@ -18,14 +19,14 @@ namespace BusinessLayer.Repository
             this._dbContext = GetConnection();
         }
 
-        public async Task<ClsResponseModel<ClsStatus>> AuthenticateUserAsync(ClsUserLoginModel clsUserModel)
+        public async Task<ClsResponseModel<ClsLoginResponse>> AuthenticateUserAsync(ClsUserLoginModel clsUserModel)
         {
-            ClsResponseModel<ClsStatus> clsResponse = new ClsResponseModel<ClsStatus>();
+            ClsResponseModel<ClsLoginResponse> clsResponse = new ClsResponseModel<ClsLoginResponse>();
             var parameters = new DynamicParameters();
             parameters.Add("@Mobile", clsUserModel.Mobile);
             parameters.Add("@Password", clsUserModel.Password);
-            ClsStatus clsStatus = await _dbContext.QuerySingleAsync<ClsStatus>("Usp_UserLogin", parameters, commandType: CommandType.StoredProcedure);
-            if (clsStatus.UserId == 2)
+            ClsLoginResponse clsStatus = await _dbContext.QuerySingleAsync<ClsLoginResponse>("Usp_UserLogin", parameters, commandType: CommandType.StoredProcedure);
+            if (clsStatus.TypeName == "2")
             {
                 clsResponse.IsSuccess = true;
                 clsResponse.ErrorCode = 200;
