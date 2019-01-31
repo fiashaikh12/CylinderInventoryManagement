@@ -1,21 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
-namespace BusinessEntities
+namespace CIM.Entities
 {
-    public class ClsUserRegistrationModel
+    public class ClsCustomerModel
     {
         public string UserId { get; set; }
+        [Required(ErrorMessage ="Please enter full name")]
         public string Name { get; set; }
         public string Password { get; set; }
+        [Required(ErrorMessage = "Please enter mobile number")]
+        [RegularExpression("^[0-9]*$", ErrorMessage ="Only numeric value allowed")]
         public string Mobile { get; set; }
+        [Required(ErrorMessage = "Please enter company name")]
         public string CompanyName { get; set; }
         public int TypeId { get; set; }
         public string BusinessId { get; set; }
         public bool IsActive { get; set; }
+        [Required(ErrorMessage = "Please enter gst no")]
         public string GSTNo { get; set; }
+        [Required(ErrorMessage = "Please enter address")]
         public string Address { get; set; }
         public DateTime? CreatedOn { get; set; }
         public int CreatedBy { get; set; }

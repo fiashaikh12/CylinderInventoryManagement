@@ -6377,6 +6377,7 @@
     <Content Include="bower_components\select2\tests\vendor\qunit-1.23.1.js" />
     <Content Include="bower_components\select2\vendor\jquery-2.1.0.js" />
     <Content Include="Content\Css\developer.css" />
+    <Content Include="Content\Js\developer.js" />
     <Content Include="dist\css\AdminLTE.css" />
     <Content Include="dist\css\AdminLTE.min.css" />
     <Content Include="dist\css\alt\AdminLTE-bootstrap-social.css" />
@@ -6601,6 +6602,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filter\SessionTimeoutAttribute.cs" />
+    <Compile Include="Filter\ValidateOnlyIncomingValuesAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -7105,6 +7107,7 @@
     <Content Include="Views\Master\CategoryList.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Product\ViewProduct.cshtml" />
+    <Content Include="Views\_ProductDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

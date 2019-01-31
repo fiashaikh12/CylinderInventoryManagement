@@ -31,6 +31,8 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="~/bower_components/select2/dist/css/select2.min.css">
 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
     <link href="~/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -76,7 +78,6 @@
                         </a>
                         <ul class="treeview-menu">
                             <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-                            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -88,6 +89,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="@Url.Action("CategoryList", "Master")"><i class="fa fa-circle-o"></i> Category</a></li>
+                            <li><a href="@Url.Action("SubCategory", "Master")"><i class="fa fa-circle-o"></i>Sub Category</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -154,7 +156,7 @@
     <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Morris.js charts -->
     <script src="~/bower_components/raphael/raphael.min.js"></script>
-    <script src="~/bower_components/morris.js/morris.min.js"></script>
+    @*<script src="~/bower_components/morris.js/morris.min.js"></script>*@
     <!-- Sparkline -->
     <script src="~/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
     <!-- jvectormap -->
@@ -183,10 +185,12 @@
     <!-- AdminLTE App -->
     <script src="~/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="~/dist/js/pages/dashboard.js"></script>
+    @*<script src="~/dist/js/pages/dashboard.js"></script>*@
     <!-- AdminLTE for demo purposes -->
     <script src="~/dist/js/demo.js"></script>
 
+    @*<script src="//code.jquery.com/jquery-1.10.2.js"></script>*@
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
     <script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -202,9 +206,6 @@
                 'autoWidth': false
             })
         })
-
-
-
         $(function () {
             //Initialize Select2 Elements
             $('.select2').select2()
@@ -261,17 +262,18 @@
             //})
 
             //Colorpicker
-            $('.my-colorpicker1').colorpicker()
+            //$('.my-colorpicker1').colorpicker()
             //color picker with addon
-            $('.my-colorpicker2').colorpicker()
+            //$('.my-colorpicker2').colorpicker()
 
             //Timepicker
-            $('.timepicker').timepicker({
-                showInputs: false
-            })
+            //$('.timepicker').timepicker({
+            //    showInputs: false
+            //})
         })
     </script>
-    <script src="../../plugins/iCheck/icheck.min.js"></script>
+    <script src="~/Content/Js/developer.js"></script>
+    <script src="~/plugins/iCheck/icheck.min.js"></script>
     <script src="~/Content/Js/jquery.validate.js"></script>
     <script src="~/Content/Js/jquery.validate.unobtrusive.js"></script>
 </body>

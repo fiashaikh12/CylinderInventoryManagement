@@ -45,6 +45,8 @@ namespace CylinderInventoryManagement.Controllers
         {
             if (ModelState.IsValid)
             {
+                clsProduct.UserId = Convert.ToInt32(Session["userId"]);
+                clsProduct.BusinessId= Convert.ToInt32(Session["businessId"]);
                 ClsResponseModel clsResponseModel =await this._product.AddProductAsync(clsProduct);
                 if (clsResponseModel.IsSuccess)
                 {
@@ -62,11 +64,26 @@ namespace CylinderInventoryManagement.Controllers
             }
         }
 
-        //[HttpGet]
-        //public ActionResult ViewProduct()
-        //{
-        //    return View();
-        //}
+        [HttpPost]
+        public async Task<ActionResult> CustomerPurchase(ClsCustomerPurchase clsCustomerPurchase)
+        {
+            clsCustomerPurchase.BusinessId = Convert.ToInt32(Session["businessId"]);
+            clsCustomerPurchase.IsDepositGiven = true;
+            clsCustomerPurchase.IsDepositReturn = false;
+
+            clsCustomerPurchase.SubCategoryId = clsResponseModel.Data.Where(x=>x.SubCategoryName==clsCustomerPurchase.SubCategoryId).Select(y=>y.SubCategoryId).FirstOrDefault().ToString();
+            clsCustomerPurchase.CategoryId = clsResponse.Data.Where(x => x.CategoryName == clsCustomerPurchase.CategoryId).Select(y => y.CategoryId).FirstOrDefault().ToString();
+
+            ClsResponseModel purchaseResponse = await this._product.CustomerPurchaseAsync(clsCustomerPurchase);
+            if (purchaseResponse.IsSuccess)
+            {
+                return Json(new { Status=1 });
+            }
+            else
+            {
+                return Json(new { Status = 0 });
+            }
+        }
         [HttpGet]//[ActionName("GetAllProduct")]
         public  ActionResult ViewProduct(int businessId)
         {

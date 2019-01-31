@@ -29,18 +29,48 @@ namespace CIM.BusinessLayer.Repository
             parameters.Add("@IsExchangeAllowed", clsProductModel.IsExchangeAllowed);
             parameters.Add("@UserId", clsProductModel.UserId);
             parameters.Add("@Price", clsProductModel.Price);
+            parameters.Add("@Businessid", clsProductModel.BusinessId);
             int returnValue = await this._dbContext.ExecuteAsync("USP_AddProducts", parameters, commandType: CommandType.StoredProcedure);
             if (returnValue > 0)
             {
                 clsResponse.IsSuccess = true;
                 clsResponse.ErrorCode = 200;
-                clsResponse.Message = "Success: Product added successfully.";
+                clsResponse.Message = "Product added successfully.";
             }
             else
             {
                 clsResponse.IsSuccess = false;
                 clsResponse.ErrorCode = 400;
-                clsResponse.Message = "Failed: Something went wrong";
+                clsResponse.Message = "Something went wrong";
+            }
+            return clsResponse;
+        }
+
+        public async Task<ClsResponseModel> CustomerPurchaseAsync(ClsCustomerPurchase clsCustomer)
+        {
+            ClsResponseModel clsResponse = new ClsResponseModel();
+            var parameters = new DynamicParameters();
+            parameters.Add("@UserId", clsCustomer.UserId);
+            parameters.Add("@IsDepositGiven", clsCustomer.IsDepositGiven);
+            parameters.Add("@IsDepositReturn", clsCustomer.IsDepositReturn);
+            parameters.Add("@DepositAmount", clsCustomer.DepositAmount);
+            parameters.Add("@Createdby", clsCustomer.BusinessId);
+            parameters.Add("@Categoryid", clsCustomer.CategoryId);
+            parameters.Add("@SubCategoryid", clsCustomer.SubCategoryId);
+            parameters.Add("@Quantity", clsCustomer.Quantity);
+            parameters.Add("@Businessid", clsCustomer.BusinessId);
+            int returnValue = await this._dbContext.ExecuteAsync("USP_CustPurchase", parameters, commandType: CommandType.StoredProcedure);
+            if (returnValue > 0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Purchase successfully.";
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Purchase failed";
             }
             return clsResponse;
         }

@@ -16,6 +16,7 @@ namespace CIM.Entities
         [Display(Name = "SubCategory")]
         public int SubCategoryId { get; set; }
         public int UserId { get; set; }
+        public int BusinessId { get; set; }
         [Required(ErrorMessage = "Please provide quantity")]
         [Range(1,999,ErrorMessage ="Quantity cannot be less than 1")]
         public int Quantity { get; set; }

@@ -7,6 +7,7 @@ using CIM.Filter;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace CylinderInventoryManagement.Controllers
 {
@@ -28,14 +29,27 @@ namespace CylinderInventoryManagement.Controllers
             if (ModelState.IsValid)
             {
                 ClsResponseModel<ClsLoginResponse> clsResponse = await this._user.AuthenticateUserAsync(clsUserLoginModel);
+                if (clsUserLoginModel.RememberMe)
+                {
+                    int timeout = clsUserLoginModel.RememberMe ? 525600 : 30;
+                    var ticket = new FormsAuthenticationTicket(clsUserLoginModel.Mobile, clsUserLoginModel.RememberMe, timeout);
+                    string encrypted = FormsAuthentication.Encrypt(ticket);
+                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted)
+                    {
+                        Expires = System.DateTime.Now.AddMinutes(timeout),
+                        HttpOnly = true
+                    };
+                    Response.Cookies.Add(cookie);
+                }
                 if (clsResponse.IsSuccess)
                 {
-                    Session["authstatus"] = clsResponse.Data.UserId;
+                    Session["userId"] = clsResponse.Data.UserId;
                     Session["businessId"] = clsResponse.Data.BusinessId;
-                    return View("Index","Dashboard");
+                    return RedirectToAction("Index","Dashboard");
                 }
                 else
                 {
+                    ModelState.AddModelError("", "Invalid username or password provided");
                     return View();
                 }
             }
@@ -43,11 +57,6 @@ namespace CylinderInventoryManagement.Controllers
             {
                 return View();
             }
-        }
-        [HttpGet]
-        public ActionResult Register()
-        {
-            return View();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace CIM.Filter
             HttpSessionStateBase session = filterContext.HttpContext.Session;
             if (filterContext.Controller is Controller controller)
             {
-                if (session != null && session["authstatus"] == null)
+                if (session != null && session["userId"] == null)
                 {
                     filterContext.Result =
                            new RedirectToRouteResult(

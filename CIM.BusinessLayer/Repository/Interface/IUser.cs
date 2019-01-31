@@ -8,6 +8,7 @@ namespace BusinessLayer.Repository.Interface
     public interface IUser
     {
         Task<ClsResponseModel<ClsLoginResponse>> AuthenticateUserAsync(ClsUserLoginModel clsUserModel);
-        Task<ClsResponseModel> RegisterUserAsync(ClsUserRegistrationModel responseModel);
+        Task<ClsResponseModel> CreateCustomerAsync(ClsCustomerModel responseModel);
+        ClsResponseModel GetCustomerDetails();
     }
 }
