@@ -51,6 +51,7 @@
     <Compile Include="Repository\Interface\IMasters.cs" />
     <Compile Include="Repository\Interface\IProduct.cs" />
     <Compile Include="Repository\Interface\IUser.cs" />
+    <Compile Include="Repository\LoggerRepository.cs" />
     <Compile Include="Repository\MasterRepository.cs" />
     <Compile Include="Repository\ProductRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />

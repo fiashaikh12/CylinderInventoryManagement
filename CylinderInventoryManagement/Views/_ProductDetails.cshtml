@@ -4,48 +4,37 @@
 </div>
 <!-- /.box-header -->
 <div class="box-body">
-    <table id="example1" class="table table-bordered table-striped">
+    <table id="example2" class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model[0].CategoryName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model[0].SubCategoryName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model[0].IsDepositAllowed)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model[0].IsExchangeAllowed)
-                </th>
-                <th>@Html.DisplayNameFor(model => model[0].Quantity)</th>
-                <th>@Html.DisplayNameFor(model => model[0].Price)</th>
-                <th>@Html.DisplayNameFor(model => model[0].AvailableQuantity)</th>
-                <th>@Html.DisplayNameFor(model => model[0].DepositAmount)</th>
-                <th>@Html.DisplayNameFor(model => model[0].PurchaseQuantity)</th>
+                <th>Category name</th>
+                <th>Sub category name</th>
+                <th>Is deposit allowed</th>
+                <th>Is exchange allowed</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Available quantity</th>
+                <th>Deposit amount</th>
+                <th>Purchase quantity</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            @if (Model != null)
+            @foreach (var item in Model)
             {
-                foreach (var item in Model)
-                {
-            <tr>
-                @Html.HiddenFor(modelItem => item.ProductId, new { @class = "userid" })
-                <td>@Html.DisplayFor(modelItem => item.CategoryName)</td>
-                <td>@Html.DisplayFor(modelItem => item.SubCategoryName)</td>
-                <td>@Html.DisplayFor(modelItem => item.IsDepositAllowed)</td>
-                <td>@Html.DisplayFor(modelItem => item.IsExchangeAllowed)</td>
-                <td class="quantity">@Html.DisplayFor(modelItem => item.Quantity)</td>
-                <td>@Html.DisplayFor(modelItem => item.Price)</td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableQuantity)</td>
-                <td>@Html.TextBoxFor(modelItem => item.DepositAmount, new { @class = item.IsDepositAllowed ? "" : "disabled" })</td>
-                <td>@Html.TextBoxFor(modelItem => item.PurchaseQuantity)</td>
-                <td><a id="updateCust" class="btn btn-primary">Buy</a></td>
-            </tr>
-                }
+                <tr>
+                    <td>@item.CategoryName</td>
+                    <td>@item.SubCategoryName</td>
+                    <td>@item.IsDepositAllowed</td>
+                    <td>@item.IsExchangeAllowed</td>
+                    <td class="quantity">@item.Quantity</td>
+                    <td>@item.Price</td>
+                    <td>@item.AvailableQuantity</td>
+                    <td>@Html.TextBoxFor(modelItem => item.DepositAmount, new { @class = item.IsDepositAllowed ? "depositAmount" : "disabled depositAmount" })</td>
+                    <td>@Html.TextBoxFor(modelItem => item.PurchaseQuantity, new { @class = "purchaseQuantity" })</td>
+                    <td><a id="purchaseCustomer" class="btn btn-primary">Buy</a></td>
+                </tr>
             }
-        </tbody>
+        </tbody>        
     </table>
 </div>

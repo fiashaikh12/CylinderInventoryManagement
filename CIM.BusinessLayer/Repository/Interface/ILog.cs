@@ -6,6 +6,6 @@ namespace BusinessLayer.Repository.Interface
 {
     public interface ILog
     {
-        void WriteLog(Exception ex,string module,string method,int lineNumber);
+        void WriteLog(Exception ex,string controller,string method);
     }
 }

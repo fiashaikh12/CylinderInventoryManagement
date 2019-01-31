@@ -1,8 +1,8 @@
 ﻿$(document).ready(function () {
-    $('#updateCust').on('click', function () {
+    $('#purchaseCustomer').on('click', function () {
         var userId = parseInt($('#UserId option:selected').val());
         var depAmount = $(this).closest('tr').find("#item_DepositAmount").val();
-        var purQuantity = $(this).closest('tr').find("#item_PurchaseQuantity").val();
+        var purQuantity = parseInt($(this).closest('tr').find("#item_PurchaseQuantity").val());
         var quantity = parseInt($(this).closest('tr').find('td:eq(4)').text());
         var category = $(this).closest('tr').find('td:eq(0)').text();
         var subcategory = $(this).closest('tr').find('td:eq(1)').text();
@@ -14,35 +14,50 @@
         obj.Quantity = purQuantity;
         obj.UserId = userId;
         if (userId > 0) {
-            if (purQuantity > 0 && purQuantity < quantity) {
-                $.ajax({
-                    type: "POST",
-                    url: "/Product/CustomerPurchase",
-                    data: JSON.stringify({ clsCustomerPurchase: obj }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (response) {
-                        if (response.Status == 1) {
-                            alert("Purchase successfull");
+            if (purQuantity > 0) {
+                if (purQuantity <= quantity) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Product/CustomerPurchase",
+                        data: JSON.stringify({ clsCustomerPurchase: obj }),
+                        contentType: "application/json; charset=utf-8",
+                        async: true,
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.Status == 1) {
+                                SweetAlert("Purchase successfull", "success", "OK");
+                            }
+                            else {
+                                SweetAlert("Purchase failed", "error", "OK");
+                            }
+                        },
+                        failure: function (response) {
+                            SweetAlert(response.responseText, "error", "OK");
+                        },
+                        error: function (response) {
+                            SweetAlert(response.responseText, "error", "OK");
                         }
-                        else {
-                            alert("Purchase failed");
-                        }
-                    },
-                    failure: function (response) {
-                        alert(response.responseText);
-                    },
-                    error: function (response) {
-                        alert(response.responseText);
-                    }
-                });
+                    });
+                }
+                else {
+                    SweetAlert("Purchase quantity cannot be greater than product quantity", "warning", "OK");
+                }
             }
             else {
-                alert("Purchase quantity cannot be less than product quantity");
+                SweetAlert("Please provide quantity", "warning", "OK");
             }
         }
         else {
-            alert("Select customer");
+            SweetAlert("Select customer","warning","OK");
         }
     })
+    
 });
+function SweetAlert(message,icon,buttonText) {
+    swal({
+        title: "",
+        text: message,
+        icon: icon,
+        button: buttonText,
+    });
+}
