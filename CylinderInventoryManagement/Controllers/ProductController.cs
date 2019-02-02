@@ -90,12 +90,14 @@ namespace CylinderInventoryManagement.Controllers
                 ClsResponseModel<List<ClsProductDetailModel>> clsResponseModel =(ClsResponseModel<List<ClsProductDetailModel>>)this._product.GetAllProduct(businessId);
                 if (clsResponseModel.IsSuccess)
                 {
-                    return Json(new { data = clsResponseModel.Data });
+                return  View(clsResponseModel.Data);
+                    //return Json(new { data = clsResponseModel.Data });
                 }
                 else
                 {
-                    return Json("");
-                }
+                return View(clsResponseModel.Data);
+                //return Json("");
+            }
         }
     }
 }

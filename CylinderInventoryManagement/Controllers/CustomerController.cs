@@ -76,14 +76,24 @@ namespace CylinderInventoryManagement.Controllers
             }
 
         }
-        [HttpGet]
+        [HttpPost]
         public ActionResult SearchCustomerAuto(string searchText)
-        {
-            ClsResponseModel<List<ClsCustomerModel>> customerResponse =(ClsResponseModel<List<ClsCustomerModel>>) this._user.GetCustomerDetails();
-            var customers = (from customer in customerResponse.Data
-                             where customer.Name.StartsWith(searchText)
-                            select new { customer.Name });
-            return Json(customers, JsonRequestBehavior.AllowGet);
+       {
+            if (searchText != null)
+            {
+                ClsResponseModel<List<ClsCustomerModel>> customerResponse = (ClsResponseModel<List<ClsCustomerModel>>)this._user.GetCustomerDetails();
+                var customers = (from customer in customerResponse.Data
+                                 where customer.Name.Contains(searchText) 
+                                 //& customer.BusinessId.Equals(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]))
+                                 //& customer.IsActive.Equals(true)
+                                 //select new { customer.UserId});
+                                 select new { id = customer.UserId, label = customer.Name, name = customer.Name });
+                return Json(customers, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

@@ -19,9 +19,9 @@
         <th>
             @Html.DisplayNameFor(model => model[0].IsExchangeAllowed)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model[0].ProductStatus)
-        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model[0].AvailableQuantity)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model[0].Quantity)
         </th>
@@ -44,9 +44,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.IsExchangeAllowed)
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.ProductStatus)
-        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.AvailableQuantity)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Quantity)
             <a href="#">
