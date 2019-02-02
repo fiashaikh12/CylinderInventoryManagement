@@ -1,0 +1,30 @@
+﻿@model  List<CIM.Entities.ClsSubCategoryMasterModel>
+<div class="box-header">
+    <h3 class="box-title">Sub Category Details</h3>
+</div>
+<!-- /.box-header -->
+<div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Category name</th>
+                <th>Sub category name</th>
+                <th>Action's</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                <tr>
+                    @Html.HiddenFor(model => item.SubCategoryId)
+                    <td>@item.CategoryName</td>
+                    <td>@item.SubCategoryName</td>
+                    <td>@Html.ActionLink("Delete", "DeleteSubCate", new { id = item.SubCategoryId }, new { onclick = "return confirm('Are you sure you want to delete this?');" })</td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

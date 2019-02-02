@@ -35,6 +35,7 @@ namespace CIM.Entities
         public int CategoryId { get; set; }
         [Required(ErrorMessage = "Please provide sub category"),Display(Name = "Sub Category")]
         public string SubCategoryName { get; set; }
+        public string CategoryName { get; set; }
         public int CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         public int ModifiedBy { get; set; }

@@ -40,7 +40,7 @@
                     });
                 }
                 else {
-                    SweetAlert("Purchase quantity cannot be greater than product quantity", "warning", "OK");
+                    SweetAlert("Purchase quantity cannot be more than product quantity", "warning", "OK");
                 }
             }
             else {
