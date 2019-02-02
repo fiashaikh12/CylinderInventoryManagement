@@ -20,6 +20,7 @@ namespace CylinderInventoryManagement.Controllers
         {
             this._masters = new MasterRepository();
            this.clsResponse = (ClsResponseModel<List<ClsCategoryMasterModel>>)this._masters.Get_Category();
+            
             ViewBag.Category = clsResponse.Data.Select(x =>
              new SelectListItem
              {
@@ -31,6 +32,7 @@ namespace CylinderInventoryManagement.Controllers
         // GET: Master
         public ActionResult SubCategory()
         {
+            ViewBag.SubCateResponse = this._masters.Get_SubCategory() as ClsResponseModel<List<ClsSubCategoryMasterModel>>;
             return View();
         }
         [HttpPost,ActionName("SubCategory")]
@@ -42,7 +44,7 @@ namespace CylinderInventoryManagement.Controllers
                 if (response.IsSuccess)
                 {
                     TempData["ErrorMsg"] = response.Message;
-                    return View();
+                    return RedirectToAction("SubCategory");
                 }
                 else
                 {
@@ -54,6 +56,13 @@ namespace CylinderInventoryManagement.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpGet]
+        public ActionResult DeleteSubCate(int id)
+        {
+            this._masters.Delete_SubCategory(Convert.ToInt32(Session["businessId"]), id);
+            return RedirectToAction("SubCategory");
         }
 
         //Category Code

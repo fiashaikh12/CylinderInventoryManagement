@@ -60,7 +60,7 @@
     })
 
 });
-function SweetAlert(message, icon, buttonText) {
+function SweetAlert(message,icon,buttonText) {
     swal({
         title: "",
         text: message,

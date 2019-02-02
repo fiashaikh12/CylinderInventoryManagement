@@ -49,9 +49,27 @@ namespace CIM.BusinessLayer.Repository
             return clsResponse;
         }
 
-        public Task<ClsResponseModel> Delete_SubCategoryAsync(ClsSubCategoryMasterModel clsSubCategoryMaster)
+        public ClsResponseModel Delete_SubCategory(int userId,int subCateId)
         {
-            throw new System.NotImplementedException();
+            ClsResponseModel clsResponse = new ClsResponseModel();
+            var parameters = new DynamicParameters();
+            parameters.Add("@flag", "D");
+            parameters.Add("@SubCategoryid", subCateId);
+            parameters.Add("@UserId", userId);
+            parameters.Add("@IsActive", 0);
+            int afftectedRows = this._dbContext.Execute("USP_SubCategoryMaster", parameters, commandType: CommandType.StoredProcedure);
+            if(afftectedRows > 0){
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Success";
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed";
+            }
+            return clsResponse;
         }
 
         public ClsResponseModel Get_Category()

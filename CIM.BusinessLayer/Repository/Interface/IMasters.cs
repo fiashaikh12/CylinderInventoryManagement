@@ -15,7 +15,7 @@ namespace CIM.BusinessLayer.Repository.Interface
         Task<ClsResponseModel> Delete_Category(int Categoryid);
         ClsResponseModel Get_SubCategory();
         Task <ClsResponseModel> Create_SubCategoryAsync(ClsSubCategoryMasterModel clsSubCategoryMaster);
-        Task<ClsResponseModel> Delete_SubCategoryAsync(ClsSubCategoryMasterModel clsSubCategoryMaster);
+        ClsResponseModel Delete_SubCategory(int userId, int subCateId);
         Task<ClsResponseModel> Update_SubCategoryAsync();
     }
 }
