@@ -173,74 +173,79 @@
 
     </div>
 
-    <div class="box">
-        @Html.Partial("/Views/_ProductDetails.cshtml", (List<CIM.Entities.ClsProductDetailModel>)ViewBag.ProductDetail.Data)
-    </div>
+    <div class="row">
+        <div class="col-xs-12">
 
-    <div class="modal fade" id="modal-default">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                @using (Html.BeginForm("CreateCustomer", "Customer", FormMethod.Post, new { @class = "form-horizontal" }))
-                {
-                    @Html.AntiForgeryToken();
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title text-center">New Customer</h4>
-                    </div>
-                    <div class="modal-body box-body">
-                        <div class="form-group">
-                            <label for="Name" class="col-sm-3 control-label">Name</label>
-                            <div class="col-sm-9">
-                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Full Name" })
-                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="mobilenumber" class="col-sm-3 control-label">Mobile Number</label>
-
-                            <div class="col-sm-9">
-                                @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", placeholder = "Mobile Number" })
-                                @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="mobilenumber" class="col-sm-3 control-label">Company Name</label>
-
-                            <div class="col-sm-9">
-                                @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", placeholder = "Company Name" })
-                                @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Address</label>
-                            <div class="col-sm-9">
-                                @Html.TextAreaFor(model => model.Address, new { @rows = "4", @cols = "50", @class = "form-control", placeholder = "Address" })
-                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="gstnumber" class="col-sm-3 control-label">GST No</label>
-
-                            <div class="col-sm-9">
-                                @Html.TextBoxFor(model => model.GSTNo, new { @class = "form-control", placeholder = "GST No" })
-                                @Html.ValidationMessageFor(model => model.GSTNo, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                }
+            <div class="box">
+                @Html.Partial("/Views/_ProductDetails.cshtml", (List<CIM.Entities.ClsProductDetailModel>)ViewBag.ProductDetail.Data)
             </div>
-            <!-- /.modal-content -->
+
+            </div>
         </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
+            <div class="modal fade" id="modal-default">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        @using (Html.BeginForm("CreateCustomer", "Customer", FormMethod.Post, new { @class = "form-horizontal" }))
+                        {
+                            @Html.AntiForgeryToken();
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title text-center">New Customer</h4>
+                            </div>
+                            <div class="modal-body box-body">
+                                <div class="form-group">
+                                    <label for="Name" class="col-sm-3 control-label">Name</label>
+                                    <div class="col-sm-9">
+                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Full Name" })
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobilenumber" class="col-sm-3 control-label">Mobile Number</label>
+
+                                    <div class="col-sm-9">
+                                        @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", placeholder = "Mobile Number" })
+                                        @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="mobilenumber" class="col-sm-3 control-label">Company Name</label>
+
+                                    <div class="col-sm-9">
+                                        @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", placeholder = "Company Name" })
+                                        @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Address</label>
+                                    <div class="col-sm-9">
+                                        @Html.TextAreaFor(model => model.Address, new { @rows = "4", @cols = "50", @class = "form-control", placeholder = "Address" })
+                                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="gstnumber" class="col-sm-3 control-label">GST No</label>
+
+                                    <div class="col-sm-9">
+                                        @Html.TextBoxFor(model => model.GSTNo, new { @class = "form-control", placeholder = "GST No" })
+                                        @Html.ValidationMessageFor(model => model.GSTNo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        }
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
 </section>
