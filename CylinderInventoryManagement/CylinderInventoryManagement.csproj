@@ -7109,6 +7109,7 @@
     <Content Include="Views\Product\ViewProduct.cshtml" />
     <Content Include="Views\_ProductDetails.cshtml" />
     <Content Include="Views\_SubCatPartial.cshtml" />
+    <Content Include="Views\Customer\PurchasedCylinder.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

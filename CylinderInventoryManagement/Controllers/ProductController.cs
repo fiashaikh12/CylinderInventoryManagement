@@ -84,7 +84,8 @@ namespace CylinderInventoryManagement.Controllers
                 return Json(new { Status = 0 });
             }
         }
-        [HttpGet]//[ActionName("GetAllProduct")]
+
+        [HttpGet]
         public  ActionResult ViewProduct(int businessId)
         {
                 ClsResponseModel<List<ClsProductDetailModel>> clsResponseModel =(ClsResponseModel<List<ClsProductDetailModel>>)this._product.GetAllProduct(businessId);
@@ -99,5 +100,6 @@ namespace CylinderInventoryManagement.Controllers
                 //return Json("");
             }
         }
+
     }
 }

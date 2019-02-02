@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $('#purchaseCustomer').on('click', function () {
+    $('.purchaseCustomer').on('click', function () {
         if ($("#hdncustid").val() != "" && $("#hdncustid").val() != undefined) {
             var userId = parseInt($("#hdncustid").val());
             var depAmount = $(this).closest('tr').find("#item_DepositAmount").val();

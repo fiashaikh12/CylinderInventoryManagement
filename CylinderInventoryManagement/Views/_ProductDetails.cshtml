@@ -1,6 +1,6 @@
 ﻿@model List<CIM.Entities.ClsProductDetailModel>
 <div class="box-header">
-    <h3 class="box-title">Invetory List</h3>
+    <h3 class="box-title">Inventory List</h3>
 </div>
 <!-- /.box-header -->
 <div class="box-body">
@@ -16,7 +16,7 @@
                 <th>Available quantity</th>
                 <th>Deposit amount</th>
                 <th>Purchase quantity</th>
-                <th></th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -30,9 +30,9 @@
                     <td class="quantity">@item.Quantity</td>
                     <td>@item.Price</td>
                     <td>@item.AvailableQuantity</td>
-                    <td>@Html.TextBoxFor(modelItem => item.DepositAmount, new { @class = item.IsDepositAllowed ? "depositAmount" : "disabled depositAmount" })</td>
-                    <td>@Html.TextBoxFor(modelItem => item.PurchaseQuantity, new { @class = "purchaseQuantity" })</td>
-                    <td><a id="purchaseCustomer" class="btn btn-primary">Buy</a></td>
+                    <td>@Html.TextBoxFor(modelItem => item.DepositAmount, new { @class = item.IsDepositAllowed ? "depositAmount form-control" : "disabled depositAmount form-control" })</td>
+                    <td>@Html.TextBoxFor(modelItem => item.PurchaseQuantity, new { @class = "purchaseQuantity form-control" })</td>
+                    <td><a class="btn btn-primary purchaseCustomer">Buy</a></td>
                 </tr>
             }
         </tbody>        

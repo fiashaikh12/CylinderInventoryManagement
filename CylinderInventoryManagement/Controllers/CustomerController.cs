@@ -95,5 +95,12 @@ namespace CylinderInventoryManagement.Controllers
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpGet,ActionName("GetPurchasedCylinder")]
+        public ActionResult PurchasedCylinder(int userId)
+        {
+            ClsResponseModel<List<ClsProductDetailModel>> cylinderResponse = this._product.GetPurchasedCylinder(Convert.ToInt32(Session["businessid"]), userId) as ClsResponseModel<List<ClsProductDetailModel>>;
+            return View(cylinderResponse.Data);
+        }
     }
 }

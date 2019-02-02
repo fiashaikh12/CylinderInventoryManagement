@@ -12,6 +12,7 @@ namespace CIM.Entities
         public int UserId { get; set; }
         [Display(Name = "Product Id")]
         public int ProductId { get; set; }
+        public int SubCategoryId { get; set; }
         [Display(Name ="Category")]
         public string CategoryName { get; set; }
         [Display(Name = "Sub category")]

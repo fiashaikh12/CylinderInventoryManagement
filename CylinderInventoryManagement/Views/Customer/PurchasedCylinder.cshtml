@@ -1,0 +1,92 @@
+﻿@model IEnumerable<CIM.Entities.ClsProductDetailModel>
+
+@{
+    ViewBag.Title = "PurchasedCylinder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table  id="example1" class="table table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubCategoryId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubCategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDepositAllowed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsExchangeAllowed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AvailableQuantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepositAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PurchaseQuantity)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubCategoryId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubCategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDepositAllowed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsExchangeAllowed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AvailableQuantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepositAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PurchaseQuantity)
+        </td>
+        <td>
+            @Html.ActionLink("Return", "Edit", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

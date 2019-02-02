@@ -96,5 +96,27 @@ namespace CIM.BusinessLayer.Repository
             }
             return clsResponse;
         }
+
+        public ClsResponseModel GetPurchasedCylinder(int businessId, int userId)
+        {
+            ClsResponseModel<List<ClsProductDetailModel>> clsResponse = new ClsResponseModel<List<ClsProductDetailModel>>();
+            var parameters = new DynamicParameters();
+            parameters.Add("@Businessid", businessId);
+            List<ClsProductDetailModel> clsProducts = this._dbContext.Query<ClsProductDetailModel>("SP_CustomerInvetoryList", parameters, commandType: CommandType.StoredProcedure).ToList();
+            if (clsProducts.Count > 0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Success";
+                clsResponse.Data = clsProducts;
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed";
+            }
+            return clsResponse;
+        }
     }
 }
