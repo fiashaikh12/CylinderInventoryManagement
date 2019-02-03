@@ -102,6 +102,7 @@ namespace CIM.BusinessLayer.Repository
             ClsResponseModel<List<ClsProductDetailModel>> clsResponse = new ClsResponseModel<List<ClsProductDetailModel>>();
             var parameters = new DynamicParameters();
             parameters.Add("@Businessid", businessId);
+            parameters.Add("@UserId", userId);
             List<ClsProductDetailModel> clsProducts = this._dbContext.Query<ClsProductDetailModel>("SP_CustomerInvetoryList", parameters, commandType: CommandType.StoredProcedure).ToList();
             if (clsProducts.Count > 0)
             {

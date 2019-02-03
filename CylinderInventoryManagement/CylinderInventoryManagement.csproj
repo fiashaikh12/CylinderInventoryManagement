@@ -7109,7 +7109,7 @@
     <Content Include="Views\Product\ViewProduct.cshtml" />
     <Content Include="Views\_ProductDetails.cshtml" />
     <Content Include="Views\_SubCatPartial.cshtml" />
-    <Content Include="Views\Customer\PurchasedCylinder.cshtml" />
+    <Content Include="Views\_PurchasedCylinder.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -7154,7 +7154,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1645</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1645/</IISUrl>
+          <IISUrl>http://localhost:16450/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

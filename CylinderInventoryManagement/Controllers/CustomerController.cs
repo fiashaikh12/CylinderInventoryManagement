@@ -96,11 +96,11 @@ namespace CylinderInventoryManagement.Controllers
             }
         }
 
-        [HttpGet,ActionName("GetPurchasedCylinder")]
+        [HttpPost,ActionName("GetPurchasedCylinder")]
         public ActionResult PurchasedCylinder(int userId)
         {
-            ClsResponseModel<List<ClsProductDetailModel>> cylinderResponse = this._product.GetPurchasedCylinder(Convert.ToInt32(Session["businessid"]), userId) as ClsResponseModel<List<ClsProductDetailModel>>;
-            return View(cylinderResponse.Data);
+            ViewBag.PurchasedCylinder = this._product.GetPurchasedCylinder(Convert.ToInt32(Session["businessid"]), userId) as ClsResponseModel<List<ClsProductDetailModel>>;
+            return PartialView("/Views/_PurchasedCylinder.cshtml", ViewBag.PurchasedCylinder.Data);
         }
     }
 }

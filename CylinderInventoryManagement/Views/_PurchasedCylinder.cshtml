@@ -7,15 +7,6 @@
 <table  id="example1" class="table table-bordered table-hover">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SubCategoryId)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.CategoryName)
         </th>
         <th>
@@ -48,15 +39,6 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubCategoryId)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.CategoryName)
         </td>
         <td>
@@ -84,7 +66,7 @@
             @Html.DisplayFor(modelItem => item.PurchaseQuantity)
         </td>
         <td>
-            @Html.ActionLink("Return", "Edit", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Return", "ReturnCylinder", new {  id=item.UserId })
         </td>
     </tr>
 }

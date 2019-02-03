@@ -58,9 +58,21 @@
         }
 
     })
-
+    //$(document).on('change', '#userid', function () {
+    //    if ($('#hdncustid').val()) {
+    //        $.ajax({
+    //            url: "/Customer/GetPurchasedCylinder",
+    //            type: "POST",
+    //            dataType: "json",
+    //            data: { userId: $("#hdncustid").val() },
+    //            success: function (data) {
+    //                console.log(data)
+    //            }
+    //        });
+    //    }
+    //});
 });
-function SweetAlert(message,icon,buttonText) {
+function SweetAlert(message, icon, buttonText) {
     swal({
         title: "",
         text: message,
@@ -71,15 +83,7 @@ function SweetAlert(message,icon,buttonText) {
 
 
 $(function () {
-    //var availableTags = [
-    //    "ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++",
-    //    "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran",
-    //    "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl",
-    //    "PHP", "Python", "Ruby", "Scala", "Scheme"
-    //];
-
     $("#userid").autocomplete({
-        //source: availableTags
         source: function (request, response) {
             //debugger;
             $.ajax({
@@ -87,17 +91,13 @@ $(function () {
                 type: "POST",
                 dataType: "json",
                 data: { searchText: request.term },
-                success: function (data) {
-                    response($.map(data, function (item) {
-                        //original code
-                        //return { label: item.FullName, value: item.FullName, id: item.TagId };
-                        //updated code
-                        return { label: item.label,value: item.id };
+                success: function (data) {                   
+                    response($.map(data, function (item) {     
+                        return { label: item.label, value: item.id };
                     }));
                 }
 
             });
-            //alert(response);
         },
         select: function (event, ui) {
             event.preventDefault();
@@ -105,9 +105,15 @@ $(function () {
             var value = ui.item.value;
             $("#hdncustid").val(value);
             $("#userid").val(label);
-            
-            //store in session
-            //alert(value);
+            $.ajax({
+                url: "/Customer/GetPurchasedCylinder",
+                type: "POST",
+                dataType: "json",
+                data: { userId: value },
+                success: function (data) {
+                    console.log(data)
+                }
+            });
         },
         messages: {
             noResults: "", results: ""
