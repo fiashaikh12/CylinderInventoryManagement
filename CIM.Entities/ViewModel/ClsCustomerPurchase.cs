@@ -9,6 +9,7 @@ namespace CIM.Entities
     public class ClsCustomerPurchase
     {
         public int UserId { get; set; }
+        public int ProductId { get; set; }
         public bool IsDepositGiven { get; set; }
         public bool IsDepositReturn { get; set; }
         public double DepositAmount { get; set; }

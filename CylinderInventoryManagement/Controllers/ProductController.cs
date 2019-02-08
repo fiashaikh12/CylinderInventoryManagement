@@ -101,5 +101,19 @@ namespace CylinderInventoryManagement.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<ActionResult> CustomerReturn(ClsCustomerPurchase clsCustomerReturn)
+        {
+            clsCustomerReturn.BusinessId = Convert.ToInt32(Session["businessId"]);
+            ClsResponseModel purchaseResponse = await this._product.CustomerReturnAsync(clsCustomerReturn);
+            if (purchaseResponse.IsSuccess)
+            {
+                return Json(new { Status = 1 });
+            }
+            else
+            {
+                return Json(new { Status = 0 });
+            }
+        }
     }
 }

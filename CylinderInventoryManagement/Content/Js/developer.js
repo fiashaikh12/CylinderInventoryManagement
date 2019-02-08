@@ -2,8 +2,8 @@
     $('.purchaseCustomer').on('click', function () {
         if ($("#hdncustid").val() != "" && $("#hdncustid").val() != undefined) {
             var userId = parseInt($("#hdncustid").val());
-            var depAmount = $(this).closest('tr').find("#item_DepositAmount").val();
-            var purQuantity = parseInt($(this).closest('tr').find("#item_PurchaseQuantity").val());
+            var depAmount = $(this).closest('tr').find(".depositAmount").val();
+            var purQuantity = parseInt($(this).closest('tr').find(".purchaseQuantity").val());
             var quantity = parseInt($(this).closest('tr').find('td:eq(4)').text());
             var category = $(this).closest('tr').find('td:eq(0)').text();
             var subcategory = $(this).closest('tr').find('td:eq(1)').text();
@@ -58,19 +58,44 @@
         }
 
     })
-    //$(document).on('change', '#userid', function () {
-    //    if ($('#hdncustid').val()) {
-    //        $.ajax({
-    //            url: "/Customer/GetPurchasedCylinder",
-    //            type: "POST",
-    //            dataType: "json",
-    //            data: { userId: $("#hdncustid").val() },
-    //            success: function (data) {
-    //                console.log(data)
-    //            }
-    //        });
-    //    }
-    //});
+    $(document).on('click', '.return-cylinder', function () {
+        if ($("#hdncustid").val() != "" && $("#hdncustid").val() != undefined) {
+            var userId = parseInt($("#hdncustid").val());
+            var productId = parseInt($('#item_ProductId').val());
+            var depAmount = $(this).closest('tr').find(".depositAmount").val();
+            var purQuantity = parseInt($(this).closest('tr').find(".purchaseQuantity").val());
+            var quantity = parseInt($(this).closest('tr').find('td:eq(4)').text());
+
+            var obj = {};
+            obj.DepositAmount = depAmount;
+            obj.ProductId = productId;
+            obj.Quantity = purQuantity;
+            obj.UserId = userId;
+            $.ajax({
+                type: "POST",
+                url: "/Product/CustomerReturn",
+                data: JSON.stringify({ clsCustomerReturn: obj }),
+                contentType: "application/json; charset=utf-8",
+                async: true,
+                dataType: "json",
+                success: function (response) {
+                    if (response.Status == 1) {
+                        SweetAlert("Cylinder returned successfull", "success", "OK");
+                    }
+                    else {
+                        SweetAlert("Somwthing went wrong", "error", "OK");
+                    }
+                },
+                failure: function (response) {
+                    console.log(response.responseText);
+                },
+                error: function (response) {
+                    console.log(response.responseText);
+                }
+            });
+        }
+        
+    });
 });
 function SweetAlert(message, icon, buttonText) {
     swal({
@@ -107,11 +132,12 @@ $(function () {
             $("#userid").val(label);
             $.ajax({
                 url: "/Customer/GetPurchasedCylinder",
-                type: "POST",
-                dataType: "json",
+                type: "GET",
+                contentType: 'application/html;charset=utf-8',
+                dataType: "html",
                 data: { userId: value },
                 success: function (data) {
-                    console.log(data)
+                    $('#purchased-cylinder').html(data);
                 }
             });
         },
