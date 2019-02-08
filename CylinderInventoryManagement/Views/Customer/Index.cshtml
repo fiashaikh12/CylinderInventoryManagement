@@ -18,9 +18,6 @@
     .example-modal .modal {
         background: transparent !important;
     }
-
-
-
     .autocomplete {
         position: relative !important;
         display: inline-block !important;
@@ -73,53 +70,35 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-
-
-
-                    @*<div class="form-group">
-
-                            <div class="col-md-12">
-                                @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
-                            </div>
-                        </div>*@
                     <div class="form-group">
-                        @*<label>Search Customer</label>*@
                         <input class="form-control autocomplete" id="userid" placeholder="Search Customer" />
                         <input type="hidden" id="hdncustid" name="custId" value="">
-                        @*@Html.DropDownListFor(model => model.UserId, ViewBag.Customer as List<SelectListItem>, "Select customer", new { @class = "form-control" })*@
-                        @*<input type="text" class="searchCustomer form-control" id="searchCustomer" placeholder="Search......"/>*@
                     </div>
-                    <br />
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
                         Add Customer
                     </button>
                 </div>
             </div>
-            <!-- /.row -->
+            <br />
+            <div class="row customer-cylinder hidden" >
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div id="purchased-cylinder">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-
     </div>
-
     <div class="row">
         <div class="col-xs-12">
-
             <div class="box">
                 @Html.Partial("/Views/_ProductDetails.cshtml", (List<CIM.Entities.ClsProductDetailModel>)ViewBag.ProductDetail.Data)
             </div>
 
         </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-
-            <div class="box">
-                <div id="purchased-cylinder">
-                    
-                </div>
-            </div>
-
-        </div>
-    </div>
+    </div> 
     <div class="modal fade" id="modal-default">
         <div class="modal-dialog">
             <div class="modal-content">

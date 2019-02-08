@@ -7100,7 +7100,7 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
-    <Content Include="Views\Master\SubCategory.cshtml" />
+    <Content Include="Views\Master\AddSubCategory.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Master\AddCategory.cshtml" />
@@ -7110,6 +7110,7 @@
     <Content Include="Views\_ProductDetails.cshtml" />
     <Content Include="Views\_SubCatPartial.cshtml" />
     <Content Include="Views\_PurchasedCylinder.cshtml" />
+    <Content Include="Views\Master\SubCategoryDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

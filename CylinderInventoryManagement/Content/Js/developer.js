@@ -83,7 +83,7 @@
                         SweetAlert("Cylinder returned successfull", "success", "OK");
                     }
                     else {
-                        SweetAlert("Somwthing went wrong", "error", "OK");
+                        SweetAlert("Something went wrong", "error", "OK");
                     }
                 },
                 failure: function (response) {
@@ -137,6 +137,7 @@ $(function () {
                 dataType: "html",
                 data: { userId: value },
                 success: function (data) {
+                    $('.customer-cylinder').removeClass('hidden');
                     $('#purchased-cylinder').html(data);
                 }
             });
