@@ -25,9 +25,10 @@ namespace CylinderInventoryManagement.Controllers
             this._product = new ProductRepository();
             ViewBag.ProductDetail = this._product.GetAllProduct(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]));
             ClsResponseModel<List<ClsCustomerModel>> customerRes = (ClsResponseModel<List<ClsCustomerModel>>)this._user.GetCustomerDetails();
-            ViewBag.Customer = customerRes.Data.Select(y => new SelectListItem {
-                Text=y.Name,
-                Value=y.UserId
+            ViewBag.Customer = customerRes.Data.Select(y => new SelectListItem
+            {
+                Text = y.Name,
+                Value = y.UserId
             }).ToList();
         }
         // GET: Customer
@@ -60,7 +61,7 @@ namespace CylinderInventoryManagement.Controllers
                 return View();
             }
         }
-        
+
 
         public ActionResult CheckExistingMobileNumber(string mobileNumber)
         {
@@ -78,12 +79,12 @@ namespace CylinderInventoryManagement.Controllers
         }
         [HttpPost]
         public ActionResult SearchCustomerAuto(string searchText)
-       {
+        {
             if (searchText != null)
             {
                 ClsResponseModel<List<ClsCustomerModel>> customerResponse = (ClsResponseModel<List<ClsCustomerModel>>)this._user.GetCustomerDetails();
                 var customers = (from customer in customerResponse.Data
-                                 where customer.Name.Contains(searchText) 
+                                 where customer.Name.Contains(searchText)
                                  //& customer.BusinessId.Equals(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]))
                                  //& customer.IsActive.Equals(true)
                                  //select new { customer.UserId});
@@ -96,11 +97,39 @@ namespace CylinderInventoryManagement.Controllers
             }
         }
 
-        [HttpPost,ActionName("GetPurchasedCylinder")]
+        //[HttpPost, ActionName("GetPurchasedCylinder")]
+        //public ActionResult PurchasedCylinder(int userId)
+        //{
+        //    ViewBag.PurchasedCylinder = this._product.GetPurchasedCylinder(Convert.ToInt32(Session["businessid"]), userId) as ClsResponseModel<List<ClsProductDetailModel>>;
+        //    return PartialView("/Views/_PurchasedCylinder.cshtml", ViewBag.PurchasedCylinder.Data);
+        //}
+
+
+        [HttpPost, ActionName("GetPurchasedCylinder")]
         public ActionResult PurchasedCylinder(int userId)
         {
-            ViewBag.PurchasedCylinder = this._product.GetPurchasedCylinder(Convert.ToInt32(Session["businessid"]), userId) as ClsResponseModel<List<ClsProductDetailModel>>;
+            ViewBag.PurchasedCylinder = this._product.GetAllProductandHoldingStock(Convert.ToInt32(Session["businessid"]), userId) as ClsResponseModel<List<ClsProductDetailModel>>;
             return PartialView("/Views/_PurchasedCylinder.cshtml", ViewBag.PurchasedCylinder.Data);
+        }
+
+        public ActionResult CustomerReport()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SearchCustomerReport(CustomerReport CustomerReport)
+        {
+            try
+            {
+                ClsResponseModel<List<CustomerReport>> customerResponse = (ClsResponseModel<List<CustomerReport>>)this._user.GetCustomerReport(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]),CustomerReport.UserId, Convert.ToDateTime(CustomerReport.fromdate), Convert.ToDateTime(CustomerReport.todate));
+                return Json(customerResponse, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                return Json(CustomerReport, JsonRequestBehavior.AllowGet);
+            }
+            
         }
     }
 }

@@ -119,5 +119,63 @@ namespace CIM.BusinessLayer.Repository
             }
             return clsResponse;
         }
+
+
+        public ClsResponseModel GetAllProductandHoldingStock(int businessId,int UserId)
+        {
+            //List<ClsProductDetailModel> ClsProductDetail = new List<ClsProductDetailModel>();
+            //List<ClsUserHoldingStockModel> ClsUserHoldingStock = new List<ClsUserHoldingStockModel>();
+            var parameters = new DynamicParameters();
+            parameters.Add("@Businessid", businessId);
+            List<ClsProductDetailModel> ClsProductDetail = this._dbContext.Query<ClsProductDetailModel>("SP_ProductInvetoryList", parameters, commandType: CommandType.StoredProcedure).ToList();
+            ClsResponseModel<List<ClsProductDetailModel>> clsResponse = new ClsResponseModel<List<ClsProductDetailModel>>();
+            if (ClsProductDetail.Count > 0)
+            {
+                try
+                {
+                    var Parameters = new DynamicParameters();
+                    parameters.Add("@UserId", UserId);
+                    List<ClsUserHoldingStockModel> ClsUserHoldingStock = this._dbContext.Query<ClsUserHoldingStockModel>("SP_CustomerHoldingStock", parameters, commandType: CommandType.StoredProcedure).ToList();
+                    for (int i = 0; i < ClsProductDetail.Count; i++)
+                    {
+                        if (ClsUserHoldingStock.Count > 0)
+                        {
+                            int flag = 0;
+                            for (int j = 0; j < ClsUserHoldingStock.Count; j++)
+                            {
+                                if (ClsUserHoldingStock[j].ProductId == ClsProductDetail[i].ProductId)
+                                {
+                                    ClsProductDetail[i].HoldingStock = ClsUserHoldingStock[j].HoldingStock;
+                                    flag = 1;
+                                    break;
+
+                                }
+                            }
+
+                            if (flag == 0)
+                            {
+                                ClsProductDetail[i].HoldingStock = 0;
+                            }
+                        }
+                        else
+                        {
+                            ClsProductDetail[i].HoldingStock = 0;
+                        }
+                    }
+                }
+                catch (Exception ex) { }
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Success";
+                clsResponse.Data = ClsProductDetail;
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed";
+            }
+            return clsResponse;
+        }
     }
 }

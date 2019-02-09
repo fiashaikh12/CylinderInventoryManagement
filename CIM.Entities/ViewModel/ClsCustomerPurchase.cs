@@ -17,4 +17,10 @@ namespace CIM.Entities
         public int Quantity { get; set; }
         public int BusinessId { get; set; }
     }
+
+    public class CustomerReport: ClsCustomerPurchase
+    {
+        public string fromdate { get; set; }
+        public string todate { get; set; }
+    }
 }

@@ -70,12 +70,15 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MAIN NAVIGATION</li>
                     <li class="active treeview">
-                        <a href="@Url.Action("Index", "Dashboard")">
-                            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="@Url.Action("Index", "Dashboard")">
+                                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                                </a>
+                            </li>
 
 
-                        </a>
-                    </li>
+                        </ul>
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-dashboard"></i> <span>Master</span>
@@ -108,7 +111,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class=""><a href="@Url.Action("Index", "Customer")"><i class="fa fa-circle-o"></i>Search Customer</a></li>
+                            <li class=""><a href="@Url.Action("Index", "Customer")"><i class="fa fa-circle-o"></i>Customer Ledger</a></li>
+                            <li class=""><a href="@Url.Action("CustomerReport", "Customer")"><i class="fa fa-circle-o"></i>Customer Report</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -161,8 +165,10 @@
     <!-- jQuery Knob Chart -->
     <script src="~/bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
     <!-- daterangepicker -->
+    <script src="../../bower_components/moment/min/moment.min.js"></script>
+    <script src="~/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
     @*<script src="~/bower_components/moment/min/moment.min.js"></script>
-    <script src="~/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>*@
+    *@
     <!-- datepicker -->
     @*<script src="~/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>*@
     <!-- Bootstrap WYSIHTML5 -->
@@ -174,8 +180,8 @@
 
     <!-- InputMask -->
     @*<script src="~/plugins/input-mask/jquery.inputmask.js"></script>
-    <script src="~/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-    <script src="~/plugins/input-mask/jquery.inputmask.extensions.js"></script>*@
+        <script src="~/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+        <script src="~/plugins/input-mask/jquery.inputmask.extensions.js"></script>*@
     <!-- iCheck 1.0.1 -->
     @*<script src="~/plugins/iCheck/icheck.min.js"></script>*@
     <!-- AdminLTE App -->
@@ -208,11 +214,11 @@
             $('.select2').select2()
 
             //Datemask dd/mm/yyyy
-            $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+            //$('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
             //Datemask2 mm/dd/yyyy
-            $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+            //$('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
             //Money Euro
-            $('[data-mask]').inputmask()
+            //$('[data-mask]').inputmask()
 
             //Date range picker
             $('#reservation').daterangepicker()

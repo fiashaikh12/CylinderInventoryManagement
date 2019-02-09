@@ -92,5 +92,30 @@ namespace BusinessLayer.Repository
             }
             return clsResponse;
         }
+
+        public ClsResponseModel GetCustomerReport(int Businessid,int Userid,DateTime fromdate,DateTime todate)
+        {
+            ClsResponseModel<List<CustomerReport>> clsResponse = new ClsResponseModel<List<CustomerReport>>();
+            var parameters = new DynamicParameters();
+            parameters.Add("@Businessid", Businessid);
+            parameters.Add("@Userid", Userid);
+            parameters.Add("@fromdate", fromdate);
+            parameters.Add("@todate", todate);
+            List<CustomerReport> clsProducts = this._dbContext.Query<CustomerReport>("SP_CustomerReport", parameters, commandType: CommandType.StoredProcedure).ToList();
+            if (clsProducts.Count > 0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Success";
+                clsResponse.Data = clsProducts;
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed";
+            }
+            return clsResponse;
+        }
     }
 }

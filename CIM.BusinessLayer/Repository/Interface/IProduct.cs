@@ -13,5 +13,6 @@ namespace CIM.BusinessLayer.Repository.Interface
         ClsResponseModel GetAllProduct(int businessId);
         Task<ClsResponseModel> CustomerPurchaseAsync(ClsCustomerPurchase clsCustomer);
         ClsResponseModel GetPurchasedCylinder(int businessId,int userId);
+        ClsResponseModel GetAllProductandHoldingStock(int businessId, int UserId);
     }
 }

@@ -71,6 +71,39 @@
     //        });
     //    }
     //});
+
+
+    $('#btnsubmitreport').click(function () {
+        //alert($('#daterange-btn').text().trim());
+        //var temp = $('#daterange-btn').text().trim().split('-');
+        if ($("#hdncustid").val() != "" && $("#hdncustid").val() != undefined) {
+            if ($('#daterange-btn').text().trim() != 'Date range picker') {
+                var temp = $('#daterange-btn').text().trim().split('-');
+                var obj = {};
+                obj.fromdate = temp[0].trim();
+                obj.todate = temp[1].trim();
+                obj.UserId = parseInt($("#hdncustid").val());
+                $.ajax({
+                    url: "/Customer/SearchCustomerReport",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    async: true,
+                    data: JSON.stringify({ CustomerReport: obj }),
+                    success: function (data) {
+                        console.log(data);
+                    }
+
+                });
+            }
+            else {
+                SweetAlert("Select date", "warning", "OK");
+            }
+        }
+        else {
+            $("#userid").empty();
+            SweetAlert("Search customer first", "warning", "OK");
+        }
+    });
 });
 function SweetAlert(message, icon, buttonText) {
     swal({
@@ -120,3 +153,5 @@ $(function () {
         }
     });
 });
+
+

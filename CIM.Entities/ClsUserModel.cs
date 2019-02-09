@@ -35,4 +35,12 @@ namespace CIM.Entities
         public string Password { get; set; }
         public bool RememberMe { get; set; }
     }
+
+
+    public class ClsUserHoldingStockModel
+    {
+        public int UserId { get; set; }
+        public int ProductId { get; set; }
+        public int HoldingStock { get; set; }
+    }
 }
