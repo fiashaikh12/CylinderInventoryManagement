@@ -2,8 +2,8 @@
     $('.purchaseCustomer').on('click', function () {
         if ($("#hdncustid").val() != "" && $("#hdncustid").val() != undefined) {
             var userId = parseInt($("#hdncustid").val());
-            var depAmount = $(this).closest('tr').find("#item_DepositAmount").val();
-            var purQuantity = parseInt($(this).closest('tr').find("#item_PurchaseQuantity").val());
+            var depAmount = $(this).closest('tr').find(".depositAmount").val();
+            var purQuantity = parseInt($(this).closest('tr').find(".purchaseQuantity").val());
             var quantity = parseInt($(this).closest('tr').find('td:eq(4)').text());
             var category = $(this).closest('tr').find('td:eq(0)').text();
             var subcategory = $(this).closest('tr').find('td:eq(1)').text();
@@ -140,11 +140,13 @@ $(function () {
             $("#userid").val(label);
             $.ajax({
                 url: "/Customer/GetPurchasedCylinder",
-                type: "POST",
-                dataType: "json",
+                type: "GET",
+                contentType: 'application/html;charset=utf-8',
+                dataType: "html",
                 data: { userId: value },
                 success: function (data) {
-                    console.log(data)
+                    $('.customer-cylinder').removeClass('hidden');
+                    $('#purchased-cylinder').html(data);
                 }
             });
         },

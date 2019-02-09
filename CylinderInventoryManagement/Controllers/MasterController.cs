@@ -29,13 +29,18 @@ namespace CylinderInventoryManagement.Controllers
              }
            ).ToList();
         }
-        // GET: Master
-        public ActionResult SubCategory()
+        [HttpGet]
+        public ActionResult SubCategoryDetails()
         {
             ViewBag.SubCateResponse = this._masters.Get_SubCategory() as ClsResponseModel<List<ClsSubCategoryMasterModel>>;
             return View();
         }
-        [HttpPost,ActionName("SubCategory")]
+        // GET: Master
+        public ActionResult AddSubCategory()
+        {
+            return View();
+        }
+        [HttpPost]
         public async Task<ActionResult> CreateSubCategory(ClsSubCategoryMasterModel clsSubCategoryMaster)
         {
             if (ModelState.IsValid)
@@ -43,12 +48,12 @@ namespace CylinderInventoryManagement.Controllers
                 ClsResponseModel response = await this._masters.Create_SubCategoryAsync(clsSubCategoryMaster);
                 if (response.IsSuccess)
                 {
-                    TempData["ErrorMsg"] = response.Message;
+                    ViewData["ErrorMsg"] = response.Message;
                     return RedirectToAction("SubCategory");
                 }
                 else
                 {
-                    TempData["ErrorMsg"] = response.Message;
+                    ViewData["ErrorMsg"] = response.Message;
                     return View();
                 }
             }

@@ -4,38 +4,6 @@
         ViewBag.Title = "Search Customer";
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
-
-@*<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>*@
-
-@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
-
-@*<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/css/bootstrap.css" rel="stylesheet" />
-<link rel="stylesheet" href="~/bower_components/bootstrap/dist/css/bootstrap.min.css">
-<script src="~/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="~/bower_components/jquery-ui/jquery-ui.min.js"></script>
-<script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>*@
-
-@*<div class="container">
-
-        <div class="form-group">
-            <label>Languages</label>
-
-        </div>
-
-        <div class="form-group">
-            <label>Another Field</label>
-            <input class="form-control">
-        </div>
-
-    </div>*@
 <style>
     .example-modal .modal {
         position: relative;
@@ -50,9 +18,6 @@
     .example-modal .modal {
         background: transparent !important;
     }
-
-
-
     .autocomplete {
         position: relative !important;
         display: inline-block !important;
@@ -66,14 +31,14 @@
         border-top: none !important;
         z-index: 1100 !important;
         /*position the autocomplete items to be the same width as the container:*/
-        top: 27% !important;
-        left: 571px !important;
+        top: 26% !important;
+        left: 575px !important;
         right: 0 !important;
-        width:607px !important;
+        width:615px !important;
     }
 
         .ui-autocomplete li {
-            padding: 10px !important;
+            padding: 8px !important;
             cursor: pointer !important;
             background-color: #fff !important;
             border-bottom: 1px solid #d4d4d4 !important;
@@ -90,49 +55,6 @@
         color: #ffffff;
     }
 
-    /*.ui-autocomplete {
-        position: absolute;
-        cursor: default;
-        z-index: 1001 !important
-    }
-
-    .ui-autocomplete {
-        width: 1px;
-    }
-    .ui-menu {
-        list-style: none;
-        padding: 2px;
-        margin: 0;
-        display: block;
-        float: left;
-    }
-
-        .ui-menu .ui-menu {
-            margin-top: -3px;
-        }
-
-        .ui-menu .ui-menu-item {
-            margin: 0;
-            padding: 0;
-            zoom: 1;
-            float: left;
-            clear: left;
-            width: 100%;
-        }
-
-            .ui-menu .ui-menu-item a {
-                text-decoration: none;
-                display: block;
-                padding: .2em .4em;
-                line-height: 1.5;
-                zoom: 1;
-            }
-
-                .ui-menu .ui-menu-item a.ui-state-hover,
-                .ui-menu .ui-menu-item a.ui-state-active {
-                    font-weight: normal;
-                    margin: -1px;
-                }*/
 </style>
 <!-- Main content -->
 <section class="content">
@@ -148,54 +70,35 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-
-
-
-                    @*<div class="form-group">
-
-                            <div class="col-md-12">
-                                @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
-                            </div>
-                        </div>*@
                     <div class="form-group">
-                        @*<label>Search Customer</label>*@
                         <input class="form-control autocomplete" id="userid" placeholder="Search Customer" />
                         <input type="hidden" id="hdncustid" name="custId" value="">
-                        @*@Html.DropDownListFor(model => model.UserId, ViewBag.Customer as List<SelectListItem>, "Select customer", new { @class = "form-control" })*@
-                        @*<input type="text" class="searchCustomer form-control" id="searchCustomer" placeholder="Search......"/>*@
                     </div>
-                    <br />
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
                         Add Customer
                     </button>
                 </div>
             </div>
-            <!-- /.row -->
+            <br />
+            <div class="row customer-cylinder hidden" >
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div id="purchased-cylinder">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-
     </div>
-
     <div class="row">
         <div class="col-xs-12">
-
             <div class="box">
                 @Html.Partial("/Views/_ProductDetails.cshtml", (List<CIM.Entities.ClsProductDetailModel>)ViewBag.ProductDetail.Data)
             </div>
 
         </div>
-    </div>
-    @if (ViewBag.PurchasedCylinder != null)
-    {
-    <div class="row">
-        <div class="col-xs-12">
-
-            <div class="box">
-                @Html.RenderPartial("/Views/_PurchasedCylinder.cshtml")
-            </div>
-
-        </div>
-    </div>
-    }
+    </div> 
     <div class="modal fade" id="modal-default">
         <div class="modal-dialog">
             <div class="modal-content">

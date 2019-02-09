@@ -8,30 +8,32 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <div class="box box-info">
-
-                    @using (Html.BeginForm("SubCategory", "Master", FormMethod.Post, new { htmlAttributes = new { @class = "form-horizontal" } }))
+                    <div class="box-header">
+                        <h3 class="box-title">Add SubCategory</h3>
+                    </div>
+                    @using (Html.BeginForm("CreateSubCategory", "Master", FormMethod.Post, new { htmlAttributes = new { @class = "form-horizontal" } }))
                     {
                         @Html.AntiForgeryToken()
+                        {
+                            string cssClass = "";
+                            if (ViewData["ErrorMsg"] != null)
                             {
-                                string cssClass = "";
-                                if (TempData["ErrorMsg"] != null)
-                                {
 
-                                    if (TempData["ErrorMsg"].ToString().Contains("Success"))
-                                    {
-                                        cssClass = "success";
-                                    }
-                                    else if (TempData["ErrorMsg"].ToString().Contains("Error"))
-                                    {
-                                        cssClass = "danger";
-                                    }
-                                    <div class="col-md-12 callout callout-@cssClass">
-                                        <p class="text-center">
-                                            @TempData["ErrorMsg"]
-                                        </p>
-                                    </div>
+                                if (ViewData["ErrorMsg"].ToString().Contains("Success"))
+                                {
+                                    cssClass = "success";
                                 }
+                                else if (ViewData["ErrorMsg"].ToString().Contains("Error"))
+                                {
+                                    cssClass = "danger";
+                                }
+                                <div class="col-md-12 callout callout-@cssClass">
+                                    <p class="text-center">
+                                        @ViewData["ErrorMsg"]
+                                    </p>
+                                </div>
                             }
+                        }
                         <div class="box-body">
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="form-group">
@@ -56,10 +58,5 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            @Html.Partial("/Views/_SubCatPartial.cshtml", ViewBag.SubCateResponse.Data as List<CIM.Entities.ClsSubCategoryMasterModel>)
-        </div>
-    </div>
+    </div>  
 </section>

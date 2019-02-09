@@ -75,6 +75,32 @@ namespace CIM.BusinessLayer.Repository
             return clsResponse;
         }
 
+        public async Task<ClsResponseModel> CustomerReturnAsync(ClsCustomerPurchase clsCustomer)
+        {
+            ClsResponseModel clsResponse = new ClsResponseModel();
+            var parameters = new DynamicParameters();
+            parameters.Add("@UserId", clsCustomer.UserId);
+            parameters.Add("@DepositReturnAmount", clsCustomer.DepositAmount);
+            parameters.Add("@Createdby", clsCustomer.BusinessId);
+            parameters.Add("@Productid", clsCustomer.ProductId);
+            parameters.Add("@Quantity", clsCustomer.Quantity);
+            parameters.Add("@Businessid", clsCustomer.BusinessId);
+            int returnValue = await this._dbContext.ExecuteAsync("USP_Custreturn", parameters, commandType: CommandType.StoredProcedure);
+            if (returnValue > 0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Purchase successfully.";
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Purchase failed";
+            }
+            return clsResponse;
+        }
+
         public ClsResponseModel GetAllProduct(int businessId)
         {
             ClsResponseModel<List<ClsProductDetailModel>> clsResponse = new ClsResponseModel<List<ClsProductDetailModel>>();
