@@ -18,12 +18,13 @@ namespace CylinderInventoryManagement.Controllers
         {
             _user = new UserRepository();   
         }
-        // GET: User
+        [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
-        [HttpPost,ValidateAntiForgeryToken]
+
+        [AllowAnonymous,HttpPost,ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(ClsUserLoginModel clsUserLoginModel)
         {
             if (ModelState.IsValid)

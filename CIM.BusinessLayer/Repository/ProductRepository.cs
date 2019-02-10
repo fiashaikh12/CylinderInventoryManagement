@@ -160,8 +160,8 @@ namespace CIM.BusinessLayer.Repository
                 try
                 {
                     var Parameters = new DynamicParameters();
-                    parameters.Add("@UserId", UserId);
-                    List<ClsUserHoldingStockModel> ClsUserHoldingStock = this._dbContext.Query<ClsUserHoldingStockModel>("SP_CustomerHoldingStock", parameters, commandType: CommandType.StoredProcedure).ToList();
+                    Parameters.Add("@UserId", UserId);
+                    List<ClsUserHoldingStockModel> ClsUserHoldingStock = this._dbContext.Query<ClsUserHoldingStockModel>("SP_CustomerHoldingStock", Parameters, commandType: CommandType.StoredProcedure).ToList();
                     for (int i = 0; i < ClsProductDetail.Count; i++)
                     {
                         if (ClsUserHoldingStock.Count > 0)

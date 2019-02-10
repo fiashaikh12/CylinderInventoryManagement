@@ -80,25 +80,45 @@
                 </div>
             </div>
             <br />
-            <div class="row customer-cylinder hidden" >
-                <div class="col-xs-12">
-                    <div class="box">
-                        <div id="purchased-cylinder">
-                        </div>
+            <div class="customer-cylinder hidden validate-form">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Challan Number</label>
+                        <input type="text" class="form-control textbox" name="ChallanNumber" id="ChallanNumber" placeholder="Challan Number" />
+                        <span class="not-required error">Challan number required</span>
                     </div>
-
+                    <div class="col-md-4">
+                        <label>Deposit Amount</label>
+                        <input type="text" class="form-control textbox numeric-without-decimal" name="DepositAmount" id="DepositAmount" placeholder="Deposit Amount" />
+                        <span class="not-required error">Deposit amount required</span>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Return Deposit</label>
+                        <input type="text" class="form-control textbox numeric-without-decimal" name="ReturnDeposit" id="ReturnDeposit" placeholder="Return Deposit" />
+                        <span class="not-required error">Return deposit required</span>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div id="purchased-cylinder">
+                            </div>
+                        </div>
+                        <input type="button" class="btn btn-primary submit" value="Submit" />
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
+    @*<div class="row">
         <div class="col-xs-12">
             <div class="box">
                 @Html.Partial("/Views/_ProductDetails.cshtml", (List<CIM.Entities.ClsProductDetailModel>)ViewBag.ProductDetail.Data)
             </div>
 
         </div>
-    </div> 
+    </div>*@ 
     <div class="modal fade" id="modal-default">
         <div class="modal-dialog">
             <div class="modal-content">

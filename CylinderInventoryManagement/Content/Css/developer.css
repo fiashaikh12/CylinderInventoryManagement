@@ -2,3 +2,12 @@
     background-color: #3c8dbc;
     color: white;
 }
+.error{
+    color:red;
+}
+.not-required{
+    display:none;
+}
+.required{
+    display:block;
+}
