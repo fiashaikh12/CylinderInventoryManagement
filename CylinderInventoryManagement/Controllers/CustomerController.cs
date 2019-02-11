@@ -105,7 +105,7 @@ namespace CylinderInventoryManagement.Controllers
         //}
 
 
-        [HttpPost, ActionName("GetPurchasedCylinder")]
+        [HttpGet, ActionName("GetPurchasedCylinder")]
         public ActionResult PurchasedCylinder(int userId)
         {
             ViewBag.PurchasedCylinder = this._product.GetAllProductandHoldingStock(Convert.ToInt32(Session["businessid"]), userId) as ClsResponseModel<List<ClsProductDetailModel>>;

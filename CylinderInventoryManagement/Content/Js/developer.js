@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     $('.purchaseCustomer').on('click', function () {
         if ($("#hdncustid").val() != "" && $("#hdncustid").val() != undefined) {
             var userId = parseInt($("#hdncustid").val());
@@ -58,19 +59,89 @@
         }
 
     })
-    //$(document).on('change', '#userid', function () {
-    //    if ($('#hdncustid').val()) {
-    //        $.ajax({
-    //            url: "/Customer/GetPurchasedCylinder",
-    //            type: "POST",
-    //            dataType: "json",
-    //            data: { userId: $("#hdncustid").val() },
-    //            success: function (data) {
-    //                console.log(data)
-    //            }
-    //        });
-    //    }
-    //});
+
+    $(document).on('keyup', '.textbox', function () {
+        if ($(this).val() != "") {
+            $(this).next().removeClass('required').addClass('not-required');
+        }
+        else {
+            $(this).next().removeClass('not-required').addClass('required');
+        }
+    });
+    $(".numeric-with-decimal").on("keypress keyup blur", function (event) {
+        $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    });
+
+    $(".numeric-without-decimal").on("keypress keyup blur", function (event) {
+        $(this).val($(this).val().replace(/[^\d].+/, ""));
+        if ((event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    });
+
+    var validateInput = function () {
+        var IsValid = false;
+        $('.validate-form').find('.textbox').each(function () {
+            if ($(this).val() == "" || $(this).val() == null || $(this).val() == undefined || $(this).val()==0) {
+                $(this).next().removeClass('not-required').addClass('required');
+                IsValid = false;
+            }
+            else {
+                $(this).next().removeClass('required').addClass('not-required');
+                IsValid = true;
+            }
+        })
+        return IsValid;
+    };
+    $('.submit').on('click', function () {
+        var challanNum, depositAmt, returnAmt;
+        challanNum = $('#ChallanNumber').val();
+        depositAmt = $('#DepositAmount').val();
+        returnAmt = $('#ReturnDeposit').val();
+        if (validateInput()) {
+            var strArray = new Array();
+            $('input[type=checkbox]').each(function () {
+                if (this.checked) {
+                    var prodId = parseInt($(this).closest('tr').find('td:eq(1)').text());
+                    var purQty = parseInt($(this).closest('tr').find(".purchaseQuantity").val());
+                    var rtQty = parseInt($(this).closest('tr').find(".returnQuantity").val());
+                    var holdingQty = parseInt($(this).closest('tr').find('td:eq(9)').text());
+                    var quantity = parseInt($(this).closest('tr').find('td:eq(7)').text());
+                    if (purQty > quantity) {
+                        SweetAlert("Purchase quantity cannot be more than available quantity", "warning", "OK");
+                    }
+                    else if (rtQty > holdingQty) {
+                        SweetAlert("Return quantity cannot be more than holding stock", "warning", "OK");
+                    }
+                    else if (purQty == 0) {
+                        $(this).closest('tr').find(".purchaseQuantity").next().removeClass('not-required').addClass('required');
+                    }
+                    else if (rtQty == 0) {
+                        $(this).closest('tr').find(".returnQuantity").next().removeClass('not-required').addClass('required');
+                    }
+                    else {
+                        strArray.push({ ProductId: prodId, HoldingStock: holdingQty, PurchaseQty: purQty, ReturnQty: rtQty })
+                    }
+                }
+            });
+            if (strArray.length > 0) {
+                $.ajax({
+                    url: "/Customer/SearchCustomerReport",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    async: true,
+                    data: JSON.stringify({ CustomerReport: strArray }),
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+                console.log(strArray)
+            }
+        }
+    })
 
 
     $('#btnsubmitreport').click(function () {
@@ -124,8 +195,8 @@ $(function () {
                 type: "POST",
                 dataType: "json",
                 data: { searchText: request.term },
-                success: function (data) {                   
-                    response($.map(data, function (item) {     
+                success: function (data) {
+                    response($.map(data, function (item) {
                         return { label: item.label, value: item.id };
                         //address = customer.Address, mobile = customer.Mobile, depositamount = customer.DepositAmount
                     }));

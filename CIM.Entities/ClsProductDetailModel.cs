@@ -31,7 +31,10 @@ namespace CIM.Entities
         public double DepositAmount { get; set; }
         [Display(Name = "Purchase Quantity")]
         public int PurchaseQuantity { get; set; }
-        [Display(Name = "HoldingStock")]
+        public int ReturnQuantity { get; set; }
+        [Display(Name = "Holding Stock")]
         public int HoldingStock { get; set; }
+        [Display(Name = "Check Product")]
+        public bool IsChecked { get; set; }
     }
 }
