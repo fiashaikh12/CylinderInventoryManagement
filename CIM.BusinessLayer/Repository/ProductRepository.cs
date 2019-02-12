@@ -252,6 +252,7 @@ namespace CIM.BusinessLayer.Repository
                 clsResponse.IsSuccess = false;
                 clsResponse.ErrorCode = 400;
                 clsResponse.Message = "Failed";
+                
             }
             return clsResponse;
         }
