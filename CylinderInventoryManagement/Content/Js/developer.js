@@ -219,6 +219,7 @@ $(function () {
                 success: function (data) {
                     response($.map(data, function (item) {
                         return { label: item.label, value: item.id };
+                        //address = customer.Address, mobile = customer.Mobile, depositamount = customer.DepositAmount
                     }));
                 }
 

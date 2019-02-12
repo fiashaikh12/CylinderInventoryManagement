@@ -27,6 +27,7 @@ namespace CIM.Entities
         public DateTime? ModifiedOn { get; set; }
         public int DeletedOn { get; set; }
         public DateTime? DeletedBy { get; set; }
+        public float DepositAmount { get; set; }
     }
 
     public class ClsUserLoginModel
