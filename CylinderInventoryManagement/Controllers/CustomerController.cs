@@ -104,6 +104,34 @@ namespace CylinderInventoryManagement.Controllers
         //    return PartialView("/Views/_PurchasedCylinder.cshtml", ViewBag.PurchasedCylinder.Data);
         //}
 
+        [HttpPost]
+        public async Task<ActionResult> CustomerPurchaseReturnc(ClsCustomerPurchaseReturn customerPurchaseReturn)
+        {
+            customerPurchaseReturn.BusinessId = Convert.ToInt32(Session["businessid"]);
+            ClsResponseModel responseModel= await this._product.CustomerPurchaseReturnAsync(customerPurchaseReturn);
+            if (responseModel.IsSuccess)
+            {
+                return Json(new { Status = 1 });
+            }
+            else
+            {
+                return Json(new { Status = 0 });
+            }
+        }
+        [HttpPost]
+        public async Task<ActionResult> CustomerDepositAsync(ClsCustomerDeposiit customerDeposiit)
+        {
+            customerDeposiit.BusinessId = Convert.ToInt32(Session["businessid"]);
+            ClsResponseModel responseModel = await this._product.CustomerDepositAsync(customerDeposiit);
+            if (responseModel.IsSuccess)
+            {
+                return Json(new { Status = 1 });
+            }
+            else
+            {
+                return Json(new { Status = 0 });
+            }
+        }
 
         [HttpGet, ActionName("GetPurchasedCylinder")]
         public ActionResult PurchasedCylinder(int userId)
