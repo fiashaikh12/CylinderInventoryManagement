@@ -103,8 +103,8 @@ $(document).ready(function () {
         depositAmt = $('#DepositAmount').val();
         returnAmt = $('#ReturnDeposit').val();
         if (validateInput()) {
-            var strPurArray = new Array();
-            var strDepArray = new Array();
+            var strPurArray = {};
+            var strDepArray = {};
             strDepArray.push({ UserId: userId,DepositType: "G", DepositAmount: depositAmt})
             $('input[type=checkbox]').each(function () {
                 if (this.checked) {

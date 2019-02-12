@@ -105,7 +105,7 @@ namespace CylinderInventoryManagement.Controllers
         //}
 
         [HttpPost]
-        public async Task<ActionResult> CustomerPurchaseReturnc(ClsCustomerPurchaseReturn customerPurchaseReturn)
+        public async Task<ActionResult> CustomerPurchaseReturnAsync(ClsCustomerPurchaseReturn customerPurchaseReturn)
         {
             customerPurchaseReturn.BusinessId = Convert.ToInt32(Session["businessid"]);
             ClsResponseModel responseModel= await this._product.CustomerPurchaseReturnAsync(customerPurchaseReturn);
