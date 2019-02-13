@@ -204,19 +204,23 @@ namespace CIM.BusinessLayer.Repository
             return clsResponse;
         }
 
-        public async Task<ClsResponseModel> CustomerPurchaseReturnAsync(ClsCustomerPurchaseReturn customerPurchaseReturn)
+        public async Task<ClsResponseModel> CustomerPurchaseReturnAsync(List<ClsCustomerPurchaseReturn> customerPurchaseReturn)
         {
+            int returnValue = 0;
             ClsResponseModel clsResponse = new ClsResponseModel();
-            var parameters = new DynamicParameters();
-            parameters.Add("@UserId", customerPurchaseReturn.UserId);
-            parameters.Add("@Createdby", customerPurchaseReturn.BusinessId);
-            parameters.Add("@Productid", customerPurchaseReturn.ProductId);
-            parameters.Add("@PurchaseQuantity", customerPurchaseReturn.PurchaseQuantity);
-            parameters.Add("@ReturnQuantity", customerPurchaseReturn.ReturnQuantity);
-            parameters.Add("@HoldingStock", customerPurchaseReturn.HoldingStock);
-            parameters.Add("@Businessid", customerPurchaseReturn.BusinessId);
-            parameters.Add("@ChallanNumber", customerPurchaseReturn.ChallanNumber);
-            int returnValue = await this._dbContext.ExecuteAsync("USP_CustPurchaseReturn", parameters, commandType: CommandType.StoredProcedure);
+            foreach (var item in customerPurchaseReturn)
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@UserId", item.UserId);
+                parameters.Add("@Createdby", customerPurchaseReturn[0].BusinessId);
+                parameters.Add("@Productid", item.ProductId);
+                parameters.Add("@PurchaseQuantity", item.PurchaseQuantity);
+                parameters.Add("@ReturnQuantity", item.ReturnQuantity);
+                parameters.Add("@HoldingStock", item.HoldingStock);
+                parameters.Add("@Businessid", customerPurchaseReturn[0].BusinessId);
+                parameters.Add("@ChallanNumber", item.ChallanNumber);
+                returnValue = await this._dbContext.ExecuteAsync("USP_CustPurchaseReturn", parameters, commandType: CommandType.StoredProcedure);
+            }
             if (returnValue > 0)
             {
                 clsResponse.IsSuccess = true;

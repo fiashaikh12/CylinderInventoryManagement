@@ -103,9 +103,9 @@ $(document).ready(function () {
         depositAmt = $('#DepositAmount').val();
         returnAmt = $('#ReturnDeposit').val();
         if (validateInput()) {
-            var strPurArray = {};
-            var strDepArray = {};
-            strDepArray.push({ UserId: userId,DepositType: "G", DepositAmount: depositAmt})
+            var strPurArray = [];
+            var strDepArray;
+            strDepArray = { UserId: userId, DepositType: "G", DepositAmount: depositAmt };
             $('input[type=checkbox]').each(function () {
                 if (this.checked) {
                     var prodId = parseInt($(this).closest('tr').find('td:eq(1)').text());
@@ -127,16 +127,15 @@ $(document).ready(function () {
                     //    $(this).closest('tr').find(".returnQuantity").next().removeClass('not-required').addClass('required');
                     //}
                     else {
-                        strPurArray.push({ ProductId: prodId, HoldingStock: holdingQty, PurchaseQuantity: purQty, ReturnQuantity: rtQty, ChallanNumber: challanNum })
+                        strPurArray.push({ UserId: userId, ProductId: prodId, HoldingStock: holdingQty, PurchaseQuantity: purQty, ReturnQuantity: rtQty, ChallanNumber: challanNum })
                     }
                 }
             });
-            if (strPurArray.length > 0 && strDepArray.length > 0) {
+            if (strPurArray.length > 0 && strDepArray) {
                 $.ajax({
                     url: "/Customer/CustomerPurchaseReturnAsync",
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
-                    async: true,
                     data: JSON.stringify({ customerPurchaseReturn: strPurArray }),
                     success: function (data) {
                         console.log(data);
