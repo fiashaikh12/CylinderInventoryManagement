@@ -156,12 +156,14 @@ $(document).ready(function () {
                 obj.UserId = parseInt($("#hdncustid").val());
                 $.ajax({
                     url: "/Customer/SearchCustomerReport",
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    async: true,
-                    data: JSON.stringify({ CustomerReport: obj }),
+                    type: "GET",
+                    contentType: 'application/html;charset=utf-8',
+                    dataType: "html",
+                    //data: JSON.stringify({ CustomerReport: obj }),
+                    data: { userId: parseInt($("#hdncustid").val()), fromdate: temp[0].trim(), todate: temp[1].trim()},
                     success: function (data) {
-                        console.log(data);
+                        $('.customer-cylinder1').removeClass('hidden');
+                        $('#purchased-cylinder1').html(data);
                     }
 
                 });
@@ -197,7 +199,8 @@ $(function () {
                 data: { searchText: request.term },
                 success: function (data) {
                     response($.map(data, function (item) {
-                        return { label: item.label, value: item.id };
+                        return { label: item.label, value: item.id, address: item.address, mobile: item.mobile, depositamount: item.depositamount};
+                        //+return { label: item.label, value: item.id, name: item.Mobile + ',' + item.DepositAmount + ',' + item.address};
                         //address = customer.Address, mobile = customer.Mobile, depositamount = customer.DepositAmount
                     }));
                 }
@@ -208,6 +211,12 @@ $(function () {
             event.preventDefault();
             var label = ui.item.label;
             var value = ui.item.value;
+            $("#lbl_custname").empty().append(ui.item.label);
+            $("#lbl_mobile").empty().append(ui.item.mobile);
+            $("#lbl_depositamount").empty().append(ui.item.depositamount);
+            $("#lbl_address").empty().append(ui.item.address);
+            $("#hdndepositamount").val(ui.item.depositamount);
+            
             $("#hdncustid").val(value);
             $("#userid").val(label);
             $.ajax({
@@ -227,5 +236,21 @@ $(function () {
         }
     });
 });
+
+function printCustomerReport() {
+
+    var divToPrint = document.getElementById('tblCustomerReportprint');
+
+    var newWin = window.open('', 'Print-Window');
+
+    newWin.document.open();
+
+    newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
+
+    newWin.document.close();
+
+    setTimeout(function () { newWin.close(); }, 10);
+
+}
 
 

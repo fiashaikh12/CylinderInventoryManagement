@@ -100,28 +100,54 @@
 
     </div>
 
-    <div class="row">
+    @*@if (ViewBag.CustomerReport != null)
+        {*@
+ 
+        <div class="box box-default customer-cylinder1 hidden">
+            <div class="box-header with-border">
+                <h3 class="box-title">Customer Details</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="customer-cylinder hidden validate-form">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Customer Name: </label>
+                            <label id="lbl_custname"></label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Mobile: </label>
+                            <label id="lbl_mobile"></label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Deposit Amount: </label>
+                            <label id="lbl_depositamount"></label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Address: </label>
+                            <label id="lbl_address"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="row customer-cylinder1 hidden">
         <div class="col-xs-12">
 
             <div class="box">
-                @Html.Partial("/Views/_ProductDetails.cshtml", (List<CIM.Entities.ClsProductDetailModel>)ViewBag.ProductDetail.Data)
+                <div id="purchased-cylinder1">
+                </div>
+                <input type="button" onclick="printCustomerReport()" value="Print" />
+                @*@Html.Partial("/Views/_CustomerReport.cshtml")*@
             </div>
 
         </div>
     </div>
-    @if (ViewBag.PurchasedCylinder != null)
-    {
-        <div class="row">
-            <div class="col-xs-12">
+    @*}*@
 
-                <div class="box">
-                    Html.RenderPartial("/Views/_PurchasedCylinder.cshtml")
-                </div>
-
-            </div>
-        </div>
-    }
-    
 </section>
 
 

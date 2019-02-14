@@ -95,13 +95,13 @@ namespace BusinessLayer.Repository
 
         public ClsResponseModel GetCustomerReport(int Businessid,int Userid,DateTime fromdate,DateTime todate)
         {
-            ClsResponseModel<List<CustomerReport>> clsResponse = new ClsResponseModel<List<CustomerReport>>();
+            ClsResponseModel<List<CustomerReportResponse>> clsResponse = new ClsResponseModel<List<CustomerReportResponse>>();
             var parameters = new DynamicParameters();
             parameters.Add("@Businessid", Businessid);
             parameters.Add("@Userid", Userid);
             parameters.Add("@fromdate", fromdate);
             parameters.Add("@todate", todate);
-            List<CustomerReport> clsProducts = this._dbContext.Query<CustomerReport>("SP_CustomerReport", parameters, commandType: CommandType.StoredProcedure).ToList();
+            List<CustomerReportResponse> clsProducts = this._dbContext.Query<CustomerReportResponse>("SP_CustomerReport", parameters, commandType: CommandType.StoredProcedure).ToList();
             if (clsProducts.Count > 0)
             {
                 clsResponse.IsSuccess = true;

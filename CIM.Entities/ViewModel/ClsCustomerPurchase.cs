@@ -24,4 +24,14 @@ namespace CIM.Entities
         public string fromdate { get; set; }
         public string todate { get; set; }
     }
+
+    public class CustomerReportResponse
+    {
+        public string LedgerDate { get; set; }
+        public string ChallanNumber { get; set; }
+        public string CategoryName { get; set; }
+        public string FullIssue { get; set; }
+        public string ReturnStock { get; set; }
+        public string HoldingStock { get; set; }
+    }
 }

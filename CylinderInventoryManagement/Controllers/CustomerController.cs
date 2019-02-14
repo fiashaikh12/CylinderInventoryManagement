@@ -117,19 +117,21 @@ namespace CylinderInventoryManagement.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult SearchCustomerReport(CustomerReport CustomerReport)
+        [HttpGet]
+        public ActionResult SearchCustomerReport(int Userid,string fromdate,string todate)
         {
-            try
-            {
-                ClsResponseModel<List<CustomerReport>> customerResponse = (ClsResponseModel<List<CustomerReport>>)this._user.GetCustomerReport(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]),CustomerReport.UserId, Convert.ToDateTime(CustomerReport.fromdate), Convert.ToDateTime(CustomerReport.todate));
-                return Json(customerResponse, JsonRequestBehavior.AllowGet);
-            }
-            catch(Exception ex)
-            {
-                return Json(CustomerReport, JsonRequestBehavior.AllowGet);
-            }
-            
+            //try
+            //{
+                //ClsResponseModel<List<CustomerReport>> customerResponse = (ClsResponseModel<List<CustomerReport>>)this._user.GetCustomerReport(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]),CustomerReport.UserId, Convert.ToDateTime(CustomerReport.fromdate), Convert.ToDateTime(CustomerReport.todate));
+                //ViewBag.CustomerReport = customerResponse;
+            //return Json(customerResponse, JsonRequestBehavior.AllowGet);
+            //}
+            //catch(Exception ex)
+            //{
+            //    return Json(CustomerReport, JsonRequestBehavior.AllowGet);
+            //}
+            ViewBag.CustomerReport = this._user.GetCustomerReport(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]), Userid, Convert.ToDateTime(fromdate), Convert.ToDateTime(todate));
+            return PartialView("/Views/_CustomerReport.cshtml", ViewBag.CustomerReport.Data);
         }
     }
 }
