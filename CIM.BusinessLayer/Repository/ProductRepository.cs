@@ -203,5 +203,62 @@ namespace CIM.BusinessLayer.Repository
             }
             return clsResponse;
         }
+
+        public async Task<ClsResponseModel> CustomerPurchaseReturnAsync(List<ClsCustomerPurchaseReturn> customerPurchaseReturn)
+        {
+            int returnValue = 0;
+            ClsResponseModel clsResponse = new ClsResponseModel();
+            foreach (var item in customerPurchaseReturn)
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@UserId", item.UserId);
+                parameters.Add("@Createdby", customerPurchaseReturn[0].BusinessId);
+                parameters.Add("@Productid", item.ProductId);
+                parameters.Add("@PurchaseQuantity", item.PurchaseQuantity);
+                parameters.Add("@ReturnQuantity", item.ReturnQuantity);
+                parameters.Add("@HoldingStock", item.HoldingStock);
+                parameters.Add("@Businessid", customerPurchaseReturn[0].BusinessId);
+                parameters.Add("@ChallanNumber", item.ChallanNumber);
+                returnValue = await this._dbContext.ExecuteAsync("USP_CustPurchaseReturn", parameters, commandType: CommandType.StoredProcedure);
+            }
+            if (returnValue > 0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Success.";
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed";
+            }
+            return clsResponse;
+        }
+
+        public async Task<ClsResponseModel> CustomerDepositAsync(ClsCustomerDeposiit customerDeposiit)
+        {
+            ClsResponseModel clsResponse = new ClsResponseModel();
+            var parameters = new DynamicParameters();
+            parameters.Add("@UserId", customerDeposiit.UserId);
+            parameters.Add("@DepositType", customerDeposiit.DepositType);
+            parameters.Add("@CreatedBy", customerDeposiit.BusinessId);
+            parameters.Add("@DepositAmount", customerDeposiit.DepositAmount);
+            int returnValue = await this._dbContext.ExecuteAsync("USP_CustDeposit", parameters, commandType: CommandType.StoredProcedure);
+            if (returnValue > 0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Success.";
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed";
+                
+            }
+            return clsResponse;
+        }
     }
 }

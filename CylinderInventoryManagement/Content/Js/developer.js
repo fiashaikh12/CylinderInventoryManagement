@@ -97,12 +97,15 @@ $(document).ready(function () {
         return IsValid;
     };
     $('.submit').on('click', function () {
+        var userId = parseInt($("#hdncustid").val());
         var challanNum, depositAmt, returnAmt;
         challanNum = $('#ChallanNumber').val();
         depositAmt = $('#DepositAmount').val();
         returnAmt = $('#ReturnDeposit').val();
         if (validateInput()) {
-            var strArray = new Array();
+            var strPurArray = [];
+            var strDepArray;
+            strDepArray = { UserId: userId, DepositType: "G", DepositAmount: depositAmt };
             $('input[type=checkbox]').each(function () {
                 if (this.checked) {
                     var prodId = parseInt($(this).closest('tr').find('td:eq(1)').text());
@@ -116,29 +119,46 @@ $(document).ready(function () {
                     else if (rtQty > holdingQty) {
                         SweetAlert("Return quantity cannot be more than holding stock", "warning", "OK");
                     }
-                    else if (purQty == 0) {
-                        $(this).closest('tr').find(".purchaseQuantity").next().removeClass('not-required').addClass('required');
-                    }
-                    else if (rtQty == 0) {
-                        $(this).closest('tr').find(".returnQuantity").next().removeClass('not-required').addClass('required');
-                    }
+                    //else if (purQty == 0 && rtQty == 0) {
+                    //    $(this).closest('tr').find(".purchaseQuantity").next().removeClass('not-required').addClass('required');
+                    //    $(this).closest('tr').find(".returnQuantity").next().removeClass('not-required').addClass('required');
+                    //}
+                    //else if () {
+                    //    $(this).closest('tr').find(".returnQuantity").next().removeClass('not-required').addClass('required');
+                    //}
                     else {
-                        strArray.push({ ProductId: prodId, HoldingStock: holdingQty, PurchaseQty: purQty, ReturnQty: rtQty })
+                        strPurArray.push({ UserId: userId, ProductId: prodId, HoldingStock: holdingQty, PurchaseQuantity: purQty, ReturnQuantity: rtQty, ChallanNumber: challanNum })
                     }
                 }
             });
-            if (strArray.length > 0) {
+            if (strPurArray.length > 0 && strDepArray) {
                 $.ajax({
-                    url: "/Customer/SearchCustomerReport",
+                    url: "/Customer/CustomerPurchaseReturnAsync",
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
-                    async: true,
-                    data: JSON.stringify({ CustomerReport: strArray }),
+                    data: JSON.stringify({ customerPurchaseReturn: strPurArray }),
                     success: function (data) {
                         console.log(data);
+                        if (data.Status == 1) {
+                            $.ajax({
+                                url: "/Customer/CustomerDepositAsync",
+                                type: "POST",
+                                contentType: "application/json; charset=utf-8",
+                                async: true,
+                                data: JSON.stringify({ customerDeposiit: strDepArray }),
+                                success: function (data) {
+                                    console.log(data);
+                                    if (data.Status == 1) {
+                                        alert(21);
+                                    }
+                                    else {
+                                        alert(22);
+                                    }
+                                }
+                            });
+                        }
                     }
                 });
-                console.log(strArray)
             }
         }
     })

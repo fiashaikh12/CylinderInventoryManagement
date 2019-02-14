@@ -18,6 +18,26 @@ namespace CIM.Entities
         public int Quantity { get; set; }
         public int BusinessId { get; set; }
     }
+    public class ClsUser
+    {
+        public int UserId { get; set; }
+        public int BusinessId { get; set; }
+    }
+
+    public class ClsCustomerPurchaseReturn: ClsUser
+    {
+        public int ProductId { get; set; }
+        public int PurchaseQuantity { get; set; }
+        public int ReturnQuantity { get; set; }
+        public int HoldingStock { get; set; }
+        public string ChallanNumber { get; set; }
+    }
+
+    public class ClsCustomerDeposiit: ClsUser
+    {
+        public string DepositType { get; set; }
+        public double DepositAmount { get; set; }
+    }
 
     public class CustomerReport: ClsCustomerPurchase
     {
