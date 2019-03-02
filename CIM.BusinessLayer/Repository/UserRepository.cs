@@ -93,6 +93,27 @@ namespace BusinessLayer.Repository
             return clsResponse;
         }
 
+        public ClsResponseModel GetDistributorDetails()
+        {
+            ClsResponseModel<List<ClsCustomerModel>> clsResponse = new ClsResponseModel<List<ClsCustomerModel>>();
+
+            List<ClsCustomerModel> response = _dbContext.Query<ClsCustomerModel>("USP_GetDistributor", null, commandType: CommandType.StoredProcedure).ToList();
+            if (response.Count > 0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Success";
+                clsResponse.Data = response;
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed";
+            }
+            return clsResponse;
+        }
+
         public ClsResponseModel GetCustomerReport(int Businessid,int Userid,DateTime fromdate,DateTime todate)
         {
             ClsResponseModel<List<CustomerReportResponse>> clsResponse = new ClsResponseModel<List<CustomerReportResponse>>();

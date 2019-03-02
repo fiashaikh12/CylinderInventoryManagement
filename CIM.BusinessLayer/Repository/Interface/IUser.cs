@@ -11,5 +11,6 @@ namespace BusinessLayer.Repository.Interface
         Task<ClsResponseModel> CreateCustomerAsync(ClsCustomerModel responseModel);
         ClsResponseModel GetCustomerDetails();
         ClsResponseModel GetCustomerReport(int Businessid, int Userid, DateTime fromdate, DateTime todate);
+        ClsResponseModel GetDistributorDetails();
     }
 }

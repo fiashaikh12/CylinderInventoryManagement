@@ -36,5 +36,7 @@ namespace CIM.Entities
         public int HoldingStock { get; set; }
         [Display(Name = "Check Product")]
         public bool IsChecked { get; set; }
+        [Display(Name = "Defect Quantity")]
+        public int DefectQuantity { get; set; }
     }
 }

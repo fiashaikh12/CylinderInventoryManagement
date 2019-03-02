@@ -31,6 +31,7 @@ namespace CIM.Entities
         public int ReturnQuantity { get; set; }
         public int HoldingStock { get; set; }
         public string ChallanNumber { get; set; }
+        public int DefectQuantity { get; set; }
     }
 
     public class ClsCustomerDeposiit: ClsUser
@@ -53,5 +54,6 @@ namespace CIM.Entities
         public string FullIssue { get; set; }
         public string ReturnStock { get; set; }
         public string HoldingStock { get; set; }
+        public int DefectQuantity { get; set; }
     }
 }

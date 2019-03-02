@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "DistributorReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .example-modal .modal {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        right: auto;
+        left: auto;
+        display: block;
+        z-index: 1;
+    }
+
+    .example-modal .modal {
+        background: transparent !important;
+    }
+
+
+
+    .autocomplete {
+        position: relative !important;
+        display: inline-block !important;
+        z-index: 1050 !important;
+    }
+
+    .ui-autocomplete {
+        position: absolute !important;
+        border: 1px solid #d4d4d4 !important;
+        border-bottom: none !important;
+        border-top: none !important;
+        z-index: 1100 !important;
+        /*position the autocomplete items to be the same width as the container:*/
+        top: 27% !important;
+        left: 571px !important;
+        right: 0 !important;
+        width: 607px !important;
+    }
+
+        .ui-autocomplete li {
+            padding: 10px !important;
+            cursor: pointer !important;
+            background-color: #fff !important;
+            border-bottom: 1px solid #d4d4d4 !important;
+        }
+
+    /*when hovering an item:*/
+    .autocomplete-items div:hover {
+        background-color: #e9e9e9;
+    }
+
+    /*when navigating through the items using the arrow keys:*/
+    .autocomplete-active {
+        background-color: DodgerBlue !important;
+        color: #ffffff;
+    }
+</style>
+<!-- Main content -->
+<section class="content">
+    <!-- SELECT2 EXAMPLE -->
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Search Distributor</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="form-group">
+                        <input class="form-control autocomplete" id="DISuserid" placeholder="Search Customer" />
+                        <input type="hidden" id="hdncustid" name="custId" value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select Date range:</label>
+                        <div class="input-group">
+                            <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                                <span>
+                                    <i class="fa fa-calendar"></i> Date range picker
+                                </span>
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-default pull-right" id="btndistsubmitreport">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+
+    </div>
+
+    @*@if (ViewBag.CustomerReport != null)
+        {*@
+
+    <div class="box box-default customer-cylinder1 hidden">
+        <div class="box-header with-border">
+            <h3 class="box-title">Distributor Details</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="customer-cylinder hidden validate-form">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Customer Name: </label>
+                        <label id="lbl_custname"></label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Mobile: </label>
+                        <label id="lbl_mobile"></label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Address: </label>
+                        <label id="lbl_address"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row customer-cylinder1 hidden">
+        <div class="col-xs-12">
+
+            <div class="box">
+                <div id="purchased-cylinder1">
+                </div>
+                <input type="button" onclick="printCustomerReport()" value="Print" />
+                @*@Html.Partial("/Views/_CustomerReport.cshtml")*@
+            </div>
+
+        </div>
+    </div>
+    @*}*@
+
+</section>
+

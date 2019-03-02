@@ -84,11 +84,11 @@ namespace CylinderInventoryManagement.Controllers
             {
                 ClsResponseModel<List<ClsCustomerModel>> customerResponse = (ClsResponseModel<List<ClsCustomerModel>>)this._user.GetCustomerDetails();
                 var customers = (from customer in customerResponse.Data
-                                 where customer.Name.Contains(searchText)
+                                 where customer.CompanyName.Contains(searchText)
                                  //& customer.BusinessId.Equals(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]))
                                  //& customer.IsActive.Equals(true)
                                  //select new { customer.UserId});
-                                 select new { id = customer.UserId, label = customer.Name, name = customer.Name,address= customer.Address ,mobile=customer.Mobile,depositamount=customer.DepositAmount});
+                                 select new { id = customer.UserId, label = customer.CompanyName, name = customer.CompanyName, address= customer.Address ,mobile=customer.Mobile,depositamount=customer.DepositAmount});
                 return Json(customers, JsonRequestBehavior.AllowGet);
             }
             else
@@ -118,6 +118,7 @@ namespace CylinderInventoryManagement.Controllers
                 return Json(new { Status = 0 });
             }
         }
+
         [HttpPost]
         public async Task<ActionResult> CustomerDepositAsync(ClsCustomerDeposiit customerDeposiit)
         {
