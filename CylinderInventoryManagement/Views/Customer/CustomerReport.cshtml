@@ -63,7 +63,7 @@
     <!-- SELECT2 EXAMPLE -->
     <div class="box box-default">
         <div class="box-header with-border">
-            <h3 class="box-title">Search Customer</h3>
+            <h3 class="box-title">Search Company</h3>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             </div>
@@ -73,7 +73,7 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="form-group">
-                        <input class="form-control autocomplete" id="userid" placeholder="Search Customer" />
+                        <input class="form-control autocomplete" id="userid" placeholder="Search Company" />
                         <input type="hidden" id="hdncustid" name="custId" value="">
                     </div>
 
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-default pull-right" id="btnsubmitreport">
+                        <button type="button" class="btn btn-primary" id="btnsubmitreport">
                             Submit
                         </button>
                     </div>
@@ -102,10 +102,10 @@
 
     @*@if (ViewBag.CustomerReport != null)
         {*@
- 
+    <div id="printdiv">
         <div class="box box-default customer-cylinder1 hidden">
             <div class="box-header with-border">
-                <h3 class="box-title">Customer Details</h3>
+                <h3 class="box-title">Company Details</h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
@@ -115,7 +115,7 @@
                 <div class="customer-cylinder hidden validate-form">
                     <div class="row">
                         <div class="col-md-6">
-                            <label>Customer Name: </label>
+                            <label>Company Name: </label>
                             <label id="lbl_custname"></label>
                         </div>
                         <div class="col-md-6">
@@ -134,20 +134,35 @@
                 </div>
             </div>
         </div>
-    <div class="row customer-cylinder1 hidden">
-        <div class="col-xs-12">
+        <div class="box box-default customer-cylinder1 hidden">
 
-            <div class="box">
-                <div id="purchased-cylinder1">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="">
+                            <table id="example1" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Ledger Date</th>
+                                        <th>Challan Number</th>
+                                        <th>Gas Type</th>
+                                        <th>FullIssue</th>
+                                        <th>Return</th>
+                                        <th>Holding</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="purchased-cylinder1"></tbody>
+                            </table>
+                            <div id="purchased-cylinder1Count">
+                            </div>
+                            <input type="button" class="btn btn-primary" onclick="printCustomerReport()" value="Print" />
+                        </div>
+                    </div>
                 </div>
-                <input type="button" onclick="printCustomerReport()" value="Print" />
-                @*@Html.Partial("/Views/_CustomerReport.cshtml")*@
             </div>
-
         </div>
     </div>
-    @*}*@
-
 </section>
+
 
 

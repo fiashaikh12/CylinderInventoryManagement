@@ -99,6 +99,43 @@ $(document).ready(function () {
         })
         return IsValid;
     };
+
+    $('.btn_notesubmit').on('click', function () {
+        var userId = parseInt($("#hdncustid").val());
+        var notes = $("#txt_Notes").val();
+        if (notes != "" && notes != undefined) {
+            $.ajax({
+                url: "/Customer/CustomerNote",
+                type: "POST",
+                dataType: "json",
+                data: { UserId: userId, Notes: notes },
+                success: function (data) {
+                    if (data = 1) {
+                        $('#dverror').hide();
+                        $('#dvsucess').show();
+                        $(function () {
+                            setTimeout(function () {
+                                $("#dvsucess").hide('blind', {}, 500)
+                            }, 5000);
+                        });
+                    }
+                    else {
+                        $('#dverror').show();
+                        $('#dvsucess').hide();
+                        $(function () {
+                            setTimeout(function () {
+                                $("#dverror").hide('blind', {}, 500)
+                            }, 5000);
+                        });
+                    }
+                }
+            });
+        }
+        else {
+            SweetAlert("Notes cannot be blank", "warning", "OK");
+        }
+    });
+
     $('.submit').on('click', function () {
         $('.overlay').show();
 
@@ -107,31 +144,38 @@ $(document).ready(function () {
         challanNum = $('#ChallanNumber').val();
         depositAmt = $('#DepositAmount').val();
         returnAmt = $('#ReturnDeposit').val();
+        var chkIsHolding = 0;
+        if ($('#chkHolding').is(":checked") == true) {
+            chkIsHolding = 1;
+        }
         if (validateInput()) {
             var strPurArray = [];
 
             $('input[type=checkbox]').each(function () {
                 if (this.checked) {
-                    var prodId = parseInt($(this).closest('tr').find('td:eq(1)').text());
-                    var purQty = parseInt($(this).closest('tr').find(".purchaseQuantity").val());
-                    var rtQty = parseInt($(this).closest('tr').find(".returnQuantity").val());
-                    var holdingQty = parseInt($(this).closest('tr').find('td:eq(5)').text());
-                    var quantity = parseInt($(this).closest('tr').find('td:eq(4)').text());
-                    if (purQty > quantity) {
-                        SweetAlert("Purchase quantity cannot be more than available quantity", "warning", "OK");
-                    }
-                    else if (rtQty > holdingQty) {
-                        SweetAlert("Return quantity cannot be more than holding stock", "warning", "OK");
-                    }
-                    //else if (purQty == 0 && rtQty == 0) {
-                    //    $(this).closest('tr').find(".purchaseQuantity").next().removeClass('not-required').addClass('required');
-                    //    $(this).closest('tr').find(".returnQuantity").next().removeClass('not-required').addClass('required');
-                    //}
-                    //else if () {
-                    //    $(this).closest('tr').find(".returnQuantity").next().removeClass('not-required').addClass('required');
-                    //}
-                    else {
-                        strPurArray.push({ UserId: userId, ProductId: prodId, HoldingStock: holdingQty, PurchaseQuantity: purQty, ReturnQuantity: rtQty, ChallanNumber: challanNum })
+
+                    if (this.getAttribute('id') != "chkHolding") {
+                        var prodId = parseInt($(this).closest('tr').find('td:eq(1)').text());
+                        var purQty = parseInt($(this).closest('tr').find(".purchaseQuantity").val());
+                        var rtQty = parseInt($(this).closest('tr').find(".returnQuantity").val());
+                        var holdingQty = parseInt($(this).closest('tr').find('td:eq(5)').text());
+                        var quantity = parseInt($(this).closest('tr').find('td:eq(4)').text());
+                        if (purQty > quantity) {
+                            SweetAlert("Purchase quantity cannot be more than available quantity", "warning", "OK");
+                        }
+                        else if (rtQty > holdingQty) {
+                            SweetAlert("Return quantity cannot be more than holding stock", "warning", "OK");
+                        }
+                        //else if (purQty == 0 && rtQty == 0) {
+                        //    $(this).closest('tr').find(".purchaseQuantity").next().removeClass('not-required').addClass('required');
+                        //    $(this).closest('tr').find(".returnQuantity").next().removeClass('not-required').addClass('required');
+                        //}
+                        //else if () {
+                        //    $(this).closest('tr').find(".returnQuantity").next().removeClass('not-required').addClass('required');
+                        //}
+                        else {
+                            strPurArray.push({ UserId: userId, ProductId: prodId, HoldingStock: holdingQty, PurchaseQuantity: purQty, ReturnQuantity: rtQty, ChallanNumber: challanNum, IsHolding: chkIsHolding })
+                        }
                     }
                 }
             });
@@ -157,17 +201,17 @@ $(document).ready(function () {
                                     success: function (data) {
                                         console.log(data);
                                         if (data.Status == 1) {
-                                            alert(21);
+                                            //alert(21);
                                         }
                                         else {
-                                            alert(22);
+                                            //alert(22);
                                         }
                                     }
                                 });
                             }
 
                             if (returnAmt > 0) {
-                                strDepReturnArray = { UserId: cc, DepositType: "R", DepositAmount: returnAmt };
+                                strDepReturnArray = { UserId: userId, DepositType: "R", DepositAmount: returnAmt };
                                 $.ajax({
                                     url: "/Customer/CustomerDepositAsync",
                                     type: "POST",
@@ -177,10 +221,10 @@ $(document).ready(function () {
                                     success: function (data) {
                                         console.log(data);
                                         if (data.Status == 1) {
-                                            alert(21);
+                                            //alert(21);
                                         }
                                         else {
-                                            alert(22);
+                                            //alert(22);
                                         }
                                     }
                                 });
@@ -330,6 +374,22 @@ $(document).ready(function () {
                     success: function (data) {
                         $('.customer-cylinder1').removeClass('hidden');
                         $('#purchased-cylinder1').html(data);
+
+                        $.ajax({
+                            url: "/Customer/SearchCustomerReportCount",
+                            type: "GET",
+                            contentType: 'application/html;charset=utf-8',
+                            dataType: "html",
+                            //data: JSON.stringify({ CustomerReport: obj }),
+                            data: { userId: parseInt($("#hdncustid").val()), fromdate: temp[0].trim(), todate: temp[1].trim() },
+                            success: function (data) {
+                                $('#purchased-cylinder1Count').html(data);
+
+
+                            }
+
+                        });
+
                     }
 
                 });
@@ -399,7 +459,7 @@ $(function () {
                 data: { searchText: request.term },
                 success: function (data) {
                     response($.map(data, function (item) {
-                        return { label: item.label, value: item.id, address: item.address, mobile: item.mobile, depositamount: item.depositamount};
+                        return { label: item.label, value: item.id, address: item.address, mobile: item.mobile, depositamount: item.depositamount, notes: item.notes};
                         //+return { label: item.label, value: item.id, name: item.Mobile + ',' + item.DepositAmount + ',' + item.address};
                         //address = customer.Address, mobile = customer.Mobile, depositamount = customer.DepositAmount
                     }));
@@ -416,7 +476,7 @@ $(function () {
             $("#lbl_depositamount").empty().append(ui.item.depositamount);
             $("#lbl_address").empty().append(ui.item.address);
             $("#hdndepositamount").val(ui.item.depositamount);
-            
+            $("#txt_Notes").empty().append(ui.item.notes);
             $("#hdncustid").val(value);
             $("#userid").val(label);
             $.ajax({
@@ -485,13 +545,13 @@ $(function () {
 
 function printCustomerReport() {
 
-    var divToPrint = document.getElementById('example1');
+    var divToPrint = document.getElementById('printdiv');
 
     var newWin = window.open('', 'Print-Window');
 
     newWin.document.open();
 
-    newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
+    newWin.document.write('<html><head><style>table { page-break-inside:auto; } td { border: 1px solid lightgray; } tr { page-break-inside: auto; } #example1_length,#example1_filter,#example1_info,#example1_paginate,.btn {display: none;}</style></head><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
 
     newWin.document.close();
 

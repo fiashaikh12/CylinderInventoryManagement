@@ -32,6 +32,7 @@ namespace CIM.Entities
         public int HoldingStock { get; set; }
         public string ChallanNumber { get; set; }
         public int DefectQuantity { get; set; }
+        public int IsHolding { get; set; }
     }
 
     public class ClsCustomerDeposiit: ClsUser

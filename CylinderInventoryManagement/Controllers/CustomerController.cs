@@ -88,12 +88,27 @@ namespace CylinderInventoryManagement.Controllers
                                  //& customer.BusinessId.Equals(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]))
                                  //& customer.IsActive.Equals(true)
                                  //select new { customer.UserId});
-                                 select new { id = customer.UserId, label = customer.CompanyName, name = customer.CompanyName, address= customer.Address ,mobile=customer.Mobile,depositamount=customer.DepositAmount});
+                                 select new { id = customer.UserId, label = customer.CompanyName, name = customer.CompanyName, address= customer.Address ,mobile=customer.Mobile,depositamount=customer.DepositAmount,notes=customer.Notes});
                 return Json(customers, JsonRequestBehavior.AllowGet);
             }
             else
             {
                 return Json("", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult CustomerNote(int UserId,string Notes)
+        {
+            if (Notes != null && UserId != 0)
+            {
+                var response = this._user.UpdateCustomerNote(UserId,Notes);
+                return Json(1, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -161,6 +176,14 @@ namespace CylinderInventoryManagement.Controllers
             //}
             ViewBag.CustomerReport = this._user.GetCustomerReport(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]), Userid, Convert.ToDateTime(fromdate), Convert.ToDateTime(todate));
             return PartialView("/Views/_CustomerReport.cshtml", ViewBag.CustomerReport.Data);
+        }
+
+
+        [HttpGet]
+        public ActionResult SearchCustomerReportCount(int Userid, string fromdate, string todate)
+        {
+            ViewBag.CustomerReportCount = this._user.GetCustomerReportCount(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]), Userid, Convert.ToDateTime(fromdate), Convert.ToDateTime(todate));
+            return PartialView("/Views/_CustomerReportCount.cshtml", ViewBag.CustomerReportCount.Data);
         }
     }
 }

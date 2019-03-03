@@ -56,6 +56,7 @@ namespace BusinessLayer.Repository
             parameters.Add("@GSTNo", responseModel.GSTNo);
             parameters.Add("@Address", responseModel.Address);
             parameters.Add("@userId", responseModel.UserId);
+            parameters.Add("@AlternateNumber", responseModel.AlternateNumber);
             int returnValue = await this._dbContext.ExecuteAsync("Usp_RegisterCustomer", parameters, commandType: CommandType.StoredProcedure);
             if (returnValue > 0)
             {
@@ -135,6 +136,53 @@ namespace BusinessLayer.Repository
                 clsResponse.IsSuccess = false;
                 clsResponse.ErrorCode = 400;
                 clsResponse.Message = "Failed";
+            }
+            return clsResponse;
+        }
+
+        public ClsResponseModel GetCustomerReportCount(int Businessid, int Userid, DateTime fromdate, DateTime todate)
+        {
+            ClsResponseModel<List<CustomerReportResponse>> clsResponse = new ClsResponseModel<List<CustomerReportResponse>>();
+            var parameters = new DynamicParameters();
+            parameters.Add("@Businessid", Businessid);
+            parameters.Add("@Userid", Userid);
+            parameters.Add("@fromdate", fromdate);
+            parameters.Add("@todate", todate);
+            List<CustomerReportResponse> clsProducts = this._dbContext.Query<CustomerReportResponse>("SP_CustomerReportCount", parameters, commandType: CommandType.StoredProcedure).ToList();
+            if (clsProducts.Count > 0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Success";
+                clsResponse.Data = clsProducts;
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed";
+            }
+            return clsResponse;
+        }
+
+        public async Task<ClsResponseModel> UpdateCustomerNote(int Userid,string Notes)
+        {
+            ClsResponseModel clsResponse = new ClsResponseModel();
+            var parameters = new DynamicParameters();
+            parameters.Add("@Userid", Userid);
+            parameters.Add("@Notes", Notes);
+            int returnValue = await this._dbContext.ExecuteAsync("Usp_UpdateCustomerNote", parameters, commandType: CommandType.StoredProcedure);
+            if (returnValue > 0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Notes Updated successully";
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed to update notes";
             }
             return clsResponse;
         }

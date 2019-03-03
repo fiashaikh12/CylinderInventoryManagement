@@ -53,7 +53,7 @@
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>A</b></span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>Admin</b></span>
+                <span class="logo-lg"><b>@Session["businessName"].ToString()</b></span>
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top">
@@ -106,14 +106,14 @@
                     </li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-dashboard"></i> <span>Customer</span>
+                            <i class="fa fa-dashboard"></i> <span>Company</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class=""><a href="@Url.Action("Index", "Customer")"><i class="fa fa-circle-o"></i>Customer Ledger</a></li>
-                            <li class=""><a href="@Url.Action("CustomerReport", "Customer")"><i class="fa fa-circle-o"></i>Customer Report</a></li>
+                            <li class=""><a href="@Url.Action("Index", "Customer")"><i class="fa fa-circle-o"></i>Company Ledger</a></li>
+                            <li class=""><a href="@Url.Action("CustomerReport", "Customer")"><i class="fa fa-circle-o"></i>Company Report</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
