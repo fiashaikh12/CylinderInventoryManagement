@@ -279,25 +279,31 @@ $(document).ready(function () {
         var userId = parseInt($("#hdncustid").val());
         var challanNum;
         challanNum = $('#ChallanNumber').val();
+        var chkIsHolding = 0;
+        if ($('#chkHolding').is(":checked") == true) {
+            chkIsHolding = 1;
+        }
         if (validateInput()) {
             var strPurArray = [];
 
             $('input[type=checkbox]').each(function () {
                 if (this.checked) {
-                    var prodId = parseInt($(this).closest('tr').find('td:eq(1)').text());
-                    var purQty = parseInt($(this).closest('tr').find(".purchaseQuantity").val());
-                    var rtQty = parseInt($(this).closest('tr').find(".returnQuantity").val());
-                    var defQty = parseInt($(this).closest('tr').find(".defectQuantity").val());
-                    var holdingQty = parseInt($(this).closest('tr').find('td:eq(5)').text());
-                    var quantity = parseInt($(this).closest('tr').find('td:eq(4)').text());
-                    if (purQty > quantity) {
-                        SweetAlert("Issue quantity cannot be more than available quantity", "warning", "OK");
-                    }
-                    else if ((rtQty + defQty) > holdingQty) {
-                        SweetAlert("Return quantity and Defect quantity cannot be more than holding stock", "warning", "OK");
-                    }
-                    else {
-                        strPurArray.push({ UserId: userId, ProductId: prodId, HoldingStock: holdingQty, PurchaseQuantity: purQty, ReturnQuantity: rtQty, ChallanNumber: challanNum, DefectQuantity: defQty})
+                    if (this.getAttribute('id') != "chkHolding") {
+                        var prodId = parseInt($(this).closest('tr').find('td:eq(1)').text());
+                        var purQty = parseInt($(this).closest('tr').find(".purchaseQuantity").val());
+                        var rtQty = parseInt($(this).closest('tr').find(".returnQuantity").val());
+                        var defQty = parseInt($(this).closest('tr').find(".defectQuantity").val());
+                        var holdingQty = parseInt($(this).closest('tr').find('td:eq(5)').text());
+                        var quantity = parseInt($(this).closest('tr').find('td:eq(4)').text());
+                        if (purQty > quantity) {
+                            SweetAlert("Issue quantity cannot be more than available quantity", "warning", "OK");
+                        }
+                        else if ((rtQty + defQty) > holdingQty) {
+                            SweetAlert("Return quantity and Defect quantity cannot be more than holding stock", "warning", "OK");
+                        }
+                        else {
+                            strPurArray.push({ UserId: userId, ProductId: prodId, HoldingStock: holdingQty, PurchaseQuantity: purQty, ReturnQuantity: rtQty, ChallanNumber: challanNum, DefectQuantity: defQty, IsHolding: chkIsHolding  })
+                        }
                     }
                 }
             });
@@ -424,6 +430,21 @@ $(document).ready(function () {
                     success: function (data) {
                         $('.customer-cylinder1').removeClass('hidden');
                         $('#purchased-cylinder1').html(data);
+
+                        $.ajax({
+                            url: "/Customer/SearchCustomerReportCount",
+                            type: "GET",
+                            contentType: 'application/html;charset=utf-8',
+                            dataType: "html",
+                            //data: JSON.stringify({ CustomerReport: obj }),
+                            data: { userId: parseInt($("#hdncustid").val()), fromdate: temp[0].trim(), todate: temp[1].trim() },
+                            success: function (data) {
+                                $('#purchased-cylinder1Count').html(data);
+
+
+                            }
+
+                        });
                     }
 
                 });
@@ -459,7 +480,7 @@ $(function () {
                 data: { searchText: request.term },
                 success: function (data) {
                     response($.map(data, function (item) {
-                        return { label: item.label, value: item.id, address: item.address, mobile: item.mobile, depositamount: item.depositamount, notes: item.notes};
+                        return { label: item.label, value: item.id, address: item.address, mobile: item.mobile, depositamount: item.depositamount, notes: item.notes, alternatenumber: item.alternatenumber };
                         //+return { label: item.label, value: item.id, name: item.Mobile + ',' + item.DepositAmount + ',' + item.address};
                         //address = customer.Address, mobile = customer.Mobile, depositamount = customer.DepositAmount
                     }));
@@ -472,7 +493,7 @@ $(function () {
             var label = ui.item.label;
             var value = ui.item.value;
             $("#lbl_custname").empty().append(ui.item.label);
-            $("#lbl_mobile").empty().append(ui.item.mobile);
+            $("#lbl_mobile").empty().append(ui.item.mobile + " /" + ui.item.alternatenumber);
             $("#lbl_depositamount").empty().append(ui.item.depositamount);
             $("#lbl_address").empty().append(ui.item.address);
             $("#hdndepositamount").val(ui.item.depositamount);
@@ -506,7 +527,7 @@ $(function () {
                 data: { searchText: request.term },
                 success: function (data) {
                     response($.map(data, function (item) {
-                        return { label: item.label, value: item.id, address: item.address, mobile: item.mobile, depositamount: item.depositamount };
+                        return { label: item.label, value: item.id, address: item.address, mobile: item.mobile, depositamount: item.depositamount, alternatenumber: item.alternatenumber };
                         //+return { label: item.label, value: item.id, name: item.Mobile + ',' + item.DepositAmount + ',' + item.address};
                         //address = customer.Address, mobile = customer.Mobile, depositamount = customer.DepositAmount
                     }));
@@ -519,7 +540,7 @@ $(function () {
             var label = ui.item.label;
             var value = ui.item.value;
             $("#lbl_custname").empty().append(ui.item.label);
-            $("#lbl_mobile").empty().append(ui.item.mobile);
+            $("#lbl_mobile").empty().append(ui.item.mobile + " /" + ui.item.alternatenumber);
             $("#lbl_depositamount").empty().append(ui.item.depositamount);
             $("#lbl_address").empty().append(ui.item.address);
             $("#hdndepositamount").val(ui.item.depositamount);

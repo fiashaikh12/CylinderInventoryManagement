@@ -335,6 +335,7 @@ namespace CIM.BusinessLayer.Repository
                 parameters.Add("@Businessid", customerPurchaseReturn[0].BusinessId);
                 parameters.Add("@ChallanNumber", item.ChallanNumber);
                 parameters.Add("@DefectQuantity", item.DefectQuantity);
+                parameters.Add("@IsHolding", item.IsHolding);
                 returnValue = await this._dbContext.ExecuteAsync("USP_DistPurchaseReturn", parameters, commandType: CommandType.StoredProcedure);
             }
             if (returnValue > 0)

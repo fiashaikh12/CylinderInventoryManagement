@@ -88,7 +88,7 @@ namespace CylinderInventoryManagement.Controllers
                                  //& customer.BusinessId.Equals(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]))
                                  //& customer.IsActive.Equals(true)
                                  //select new { customer.UserId});
-                                 select new { id = customer.UserId, label = customer.CompanyName, name = customer.CompanyName, address= customer.Address ,mobile=customer.Mobile,depositamount=customer.DepositAmount,notes=customer.Notes});
+                                 select new { id = customer.UserId, label = customer.CompanyName, name = customer.CompanyName, address= customer.Address ,mobile=customer.Mobile,depositamount=customer.DepositAmount,notes=customer.Notes, alternatenumber = customer.AlternateNumber });
                 return Json(customers, JsonRequestBehavior.AllowGet);
             }
             else

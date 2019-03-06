@@ -65,7 +65,7 @@ namespace CylinderInventoryManagement.Controllers
                 ClsResponseModel<List<ClsCustomerModel>> customerResponse = (ClsResponseModel<List<ClsCustomerModel>>)this._user.GetDistributorDetails();
                 var customers = (from customer in customerResponse.Data
                                  where customer.CompanyName.Contains(searchText)
-                                 select new { id = customer.UserId, label = customer.CompanyName, name = customer.Name, address = customer.Address, mobile = customer.Mobile, depositamount = customer.DepositAmount });
+                                 select new { id = customer.UserId, label = customer.CompanyName, name = customer.Name, address = customer.Address, mobile = customer.Mobile, depositamount = customer.DepositAmount,alternatenumber = customer.AlternateNumber });
                 return Json(customers, JsonRequestBehavior.AllowGet);
             }
             else
