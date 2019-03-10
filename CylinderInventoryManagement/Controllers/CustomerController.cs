@@ -84,16 +84,31 @@ namespace CylinderInventoryManagement.Controllers
             {
                 ClsResponseModel<List<ClsCustomerModel>> customerResponse = (ClsResponseModel<List<ClsCustomerModel>>)this._user.GetCustomerDetails();
                 var customers = (from customer in customerResponse.Data
-                                 where customer.Name.Contains(searchText)
+                                 where customer.CompanyName.Contains(searchText)
                                  //& customer.BusinessId.Equals(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]))
                                  //& customer.IsActive.Equals(true)
                                  //select new { customer.UserId});
-                                 select new { id = customer.UserId, label = customer.Name, name = customer.Name,address= customer.Address ,mobile=customer.Mobile,depositamount=customer.DepositAmount});
+                                 select new { id = customer.UserId, label = customer.CompanyName, name = customer.CompanyName, address= customer.Address ,mobile=customer.Mobile,depositamount=customer.DepositAmount,notes=customer.Notes, alternatenumber = customer.AlternateNumber });
                 return Json(customers, JsonRequestBehavior.AllowGet);
             }
             else
             {
                 return Json("", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult CustomerNote(int UserId,string Notes)
+        {
+            if (Notes != null && UserId != 0)
+            {
+                var response = this._user.UpdateCustomerNote(UserId,Notes);
+                return Json(1, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -118,6 +133,7 @@ namespace CylinderInventoryManagement.Controllers
                 return Json(new { Status = 0 });
             }
         }
+
         [HttpPost]
         public async Task<ActionResult> CustomerDepositAsync(ClsCustomerDeposiit customerDeposiit)
         {
@@ -160,6 +176,14 @@ namespace CylinderInventoryManagement.Controllers
             //}
             ViewBag.CustomerReport = this._user.GetCustomerReport(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]), Userid, Convert.ToDateTime(fromdate), Convert.ToDateTime(todate));
             return PartialView("/Views/_CustomerReport.cshtml", ViewBag.CustomerReport.Data);
+        }
+
+
+        [HttpGet]
+        public ActionResult SearchCustomerReportCount(int Userid, string fromdate, string todate)
+        {
+            ViewBag.CustomerReportCount = this._user.GetCustomerReportCount(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]), Userid, Convert.ToDateTime(fromdate), Convert.ToDateTime(todate));
+            return PartialView("/Views/_CustomerReportCount.cshtml", ViewBag.CustomerReportCount.Data);
         }
     }
 }

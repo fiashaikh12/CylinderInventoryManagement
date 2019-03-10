@@ -1,0 +1,27 @@
+﻿@model List<CIM.Entities.CustomerReportResponse>
+
+<p><b>Count: </b></p>
+<table id="" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Gas Type</th>
+            <th>FullIssue</th>
+            <th>Return</th>
+            <th>Holding</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CategoryName</td>
+                    <td>@item.FullIssue</td>
+                    <td>@item.ReturnStock</td>
+                    <td>@item.HoldingStock</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

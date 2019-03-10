@@ -12,6 +12,9 @@ namespace CIM.Entities
         [Required(ErrorMessage = "Please enter mobile number")]
         [RegularExpression("^[0-9]*$", ErrorMessage ="Only numeric value allowed")]
         public string Mobile { get; set; }
+        [Required(ErrorMessage = "Please enter alternate number")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Only numeric value allowed")]
+        public string AlternateNumber { get; set; }
         [Required(ErrorMessage = "Please enter company name")]
         public string CompanyName { get; set; }
         public int TypeId { get; set; }
@@ -28,6 +31,7 @@ namespace CIM.Entities
         public int DeletedOn { get; set; }
         public DateTime? DeletedBy { get; set; }
         public float DepositAmount { get; set; }
+        public string Notes { get; set; }
     }
 
     public class ClsUserLoginModel

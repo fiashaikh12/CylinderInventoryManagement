@@ -1,9 +1,10 @@
 ﻿@model CIM.Entities.ClsCustomerModel
-
 @{
-    ViewBag.Title = "Search Customer";
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 <style>
     .example-modal .modal {
         position: relative;
@@ -63,7 +64,7 @@
     <!-- SELECT2 EXAMPLE -->
     <div class="box box-default">
         <div class="box-header with-border">
-            <h3 class="box-title">Search Company</h3>
+            <h3 class="box-title">Search Distributor</h3>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             </div>
@@ -73,88 +74,28 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="form-group">
-                        <input class="form-control autocomplete" id="userid" placeholder="Search Company" />
+                        <input class="form-control autocomplete" id="DISuserid" placeholder="Search Customer" />
                         <input type="hidden" id="hdncustid" name="custId" value="">
                         <input type="hidden" id="hdndepositamount" name="depositamount" value="">
                     </div>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
-                        Add Customer
+                        Add Distributor
                     </button>
                 </div>
             </div>
-            @*<br />
-                <div class="customer-cylinder hidden validate-form">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Customer Name: </label>
-                            <label id="lbl_custname"></label>
-                        </div>
-                        <div class="col-md-6">
-                            <label>Mobile: </label>
-                            <label id="lbl_mobile"></label>
-                        </div>
-                        <div class="col-md-6">
-                            <label>Deposit Amount: </label>
-                            <label id="lbl_depositamount"></label>
-                        </div>
-                        <div class="col-md-6">
-                            <label>Address: </label>
-                            <label id="lbl_address"></label>
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <div class="customer-cylinder hidden validate-form">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label>Challan Number</label>
-                            <input type="text" class="form-control textbox" name="ChallanNumber" id="ChallanNumber" placeholder="Challan Number" />
-                            <span class="not-required error">Challan number required</span>
-                        </div>
-                        <div class="col-md-4">
-                            <label>Deposit Amount</label>
-                            <input type="text" class="form-control textbox numeric-without-decimal" name="DepositAmount" id="DepositAmount" placeholder="Deposit Amount" />
-                            <span class="not-required error">Deposit amount required</span>
-                        </div>
-                        <div class="col-md-4">
-                            <label>Return Deposit</label>
-                            <input type="text" class="form-control textbox numeric-without-decimal" name="ReturnDeposit" id="ReturnDeposit" placeholder="Return Deposit" />
-                            <span class="not-required error">Return deposit required</span>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="box">
-                                <div id="purchased-cylinder">
-                                </div>
-                            </div>
-                            <input type="button" class="btn btn-primary submit" value="Submit" />
-                        </div>
-                    </div>
-                </div>*@
-
         </div>
     </div>
-    @*<div class="row">
-            <div class="col-xs-12">
-                <div class="box">
-                    @Html.Partial("/Views/_ProductDetails.cshtml", (List<CIM.Entities.ClsProductDetailModel>)ViewBag.ProductDetail.Data)
-                </div>
-
-            </div>
-        </div>*@
     <div class="modal fade" id="modal-default">
         <div class="modal-dialog">
             <div class="modal-content">
-                @using (Html.BeginForm("CreateCustomer", "Customer", FormMethod.Post, new { @class = "form-horizontal" }))
+                @using (Html.BeginForm("CreateCustomer", "Distributor", FormMethod.Post, new { @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken();
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title text-center">New Customer</h4>
+                        <h4 class="modal-title text-center">New Distributor</h4>
                     </div>
                     <div class="modal-body box-body">
                         <div class="form-group">
@@ -168,7 +109,7 @@
                             <label for="mobilenumber" class="col-sm-3 control-label">Mobile Number</label>
 
                             <div class="col-sm-9">
-                                @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control numeric-without-decimal", placeholder = "Mobile Number" })
+                                @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", placeholder = "Mobile Number" })
                                 @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -176,7 +117,7 @@
                             <label for="AlternateNumber" class="col-sm-3 control-label">Alternate Number</label>
 
                             <div class="col-sm-9">
-                                @Html.TextBoxFor(model => model.AlternateNumber, new { @class = "form-control numeric-without-decimal", placeholder = "Alternate Number" })
+                                @Html.TextBoxFor(model => model.AlternateNumber, new { @class = "form-control", placeholder = "Alternate Number" })
                                 @Html.ValidationMessageFor(model => model.AlternateNumber, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -223,67 +164,7 @@
     <!-- SELECT2 EXAMPLE -->
     <div class="box box-default">
         <div class="box-header with-border">
-            <h3 class="box-title">Customer Details</h3>
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            </div>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-            <div class="customer-cylinder hidden validate-form">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label>Company Name: </label>
-                        <label id="lbl_custname"></label>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Mobile: </label>
-                        <label id="lbl_mobile"></label>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Address: </label>
-                        <label id="lbl_address"></label>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Deposit Amount: </label>
-                        <label id="lbl_depositamount"></label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="box box-default">
-        <div class="box-header with-border">
-            <h3 class="box-title">Update Notes</h3>
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            </div>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-            <div class="customer-cylinder hidden validate-form">
-                <div class="row">
-                    <div class="col-md-2">
-                        <label>Note: </label>
-                    </div>
-                    <div class="col-md-10">
-                        <textarea id="txt_Notes" cols="12" style="width:100%;"></textarea>
-                    </div>
-                    <div class="col-md-4 col-md-offset-4">
-                        <input type="button" class="btn btn-primary btn_notesubmit" value="Update" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="content customer-cylinder hidden" style="min-height: 0px !important;">
-    <!-- SELECT2 EXAMPLE -->
-    <div class="box box-default">
-        <div class="box-header with-border">
-            <h3 class="box-title">Customer Leadger</h3>
+            <h3 class="box-title">Distributor Leadger</h3>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             </div>
@@ -303,20 +184,11 @@
             <div class="customer-cylinder hidden validate-form">
                 <div class="row">
                     <div class="col-md-4">
-                        <label>Challan Number</label>
-                        <input type="text" class="form-control textbox numeric-without-decimal" name="ChallanNumber" id="ChallanNumber" placeholder="Challan Number" />
-                        <span class="not-required error">Challan number required</span>
+                        <label>Bill Number</label>
+                        <input type="text" class="form-control textbox numeric-without-decimal" name="ChallanNumber" id="ChallanNumber" placeholder="Bill Number" />
+                        <span class="not-required error">Bill number required</span>
                     </div>
-                    <div class="col-md-4">
-                        <label>Deposit Amount</label>
-                        <input type="text" class="form-control textbox numeric-without-decimal" name="DepositAmount" id="DepositAmount" placeholder="Deposit Amount" value="0" />
-                        <span class="not-required error">Deposit amount required</span>
-                    </div>
-                    <div class="col-md-4">
-                        <label>Return Deposit</label>
-                        <input type="text" class="form-control textbox numeric-without-decimal" name="ReturnDeposit" id="ReturnDeposit" placeholder="Return Deposit" value="0" />
-                        <span class="not-required error">Return deposit required</span>
-                    </div>
+                    
                 </div>
                 <br />
                 <div class="row">
@@ -325,8 +197,7 @@
                             <div id="purchased-cylinder">
                             </div>
                         </div>
-                        <input type="checkbox" id="chkHolding" value="IsHolding"> Is Holding<br />
-                        <input type="button" class="btn btn-primary submit" value="Submit" />
+                        <input type="button" class="btn btn-primary Dis-submit" value="Submit" />
                     </div>
                 </div>
             </div>
@@ -336,5 +207,4 @@
         </div>
     </div>
 </section>
-
 

@@ -219,6 +219,7 @@ namespace CIM.BusinessLayer.Repository
                 parameters.Add("@HoldingStock", item.HoldingStock);
                 parameters.Add("@Businessid", customerPurchaseReturn[0].BusinessId);
                 parameters.Add("@ChallanNumber", item.ChallanNumber);
+                parameters.Add("@IsHolding", item.IsHolding);
                 returnValue = await this._dbContext.ExecuteAsync("USP_CustPurchaseReturn", parameters, commandType: CommandType.StoredProcedure);
             }
             if (returnValue > 0)
@@ -257,6 +258,97 @@ namespace CIM.BusinessLayer.Repository
                 clsResponse.ErrorCode = 400;
                 clsResponse.Message = "Failed";
                 
+            }
+            return clsResponse;
+        }
+
+        public ClsResponseModel GetAllEmptyProductandHoldingStock(int businessId, int UserId)
+        {
+            //List<ClsProductDetailModel> ClsProductDetail = new List<ClsProductDetailModel>();
+            //List<ClsUserHoldingStockModel> ClsUserHoldingStock = new List<ClsUserHoldingStockModel>();
+            var parameters = new DynamicParameters();
+            parameters.Add("@Businessid", businessId);
+            List<ClsProductDetailModel> ClsProductDetail = this._dbContext.Query<ClsProductDetailModel>("SP_ProductEmptyList", parameters, commandType: CommandType.StoredProcedure).ToList();
+            ClsResponseModel<List<ClsProductDetailModel>> clsResponse = new ClsResponseModel<List<ClsProductDetailModel>>();
+            if (ClsProductDetail.Count > 0)
+            {
+                try
+                {
+                    var Parameters = new DynamicParameters();
+                    Parameters.Add("@UserId", UserId);
+                    List<ClsUserHoldingStockModel> ClsUserHoldingStock = this._dbContext.Query<ClsUserHoldingStockModel>("SP_CustomerHoldingStock", Parameters, commandType: CommandType.StoredProcedure).ToList();
+                    for (int i = 0; i < ClsProductDetail.Count; i++)
+                    {
+                        if (ClsUserHoldingStock.Count > 0)
+                        {
+                            int flag = 0;
+                            for (int j = 0; j < ClsUserHoldingStock.Count; j++)
+                            {
+                                if (ClsUserHoldingStock[j].ProductId == ClsProductDetail[i].ProductId)
+                                {
+                                    ClsProductDetail[i].HoldingStock = ClsUserHoldingStock[j].HoldingStock;
+                                    flag = 1;
+                                    break;
+
+                                }
+                            }
+
+                            if (flag == 0)
+                            {
+                                ClsProductDetail[i].HoldingStock = 0;
+                            }
+                        }
+                        else
+                        {
+                            ClsProductDetail[i].HoldingStock = 0;
+                        }
+                    }
+                }
+                catch (Exception ex) { }
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Success";
+                clsResponse.Data = ClsProductDetail;
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed";
+            }
+            return clsResponse;
+        }
+
+        public async Task<ClsResponseModel> DistributorPurchaseReturnAsync(List<ClsCustomerPurchaseReturn> customerPurchaseReturn)
+        {
+            int returnValue = 0;
+            ClsResponseModel clsResponse = new ClsResponseModel();
+            foreach (var item in customerPurchaseReturn)
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@UserId", item.UserId);
+                parameters.Add("@Createdby", customerPurchaseReturn[0].BusinessId);
+                parameters.Add("@Productid", item.ProductId);
+                parameters.Add("@PurchaseQuantity", item.PurchaseQuantity);
+                parameters.Add("@ReturnQuantity", item.ReturnQuantity);
+                parameters.Add("@HoldingStock", item.HoldingStock);
+                parameters.Add("@Businessid", customerPurchaseReturn[0].BusinessId);
+                parameters.Add("@ChallanNumber", item.ChallanNumber);
+                parameters.Add("@DefectQuantity", item.DefectQuantity);
+                parameters.Add("@IsHolding", item.IsHolding);
+                returnValue = await this._dbContext.ExecuteAsync("USP_DistPurchaseReturn", parameters, commandType: CommandType.StoredProcedure);
+            }
+            if (returnValue > 0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Success.";
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed";
             }
             return clsResponse;
         }

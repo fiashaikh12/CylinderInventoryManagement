@@ -1,0 +1,37 @@
+﻿@model List<CIM.Entities.CustomerReportResponse>
+<div class="box-header">
+    <h3 class="box-title">Inventory List</h3>
+</div>
+<!-- /.box-header -->
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Ledger Date</th>
+                <th>Bill Number</th>
+                <th>Gas Type</th>
+                <th>Empty for refill</th>
+                <th>Purchase full cylinder</th>
+                <th>Holding</th>
+                <th>Defect Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.LedgerDate</td>
+                        <td>@item.ChallanNumber</td>
+                        <td>@item.CategoryName</td>
+                        <td>@item.FullIssue</td>
+                        <td>@item.ReturnStock</td>
+                        <td>@item.HoldingStock</td>
+                        <td>@item.DefectQuantity</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

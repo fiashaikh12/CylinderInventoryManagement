@@ -7,17 +7,14 @@
     <thead>
         <tr>
             <th>Check Box</th>
-            <th hidden>Product Id</th>
+            <th>Product Id</th>
             <th>Category</th>
-            @*<th>Sub Category</th>*@
-            <th hidden>Quantity</th>
-            @*<th>Is Deposit Allowed</th>
-            <th>Is Exchange Allowed</th>*@
+            <th>Quantity</th>
             <th>Available Quantity</th>
-            @*<th>Price</th>*@
             <th>Holding Stock</th>
-            <th>Purchase Quantity</th>
+            <th>Issue Quantity</th>
             <th>Return Quantity</th>
+            <th>Defect Quantity</th>
         </tr>
     </thead>
     <tbody>
@@ -27,14 +24,10 @@
             {
                 <tr>
                     <td>@Html.CheckBoxFor(model => item.IsChecked)</td>
-                    <td hidden>@item.ProductId</td>
+                    <td>@item.ProductId</td>
                     <td>@item.CategoryName</td>
-                    @*<td>@item.SubCategoryName</td>*@
-                    <td hidden>@item.Quantity</td>
-                    @*<td>@item.IsDepositAllowed</td>
-                    <td>@item.IsExchangeAllowed</td>*@
+                    <td>@item.Quantity</td>
                     <td>@item.AvailableQuantity</td>
-                    @*<td>@item.Price</td>*@
                     <td>@item.HoldingStock</td>
                     <td>
                         @Html.TextBoxFor(modelItem => item.PurchaseQuantity, new { @class = "purchaseQuantity form-control numeric-without-decimal" })
@@ -44,8 +37,13 @@
                         @Html.TextBoxFor(modelItem => item.ReturnQuantity, new { @class = "returnQuantity form-control numeric-without-decimal" })
                         <span class="not-required error">Purchase quantity required</span>
                     </td>
+                    <td>
+                        @Html.TextBoxFor(modelItem => item.DefectQuantity, new { @class = "defectQuantity form-control numeric-without-decimal" })
+                        <span class="not-required error">Purchase quantity required</span>
+                    </td>
                 </tr>
             }
         }
     </tbody>
 </table>
+

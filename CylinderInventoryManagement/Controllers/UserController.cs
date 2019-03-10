@@ -46,6 +46,7 @@ namespace CylinderInventoryManagement.Controllers
                 {
                     Session["userId"] = clsResponse.Data.UserId;
                     Session["businessId"] = clsResponse.Data.BusinessId;
+                    Session["businessName"] = clsResponse.Data.BusinessName;
                     return RedirectToAction("Index","Dashboard");
                 }
                 else
