@@ -121,7 +121,7 @@ $(document).ready(function () {
                     }
                     //else if (purQty == 0 && rtQty == 0) {
                     //    $(this).closest('tr').find(".purchaseQuantity").next().removeClass('not-required').addClass('required');
-                    //    $(this).closest('tr').find(".returnQuantity").next().removeClass('not-required').addClass('required');
+                    //    +$(this).closest('tr').find(".returnQuantity").next().removeClass('not-required').addClass('required');
                     //}
                     //else if () {
                     //    $(this).closest('tr').find(".returnQuantity").next().removeClass('not-required').addClass('required');
