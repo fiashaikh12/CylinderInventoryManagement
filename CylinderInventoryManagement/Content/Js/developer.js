@@ -63,6 +63,27 @@ $(document).ready(function () {
 
     })
 
+    $('.user_deposit_details').on('click', function () {
+        debugger
+        var Id =7//parseInt($("#userid").val());
+        if (Id > 0) {
+            $.ajax({
+                url: "/Distributor/GetUserDepositDetails",
+                type: "GET",
+                contentType: 'application/html;charset=utf-8',
+                dataType: "html",
+                data: { userId: Id },
+                success: function (data) {
+                    $('.customer-cylinder').removeClass('hidden');
+                    $('#depositDetails').html(data);
+                }
+            });
+        }
+        else {
+            SweetAlert("Unexpected error", "warning", "OK");
+        }
+    });
+
     $(document).on('keyup', '.textbox', function () {
         if ($(this).val() != "") {
             $(this).next().removeClass('required').addClass('not-required');

@@ -352,5 +352,28 @@ namespace CIM.BusinessLayer.Repository
             }
             return clsResponse;
         }
+
+        public async Task<ClsResponseModel> GetDepositDetails(int userId)
+        {
+            
+            ClsResponseModel<IEnumerable<ClsUserDepositDetails>> clsResponse = new ClsResponseModel<IEnumerable<ClsUserDepositDetails>>();
+            var parameters = new DynamicParameters();
+            parameters.Add("@UserId", userId);
+            IEnumerable<ClsUserDepositDetails> clsDepositDetails = await this._dbContext.QueryAsync<ClsUserDepositDetails>("Usp_GetUserDepositDetails", parameters, commandType: CommandType.StoredProcedure);
+            if (clsDepositDetails.Count()>0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Success";
+                clsResponse.Data = clsDepositDetails;
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed";
+            }
+            return clsResponse;
+        }
     }
 }

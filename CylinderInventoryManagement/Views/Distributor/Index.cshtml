@@ -74,7 +74,7 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="form-group">
-                        <input class="form-control autocomplete" id="DISuserid" placeholder="Search Customer" />
+                        <input class="form-control autocomplete" id="DISuserid" placeholder="Enter customer name" />
                         <input type="hidden" id="hdncustid" name="custId" value="">
                         <input type="hidden" id="hdndepositamount" name="depositamount" value="">
                     </div>
@@ -157,10 +157,31 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <div class="modal fade" id="modal-default1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title text-center">Deposit Details</h4>
+                </div>
+                <div class="modal-body box-body">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3" id="depositDetails">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
     <!-- /.modal -->
 </section>
-
+<a href="#" class="user_deposit_details" data-toggle="modal" data-target="#modal-default1">Get Deposit Details</a>
 <section class="content customer-cylinder hidden" style="min-height: 0px !important;">
+    
     <!-- SELECT2 EXAMPLE -->
     <div class="box box-default">
         <div class="box-header with-border">

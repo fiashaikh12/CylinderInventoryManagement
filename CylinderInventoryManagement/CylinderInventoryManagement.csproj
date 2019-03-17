@@ -6596,8 +6596,10 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\DistributorController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -7111,6 +7113,15 @@
     <Content Include="Views\_SubCatPartial.cshtml" />
     <Content Include="Views\_PurchasedCylinder.cshtml" />
     <Content Include="Views\Master\SubCategoryDetails.cshtml" />
+    <Content Include="Views\_CustomerReport.cshtml" />
+    <Content Include="Views\_CustomerReportCount.cshtml" />
+    <Content Include="Views\Distributor\DistributorReport.cshtml" />
+    <Content Include="Views\Distributor\Index.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\_DistributorCylinder.cshtml" />
+    <Content Include="Views\_DistributorReport.cshtml" />
+    <Content Include="Views\_TrailMasterPartial.cshtml" />
+    <Content Include="Views\Customer\CustomerReport.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -7121,6 +7132,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="bower_components\fullcalendar\dist\fullcalendar.d.ts" />
