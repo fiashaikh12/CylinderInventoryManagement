@@ -537,9 +537,8 @@ $(function () {
         }
     });
 
-    $("#UserId").autocomplete({
+    $("#Username").autocomplete({
         source: function (request, response) {
-            debugger;
             $.ajax({
                 url: "/Customer/SearchCustomerAuto",
                 type: "POST",
@@ -547,6 +546,7 @@ $(function () {
                 data: { searchText: request.term },
                 success: function (data) {
                     response($.map(data, function (item) {
+                        //console.log(item)
                         return { label: item.label, value: item.id, address: item.address, mobile: item.mobile, depositamount: item.depositamount, notes: item.notes, alternatenumber: item.alternatenumber };
                     }));
                 }
@@ -556,14 +556,8 @@ $(function () {
             event.preventDefault();
             var label = ui.item.label;
             var value = ui.item.value;
-            //$("#lbl_custname").empty().append(ui.item.label);
-            //$("#lbl_mobile").empty().append(ui.item.mobile + " /" + ui.item.alternatenumber);
-            //$("#lbl_depositamount").empty().append(ui.item.depositamount);
-            //$("#lbl_address").empty().append(ui.item.address);
-            //$("#hdndepositamount").val(ui.item.depositamount);
-            //$("#txt_Notes").empty().append(ui.item.notes);
             $("#CustomerId").val(value);
-            $("#UserId").val(label);
+            $("#Username").val(label);
             $.ajax({
                 url: "/Customer/GetRateCardDetails",
                 type: "GET",
@@ -577,7 +571,7 @@ $(function () {
             });
         },
         messages: {
-            noResults: "", results: ""
+            noResults: "Data not found", results: "Data not found"
         }
     });
 

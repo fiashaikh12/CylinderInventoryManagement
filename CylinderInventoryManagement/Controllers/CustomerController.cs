@@ -59,7 +59,7 @@ namespace CylinderInventoryManagement.Controllers
         [HttpPost]
         public async Task<ActionResult> AddRateCard(ClsRateCard rateCard)
         {
-            rateCard.UserId = Convert.ToInt32(Session["userId"]);
+            rateCard.UserId =(int)Session["userId"];
             var response =await this._user.AddRateCardAsync(rateCard);
             if (response.IsSuccess)
             {
@@ -75,8 +75,8 @@ namespace CylinderInventoryManagement.Controllers
         [HttpGet]
         public async Task<ActionResult> GetRateCardDetails(int userId)
         {
-            var response =await this._user.GetRateCardDetailsByUser(userId) as ClsResponseModel<IEnumerable<ClsRateCard>>;
-            return PartialView("_RateCardDetailsPartial.cshtml", response.Data);
+            ClsResponseModel<IEnumerable<ClsRateCard>> lstRateCards =await this._user.GetRateCardDetailsByUser(userId) as ClsResponseModel<IEnumerable<ClsRateCard>>;
+            return PartialView("_RateCardDetailsPartial.cshtml", lstRateCards.Data);
         }
 
         [HttpPost, ValidateAntiForgeryToken, ValidateOnlyIncomingValues]
@@ -128,10 +128,12 @@ namespace CylinderInventoryManagement.Controllers
                 ClsResponseModel<List<ClsCustomerModel>> customerResponse = (ClsResponseModel<List<ClsCustomerModel>>)this._user.GetCustomerDetails();
                 var customers = (from customer in customerResponse.Data
                                  where customer.CompanyName.Contains(searchText)
-                                 //& customer.BusinessId.Equals(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]))
-                                 //& customer.IsActive.Equals(true)
-                                 //select new { customer.UserId});
-                                 select new { id = customer.UserId, label = customer.CompanyName, name = customer.CompanyName, address= customer.Address ,mobile=customer.Mobile,depositamount=customer.DepositAmount,notes=customer.Notes, alternatenumber = customer.AlternateNumber });
+                                 select new {
+                                     id = customer.UserId, label = customer.CompanyName,
+                                     name = customer.CompanyName, address= customer.Address ,
+                                     mobile =customer.Mobile,depositamount=customer.DepositAmount,
+                                     notes =customer.Notes, alternatenumber = customer.AlternateNumber
+                                 }).ToList();
                 return Json(customers, JsonRequestBehavior.AllowGet);
             }
             else

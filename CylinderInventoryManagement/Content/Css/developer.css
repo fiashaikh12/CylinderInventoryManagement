@@ -49,10 +49,10 @@
     border-top: none !important;
     z-index: 1100 !important;
     /*position the autocomplete items to be the same width as the container:*/
-    top: 26% !important;
-    left: 575px !important;
-    right: 0 !important;
-    width: 615px !important;
+    /*top: 26% !important;*/
+    /*left: 575px !important;*/
+    /*right: 0 !important;*/
+    /*width: 615px !important;*/
 }
 
     .ui-autocomplete li {

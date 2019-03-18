@@ -2,22 +2,27 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style type="text/css">
+    .ui-autocomplete {
+        top: 26% !important;
+        left: 576px !important;
+        right: 0 !important;
+        width: 614px !important;
+    }
+</style>
 <!-- Main content -->
 <section class="content" style="min-height: 0px !important;">
     <!-- SELECT2 EXAMPLE -->
     <div class="box box-default">
         <div class="box-header with-border">
             <h3 class="box-title">Search Distributor</h3>
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="form-group">
-                        <input class="form-control autocomplete" id="DISuserid" placeholder="Enter customer name" />
+                        <input class="form-control autocomplete" id="DISuserid" placeholder="Enter company name" />
                         <input type="hidden" id="hdncustid" name="custId" value="">
                         <input type="hidden" id="hdndepositamount" name="depositamount" value="">
                     </div>
@@ -122,15 +127,14 @@
     </div>
     <!-- /.modal -->
 </section>
-<a href="#" class="user_deposit_details" data-toggle="modal" data-target="#modal-default1">Get Deposit Details</a>
 <section class="content customer-cylinder hidden" style="min-height: 0px !important;">
     
     <!-- SELECT2 EXAMPLE -->
     <div class="box box-default">
         <div class="box-header with-border">
-            <h3 class="box-title">Distributor Leadger</h3>
+            <h3 class="box-title">Distributor Ledger</h3>
             <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <a href="#" class="user_deposit_details" data-toggle="modal" data-target="#modal-default1">Get Deposit Details</a>
             </div>
         </div>
         <!-- /.box-header -->
