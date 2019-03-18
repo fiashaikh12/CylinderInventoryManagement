@@ -1,73 +1,21 @@
 ﻿@model CIM.Entities.ClsCustomerModel
 @{
-    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-<style>
-    .example-modal .modal {
-        position: relative;
-        top: auto;
-        bottom: auto;
-        right: auto;
-        left: auto;
-        display: block;
-        z-index: 1;
-    }
-
-    .example-modal .modal {
-        background: transparent !important;
-    }
-
-    .autocomplete {
-        position: relative !important;
-        display: inline-block !important;
-        z-index: 1050 !important;
-    }
-
+<style type="text/css">
     .ui-autocomplete {
-        position: absolute !important;
-        border: 1px solid #d4d4d4 !important;
-        border-bottom: none !important;
-        border-top: none !important;
-        z-index: 1100 !important;
-        /*position the autocomplete items to be the same width as the container:*/
         top: 26% !important;
-        left: 575px !important;
+        left: 576px !important;
         right: 0 !important;
-        width: 615px !important;
-    }
-
-        .ui-autocomplete li {
-            padding: 8px !important;
-            cursor: pointer !important;
-            background-color: #fff !important;
-            border-bottom: 1px solid #d4d4d4 !important;
-        }
-
-    /*when hovering an item:*/
-    .autocomplete-items div:hover {
-        background-color: #e9e9e9;
-    }
-
-    /*when navigating through the items using the arrow keys:*/
-    .autocomplete-active {
-        background-color: DodgerBlue !important;
-        color: #ffffff;
+        width: 614px !important;
     }
 </style>
-
-
 <!-- Main content -->
 <section class="content" style="min-height: 0px !important;">
     <!-- SELECT2 EXAMPLE -->
     <div class="box box-default">
         <div class="box-header with-border">
             <h3 class="box-title">Search Distributor</h3>
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -157,16 +105,36 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <div class="modal fade" id="modal-default1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title text-center">Deposit Details</h4>
+                </div>
+                <div class="modal-body box-body">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3" id="depositDetails">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
     <!-- /.modal -->
 </section>
-
 <section class="content customer-cylinder hidden" style="min-height: 0px !important;">
+    
     <!-- SELECT2 EXAMPLE -->
     <div class="box box-default">
         <div class="box-header with-border">
-            <h3 class="box-title">Distributor Leadger</h3>
+            <h3 class="box-title">Distributor Ledger</h3>
             <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <a href="#" class="user_deposit_details" data-toggle="modal" data-target="#modal-default1">Get Deposit Details</a>
             </div>
         </div>
         <!-- /.box-header -->

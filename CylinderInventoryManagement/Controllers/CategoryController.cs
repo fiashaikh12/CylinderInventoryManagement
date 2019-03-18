@@ -12,11 +12,11 @@ namespace CylinderInventoryManagement.Controllers
         // GET: Category
         public ActionResult Index()
         {
-            MasterRepository obj = new MasterRepository();
-            ClsCategoryMasterModel objmodel= new ClsCategoryMasterModel();
-            objmodel.flag = "S";
-            var result = obj.GetCategoryAsync(objmodel);
-            return View(result);
+            //MasterRepository obj = new MasterRepository();
+            //ClsCategoryMasterModel objmodel= new ClsCategoryMasterModel();
+            //objmodel.flag = "S";
+            //var result = obj.GetCategoryAsync(objmodel);
+            return View();
         }
     }
 }

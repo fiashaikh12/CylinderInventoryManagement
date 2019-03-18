@@ -10,6 +10,7 @@ namespace CIM.BusinessLayer.Repository.Interface
     public interface IProduct
     {
         Task<ClsResponseModel> AddProductAsync(ClsProductModel clsProductModel);
+        Task<ClsResponseModel> GetDepositDetails(int userId);
         ClsResponseModel GetAllProduct(int businessId);
         Task<ClsResponseModel> CustomerPurchaseAsync(ClsCustomerPurchase clsCustomer);
         Task<ClsResponseModel> CustomerReturnAsync(ClsCustomerPurchase clsCustomer);

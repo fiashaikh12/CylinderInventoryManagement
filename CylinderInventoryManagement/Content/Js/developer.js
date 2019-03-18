@@ -63,6 +63,27 @@ $(document).ready(function () {
 
     })
 
+    $('.user_deposit_details').on('click', function () {
+        debugger
+        var Id =7//parseInt($("#userid").val());
+        if (Id > 0) {
+            $.ajax({
+                url: "/Distributor/GetUserDepositDetails",
+                type: "GET",
+                contentType: 'application/html;charset=utf-8',
+                dataType: "html",
+                data: { userId: Id },
+                success: function (data) {
+                    //$('.customer-cylinder').removeClass('hidden');
+                    $('#depositDetails').html(data);
+                }
+            });
+        }
+        else {
+            SweetAlert("Unexpected error", "warning", "OK");
+        }
+    });
+
     $(document).on('keyup', '.textbox', function () {
         if ($(this).val() != "") {
             $(this).next().removeClass('required').addClass('not-required');
@@ -468,7 +489,6 @@ function SweetAlert(message, icon, buttonText) {
     });
 }
 
-
 $(function () {
     $("#userid").autocomplete({
         source: function (request, response) {
@@ -514,6 +534,44 @@ $(function () {
         },
         messages: {
             noResults: "", results: ""
+        }
+    });
+
+    $("#Username").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/Customer/SearchCustomerAuto",
+                type: "POST",
+                dataType: "json",
+                data: { searchText: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        //console.log(item)
+                        return { label: item.label, value: item.id, address: item.address, mobile: item.mobile, depositamount: item.depositamount, notes: item.notes, alternatenumber: item.alternatenumber };
+                    }));
+                }
+            });
+        },
+        select: function (event, ui) {
+            event.preventDefault();
+            var label = ui.item.label;
+            var value = ui.item.value;
+            $("#CustomerId").val(value);
+            $("#Username").val(label);
+            $.ajax({
+                url: "/Customer/GetRateCardDetails",
+                type: "GET",
+                contentType: 'application/html;charset=utf-8',
+                dataType: "html",
+                data: { userId: value },
+                success: function (data) {
+                    $('.rateCard').removeClass('hidden');
+                    $('#rateCardDetails').html(data);
+                }
+            });
+        },
+        messages: {
+            noResults: "Data not found", results: "Data not found"
         }
     });
 

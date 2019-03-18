@@ -41,7 +41,13 @@ namespace CIM.Entities
         public bool RememberMe { get; set; }
     }
 
+    public class ClsUserDepositDetails
+    {
+        public string DepositType { get; set; }
+        public DateTime Date { get; set; }
+        public double DepositAmount { get; set; }
 
+    }
     public class ClsUserHoldingStockModel
     {
         public int UserId { get; set; }

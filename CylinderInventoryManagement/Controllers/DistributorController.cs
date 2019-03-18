@@ -31,6 +31,17 @@ namespace CylinderInventoryManagement.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<ActionResult> GetUserDepositDetails(int userId)
+        {
+            ClsResponseModel<IEnumerable<ClsUserDepositDetails>> _depositDetails=null;
+            if (userId > 0)
+            {
+                _depositDetails = await this._product.GetDepositDetails(userId) as ClsResponseModel<IEnumerable<ClsUserDepositDetails>>;
+            }
+            return PartialView("/Views/_DepositDetailsPartial.cshtml", _depositDetails.Data);
+        }
+
         [HttpPost, ValidateAntiForgeryToken, ValidateOnlyIncomingValues]
         public async Task<ActionResult> CreateCustomer(ClsCustomerModel clsCustomerModel)
         {

@@ -74,7 +74,7 @@
                         <ul class="treeview-menu">
                             <li>
                                 <a href="@Url.Action("Index", "Dashboard")">
-                                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                                    <i class="glyphicon glyphicon-home"></i> <span>Dashboard</span>
                                 </a>
                             </li>
 
@@ -91,6 +91,14 @@
                             <li><a href="@Url.Action("CategoryList", "Master")"><i class="fa fa-circle-o"></i> Category</a></li>
                             <li><a href="@Url.Action("SubCategoryDetails", "Master")"><i class="fa fa-circle-o"></i>Sub Category</a></li>
                         </ul>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("CreateRateCard", "Customer")">
+                            <i class="glyphicon glyphicon-plus"></i> <span>Rate Card</span>
+                            @*<span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>*@
+                        </a>
                     </li>
                     <li class="treeview">
                         <a href="#">
@@ -112,8 +120,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class=""><a href="@Url.Action("Index", "Customer")"><i class="fa fa-circle-o"></i>Company Ledger</a></li>
-                            <li class=""><a href="@Url.Action("CustomerReport", "Customer")"><i class="fa fa-circle-o"></i>Company Report</a></li>
+                            <li class=""><a href="@Url.Action("Index", "Customer")"><i class="glyphicon glyphicon-book"></i>Company Ledger</a></li>
+                            <li class=""><a href="@Url.Action("CustomerReport", "Customer")"><i class="glyphicon glyphicon-stats"></i>Company Report</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -124,8 +132,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class=""><a href="@Url.Action("Index", "Distributor")"><i class="fa fa-circle-o"></i>Distributor Ledger</a></li>
-                            <li class=""><a href="@Url.Action("DistributorReport", "Distributor")"><i class="fa fa-circle-o"></i>Distributor Report</a></li>
+                            <li class=""><a href="@Url.Action("Index", "Distributor")"><i class="glyphicon glyphicon-book"></i>Distributor Ledger</a></li>
+                            <li class=""><a href="@Url.Action("DistributorReport", "Distributor")"><i class="glyphicon glyphicon-stats"></i>Distributor Report</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -152,7 +160,7 @@
             <div class="pull-right hidden-xs">
                 <b>Version</b> 2.4.0
             </div>
-            <strong>Copyright &copy; 2014-2016 <a href="#">XYZ</a>.</strong> All rights
+            <strong>Copyright &copy; 2014-2016 <a href="#">Jan Seva</a>.</strong> All rights
             reserved.
         </footer>
     </div>
@@ -206,9 +214,8 @@
 
     @*<script src="//code.jquery.com/jquery-1.10.2.js"></script>*@
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
-    <script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         $(function () {

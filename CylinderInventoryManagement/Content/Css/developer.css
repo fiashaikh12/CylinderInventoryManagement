@@ -11,3 +11,64 @@
 .required{
     display:block;
 }
+.has-search .form-control-feedback {
+    right: initial;
+    left: 0;
+    color: #ccc;
+}
+
+.has-search .form-control {
+    padding-right: 12px;
+    padding-left: 30px;
+}
+
+.example-modal .modal {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    right: auto;
+    left: auto;
+    display: block;
+    z-index: 1;
+}
+
+.example-modal .modal {
+    background: transparent !important;
+}
+
+.autocomplete {
+    position: relative !important;
+    display: inline-block !important;
+    z-index: 1050 !important;
+}
+
+.ui-autocomplete {
+    position: absolute !important;
+    border: 1px solid #d4d4d4 !important;
+    border-bottom: none !important;
+    border-top: none !important;
+    z-index: 1100 !important;
+    /*position the autocomplete items to be the same width as the container:*/
+    /*top: 26% !important;*/
+    /*left: 575px !important;*/
+    /*right: 0 !important;*/
+    /*width: 615px !important;*/
+}
+
+    .ui-autocomplete li {
+        padding: 8px !important;
+        cursor: pointer !important;
+        background-color: #fff !important;
+        border-bottom: 1px solid #d4d4d4 !important;
+    }
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+    background-color: #e9e9e9;
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+    background-color: DodgerBlue !important;
+    color: #ffffff;
+}

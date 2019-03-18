@@ -19,10 +19,23 @@ namespace CylinderInventoryManagement.Controllers
 
         private readonly IUser _user; 
         private readonly IProduct _product;
+        private readonly IMasters _masters;
+        private ClsResponseModel<List<ClsCategoryMasterModel>> clsResponse;
+
         public CustomerController()
         {
             this._user = new UserRepository();
             this._product = new ProductRepository();
+            this._masters = new MasterRepository();
+            this.clsResponse = (ClsResponseModel<List<ClsCategoryMasterModel>>)this._masters.Get_Category();
+            ViewBag.Category = clsResponse.Data.Select(x =>
+             new SelectListItem
+             {
+                 Text = x.CategoryName,
+                 Value = Convert.ToString(x.CategoryId)
+             }
+           ).ToList();
+
             ViewBag.ProductDetail = this._product.GetAllProduct(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]));
             ClsResponseModel<List<ClsCustomerModel>> customerRes = (ClsResponseModel<List<ClsCustomerModel>>)this._user.GetCustomerDetails();
             ViewBag.Customer = customerRes.Data.Select(y => new SelectListItem
@@ -36,6 +49,36 @@ namespace CylinderInventoryManagement.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult CreateRateCard()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddRateCard(ClsRateCard rateCard)
+        {
+            rateCard.UserId =(int)Session["userId"];
+            var response =await this._user.AddRateCardAsync(rateCard);
+            if (response.IsSuccess)
+            {
+                ViewBag.Message = "Rate card created successfully";
+            }
+            else
+            {
+                ViewBag.Message = "Failed to create rate card for this user";
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetRateCardDetails(int userId)
+        {
+            ClsResponseModel<IEnumerable<ClsRateCard>> lstRateCards =await this._user.GetRateCardDetailsByUser(userId) as ClsResponseModel<IEnumerable<ClsRateCard>>;
+            return PartialView("_RateCardDetailsPartial.cshtml", lstRateCards.Data);
+        }
+
         [HttpPost, ValidateAntiForgeryToken, ValidateOnlyIncomingValues]
         public async Task<ActionResult> CreateCustomer(ClsCustomerModel clsCustomerModel)
         {
@@ -85,10 +128,12 @@ namespace CylinderInventoryManagement.Controllers
                 ClsResponseModel<List<ClsCustomerModel>> customerResponse = (ClsResponseModel<List<ClsCustomerModel>>)this._user.GetCustomerDetails();
                 var customers = (from customer in customerResponse.Data
                                  where customer.CompanyName.Contains(searchText)
-                                 //& customer.BusinessId.Equals(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]))
-                                 //& customer.IsActive.Equals(true)
-                                 //select new { customer.UserId});
-                                 select new { id = customer.UserId, label = customer.CompanyName, name = customer.CompanyName, address= customer.Address ,mobile=customer.Mobile,depositamount=customer.DepositAmount,notes=customer.Notes, alternatenumber = customer.AlternateNumber });
+                                 select new {
+                                     id = customer.UserId, label = customer.CompanyName,
+                                     name = customer.CompanyName, address= customer.Address ,
+                                     mobile =customer.Mobile,depositamount=customer.DepositAmount,
+                                     notes =customer.Notes, alternatenumber = customer.AlternateNumber
+                                 }).ToList();
                 return Json(customers, JsonRequestBehavior.AllowGet);
             }
             else

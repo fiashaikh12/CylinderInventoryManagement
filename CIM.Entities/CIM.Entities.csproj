@@ -46,6 +46,7 @@
     <Compile Include="ClsMastersModel.cs" />
     <Compile Include="ClsProductDetailModel.cs" />
     <Compile Include="ClsProductModel.cs" />
+    <Compile Include="ClsRateCard.cs" />
     <Compile Include="ClsResponseModel.cs" />
     <Compile Include="ClsUserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

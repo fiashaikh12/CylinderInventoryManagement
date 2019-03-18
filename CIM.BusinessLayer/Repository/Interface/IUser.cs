@@ -14,5 +14,7 @@ namespace BusinessLayer.Repository.Interface
         ClsResponseModel GetCustomerReportCount(int Businessid, int Userid, DateTime fromdate, DateTime todate);
         ClsResponseModel GetDistributorDetails();
         Task<ClsResponseModel> UpdateCustomerNote(int Userid, string Notes);
+        Task<ClsResponseModel> AddRateCardAsync(ClsRateCard rateCard);
+        Task<ClsResponseModel> GetRateCardDetailsByUser(int userId);
     }
 }
