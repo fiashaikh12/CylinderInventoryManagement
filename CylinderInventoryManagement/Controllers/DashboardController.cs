@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace CylinderInventoryManagement.Controllers
 {
-    public class DashboardController : Controller
+    public class DashboardController : Controller 
     {
         // GET: Dashboard
         public ActionResult Index()

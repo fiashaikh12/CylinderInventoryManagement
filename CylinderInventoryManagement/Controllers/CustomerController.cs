@@ -17,7 +17,7 @@ namespace CylinderInventoryManagement.Controllers
     public class CustomerController : Controller
     {
 
-        private readonly IUser _user;
+        private readonly IUser _user; 
         private readonly IProduct _product;
         public CustomerController()
         {

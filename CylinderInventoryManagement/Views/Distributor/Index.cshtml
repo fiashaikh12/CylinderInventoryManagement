@@ -74,7 +74,7 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="form-group">
-                        <input class="form-control autocomplete" id="DISuserid" placeholder="Search Customer" />
+                        <input class="form-control autocomplete" id="DISuserid" placeholder="Search Distributor" />
                         <input type="hidden" id="hdncustid" name="custId" value="">
                         <input type="hidden" id="hdndepositamount" name="depositamount" value="">
                     </div>
@@ -109,7 +109,7 @@
                             <label for="mobilenumber" class="col-sm-3 control-label">Mobile Number</label>
 
                             <div class="col-sm-9">
-                                @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", placeholder = "Mobile Number" })
+                                @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control numeric-without-decimal", placeholder = "Mobile Number" })
                                 @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -117,7 +117,7 @@
                             <label for="AlternateNumber" class="col-sm-3 control-label">Alternate Number</label>
 
                             <div class="col-sm-9">
-                                @Html.TextBoxFor(model => model.AlternateNumber, new { @class = "form-control", placeholder = "Alternate Number" })
+                                @Html.TextBoxFor(model => model.AlternateNumber, new { @class = "form-control numeric-without-decimal", placeholder = "Alternate Number" })
                                 @Html.ValidationMessageFor(model => model.AlternateNumber, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -197,6 +197,7 @@
                             <div id="purchased-cylinder">
                             </div>
                         </div>
+                        <input type="checkbox" id="chkHolding" value="IsHolding"> Is Holding<br />
                         <input type="button" class="btn btn-primary Dis-submit" value="Submit" />
                     </div>
                 </div>

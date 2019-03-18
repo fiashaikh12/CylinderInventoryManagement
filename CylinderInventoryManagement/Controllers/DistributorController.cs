@@ -23,7 +23,7 @@ namespace CylinderInventoryManagement.Controllers
         {
             this._user = new UserRepository();
             this._product = new ProductRepository();
-        }
+        } 
 
         public ActionResult Index()
         {

@@ -7,9 +7,9 @@
     <thead>
         <tr>
             <th>Check Box</th>
-            <th>Product Id</th>
+            <th hidden>Product Id</th>
             <th>Category</th>
-            <th>Quantity</th>
+            <th hidden>Quantity</th>
             <th>Available Quantity</th>
             <th>Holding Stock</th>
             <th>Issue Quantity</th>
@@ -24,9 +24,9 @@
             {
                 <tr>
                     <td>@Html.CheckBoxFor(model => item.IsChecked)</td>
-                    <td>@item.ProductId</td>
+                    <td hidden>@item.ProductId</td>
                     <td>@item.CategoryName</td>
-                    <td>@item.Quantity</td>
+                    <td hidden>@item.Quantity</td>
                     <td>@item.AvailableQuantity</td>
                     <td>@item.HoldingStock</td>
                     <td>
