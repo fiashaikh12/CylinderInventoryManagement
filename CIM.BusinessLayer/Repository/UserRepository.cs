@@ -186,5 +186,51 @@ namespace BusinessLayer.Repository
             }
             return clsResponse;
         }
+
+        public async Task<ClsResponseModel> AddRateCardAsync(ClsRateCard rateCard)
+        {
+            ClsResponseModel clsResponse = new ClsResponseModel();
+            var parameters = new DynamicParameters();
+            parameters.Add("@userId", rateCard.CustomerId);
+            parameters.Add("@categoryId", rateCard.CategoryId);
+            parameters.Add("@rate", rateCard.RateCard);
+            parameters.Add("@createdBy", rateCard.UserId);
+            int returnValue = await this._dbContext.ExecuteAsync("Usp_AddRateCard", parameters, commandType: CommandType.StoredProcedure);
+            if (returnValue > 0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Success";
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed";
+            }
+            return clsResponse;
+        }
+
+        public async Task<ClsResponseModel> GetRateCardDetailsByUser(int userId)
+        {
+            ClsResponseModel<IEnumerable<ClsRateCard>> clsResponse = new ClsResponseModel<IEnumerable<ClsRateCard>>();
+            var parameters = new DynamicParameters();
+            parameters.Add("@userId", userId);
+            IEnumerable<ClsRateCard> lstRateDetails =await this._dbContext.QueryAsync<ClsRateCard>("Usp_GetRateCardDetailsByUser", parameters, commandType: CommandType.StoredProcedure);
+            if (lstRateDetails.Count()> 0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Success";
+                clsResponse.Data = lstRateDetails;
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed";
+            }
+            return clsResponse;
+        }
     }
 }

@@ -74,7 +74,7 @@ $(document).ready(function () {
                 dataType: "html",
                 data: { userId: Id },
                 success: function (data) {
-                    $('.customer-cylinder').removeClass('hidden');
+                    //$('.customer-cylinder').removeClass('hidden');
                     $('#depositDetails').html(data);
                 }
             });
@@ -489,7 +489,6 @@ function SweetAlert(message, icon, buttonText) {
     });
 }
 
-
 $(function () {
     $("#userid").autocomplete({
         source: function (request, response) {
@@ -530,6 +529,50 @@ $(function () {
                 success: function (data) {
                     $('.customer-cylinder').removeClass('hidden');
                     $('#purchased-cylinder').html(data);
+                }
+            });
+        },
+        messages: {
+            noResults: "", results: ""
+        }
+    });
+
+    $("#UserId").autocomplete({
+        source: function (request, response) {
+            debugger;
+            $.ajax({
+                url: "/Customer/SearchCustomerAuto",
+                type: "POST",
+                dataType: "json",
+                data: { searchText: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.label, value: item.id, address: item.address, mobile: item.mobile, depositamount: item.depositamount, notes: item.notes, alternatenumber: item.alternatenumber };
+                    }));
+                }
+            });
+        },
+        select: function (event, ui) {
+            event.preventDefault();
+            var label = ui.item.label;
+            var value = ui.item.value;
+            //$("#lbl_custname").empty().append(ui.item.label);
+            //$("#lbl_mobile").empty().append(ui.item.mobile + " /" + ui.item.alternatenumber);
+            //$("#lbl_depositamount").empty().append(ui.item.depositamount);
+            //$("#lbl_address").empty().append(ui.item.address);
+            //$("#hdndepositamount").val(ui.item.depositamount);
+            //$("#txt_Notes").empty().append(ui.item.notes);
+            $("#CustomerId").val(value);
+            $("#UserId").val(label);
+            $.ajax({
+                url: "/Customer/GetRateCardDetails",
+                type: "GET",
+                contentType: 'application/html;charset=utf-8',
+                dataType: "html",
+                data: { userId: value },
+                success: function (data) {
+                    $('.rateCard').removeClass('hidden');
+                    $('#rateCardDetails').html(data);
                 }
             });
         },

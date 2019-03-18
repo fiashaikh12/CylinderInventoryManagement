@@ -74,7 +74,7 @@
                         <ul class="treeview-menu">
                             <li>
                                 <a href="@Url.Action("Index", "Dashboard")">
-                                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                                    <i class="glyphicon glyphicon-home"></i> <span>Dashboard</span>
                                 </a>
                             </li>
 
@@ -91,6 +91,14 @@
                             <li><a href="@Url.Action("CategoryList", "Master")"><i class="fa fa-circle-o"></i> Category</a></li>
                             <li><a href="@Url.Action("SubCategoryDetails", "Master")"><i class="fa fa-circle-o"></i>Sub Category</a></li>
                         </ul>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("CustomerRateCard", "Customer")">
+                            <i class="glyphicon glyphicon-plus"></i> <span>Rate Card</span>
+                            @*<span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>*@
+                        </a>
                     </li>
                     <li class="treeview">
                         <a href="#">

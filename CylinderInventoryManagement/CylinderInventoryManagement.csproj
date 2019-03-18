@@ -7120,8 +7120,10 @@
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\_DistributorCylinder.cshtml" />
     <Content Include="Views\_DistributorReport.cshtml" />
-    <Content Include="Views\_TrailMasterPartial.cshtml" />
+    <Content Include="Views\_DepositDetailsPartial.cshtml" />
     <Content Include="Views\Customer\CustomerReport.cshtml" />
+    <Content Include="Views\Customer\CreateRateCard.cshtml" />
+    <Content Include="Views\_RateCardDetailsPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

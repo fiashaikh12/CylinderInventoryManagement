@@ -1,0 +1,22 @@
+﻿@model IEnumerable<CIM.Entities.ClsRateCard>
+
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Category Name</th>
+            <th>Rate Card</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CategoryName</td>
+                    <td>@item.RateCard</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

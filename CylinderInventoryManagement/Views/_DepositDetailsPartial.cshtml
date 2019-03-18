@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<CIM.Entities.ClsUserDepositDetails>
 
-<table id="example1" class="table table-bordered table-hover">
+<table id="example2" class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>Deposit Type</th>
@@ -15,7 +15,7 @@
             {
                 <tr>
                     <td>@item.DepositType</td>
-                    <td>@item.Date.ToString("dd/MM/yyyy")</td>
+                    <td>@item.Date.ToString("dd-MMM-yyyy")</td>
                     <td>@item.DepositAmount</td>
                 </tr>
             }

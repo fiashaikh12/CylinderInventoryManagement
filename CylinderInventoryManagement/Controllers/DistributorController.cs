@@ -39,7 +39,7 @@ namespace CylinderInventoryManagement.Controllers
             {
                 _depositDetails = await this._product.GetDepositDetails(userId) as ClsResponseModel<IEnumerable<ClsUserDepositDetails>>;
             }
-            return PartialView("/Views/_TrailMasterPartial.cshtml", _depositDetails.Data);
+            return PartialView("/Views/_DepositDetailsPartial.cshtml", _depositDetails.Data);
         }
 
         [HttpPost, ValidateAntiForgeryToken, ValidateOnlyIncomingValues]
