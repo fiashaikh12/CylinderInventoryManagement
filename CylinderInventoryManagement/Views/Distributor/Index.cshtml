@@ -2,14 +2,14 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style type="text/css">
+@*<style type="text/css">
     .ui-autocomplete {
         top: 26% !important;
         left: 576px !important;
         right: 0 !important;
         width: 614px !important;
     }
-</style>
+</style>*@
 <!-- Main content -->
 <section class="content" style="min-height: 0px !important;">
     <!-- SELECT2 EXAMPLE -->
@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <label for="Name" class="col-sm-3 control-label">Name</label>
                             <div class="col-sm-9">
-                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Full Name" })
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Full Name", autocomplete = "off" })
                                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                             <label for="mobilenumber" class="col-sm-3 control-label">Mobile Number</label>
 
                             <div class="col-sm-9">
-                                @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control numeric-without-decimal", placeholder = "Mobile Number" })
+                                @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control numeric-without-decimal", placeholder = "Mobile Number", autocomplete = "off" })
                                 @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                             <label for="AlternateNumber" class="col-sm-3 control-label">Alternate Number</label>
 
                             <div class="col-sm-9">
-                                @Html.TextBoxFor(model => model.AlternateNumber, new { @class = "form-control numeric-without-decimal", placeholder = "Alternate Number" })
+                                @Html.TextBoxFor(model => model.AlternateNumber, new { @class = "form-control numeric-without-decimal", placeholder = "Alternate Number", autocomplete = "off" })
                                 @Html.ValidationMessageFor(model => model.AlternateNumber, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                             <label for="mobilenumber" class="col-sm-3 control-label">Company Name</label>
 
                             <div class="col-sm-9">
-                                @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", placeholder = "Company Name" })
+                                @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", placeholder = "Company Name", autocomplete = "off" })
                                 @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Address</label>
                             <div class="col-sm-9">
-                                @Html.TextAreaFor(model => model.Address, new { @rows = "4", @cols = "50", @class = "form-control", placeholder = "Address" })
+                                @Html.TextAreaFor(model => model.Address, new { @rows = "4", @cols = "50", @class = "form-control", placeholder = "Address", autocomplete = "off" })
                                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                             <label for="gstnumber" class="col-sm-3 control-label">GST No</label>
 
                             <div class="col-sm-9">
-                                @Html.TextBoxFor(model => model.GSTNo, new { @class = "form-control", placeholder = "GST No" })
+                                @Html.TextBoxFor(model => model.GSTNo, new { @class = "form-control", placeholder = "GST No", autocomplete = "off" })
                                 @Html.ValidationMessageFor(model => model.GSTNo, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -105,26 +105,6 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <div class="modal fade" id="modal-default1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title text-center">Deposit Details</h4>
-                </div>
-                <div class="modal-body box-body">
-                    <div class="row">
-                        <div class="col-md-6 col-md-offset-3" id="depositDetails">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
     <!-- /.modal -->
 </section>
 <section class="content customer-cylinder hidden" style="min-height: 0px !important;">
@@ -133,9 +113,6 @@
     <div class="box box-default">
         <div class="box-header with-border">
             <h3 class="box-title">Distributor Ledger</h3>
-            <div class="box-tools pull-right">
-                <a href="#" class="user_deposit_details" data-toggle="modal" data-target="#modal-default1">Get Deposit Details</a>
-            </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -153,10 +130,20 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label>Bill Number</label>
-                        <input type="text" class="form-control textbox numeric-without-decimal" name="ChallanNumber" id="ChallanNumber" placeholder="Bill Number" />
+                        <input type="text" autocomplete="off" class="form-control textbox" name="ChallanNumber" id="ChallanNumber" placeholder="Bill Number" />
                         <span class="not-required error">Bill number required</span>
                     </div>
-                    
+
+                    <div class="col-md-4">
+                        <label>Bill Date</label>
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" autocomplete="off" class="form-control pull-right textbox" name="BillDate" id="challandate_datepicker" placeholder="Bill Date" />
+                            <span class="not-required error">Bill date required</span>
+                        </div>
+                    </div>
                 </div>
                 <br />
                 <div class="row">

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-
+using CylinderInventoryManagement.Common;
 namespace CylinderInventoryManagement.Controllers
 {
     [SessionTimeout]
@@ -53,21 +53,29 @@ namespace CylinderInventoryManagement.Controllers
         [HttpGet]
         public ActionResult CreateRateCard()
         {
-            return View();
+            ClsRateCard ratecard = new ClsRateCard();
+            return View(ratecard);
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddRateCard(ClsRateCard rateCard)
+        public ActionResult CreateRateCard(ClsRateCard rateCard)
         {
-            rateCard.UserId =(int)Session["userId"];
-            var response =await this._user.AddRateCardAsync(rateCard);
-            if (response.IsSuccess)
+            if (rateCard != null)
             {
-                ViewBag.Message = "Rate card created successfully";
+                rateCard.UserId = (int)Session["userId"];
+                //var response = await this._user.AddRateCardAsync(rateCard);
+                //if (response.IsSuccess)
+                //{
+                    ViewBag.Message = "Rate card created successfully";
+                //}
+                //else
+                //{
+                //    ViewBag.Message = "Failed to create rate card for this user";
+                //}
             }
             else
             {
-                ViewBag.Message = "Failed to create rate card for this user";
+                ViewBag.Message = "Something went wrong";
             }
             return View();
         }
@@ -122,12 +130,12 @@ namespace CylinderInventoryManagement.Controllers
         }
         [HttpPost]
         public ActionResult SearchCustomerAuto(string searchText)
-        {
+       {
             if (searchText != null)
             {
                 ClsResponseModel<List<ClsCustomerModel>> customerResponse = (ClsResponseModel<List<ClsCustomerModel>>)this._user.GetCustomerDetails();
                 var customers = (from customer in customerResponse.Data
-                                 where customer.CompanyName.Contains(searchText)
+                                 where customer.CompanyName.ToLower().Contains(searchText.ToLower())
                                  select new {
                                      id = customer.UserId, label = customer.CompanyName,
                                      name = customer.CompanyName, address= customer.Address ,
@@ -167,15 +175,24 @@ namespace CylinderInventoryManagement.Controllers
         [HttpPost]
         public async Task<ActionResult> CustomerPurchaseReturnAsync(List<ClsCustomerPurchaseReturn> customerPurchaseReturn)
         {
-            customerPurchaseReturn[0].BusinessId = Convert.ToInt32(Session["businessid"]);
-            ClsResponseModel responseModel= await this._product.CustomerPurchaseReturnAsync(customerPurchaseReturn);
-            if (responseModel.IsSuccess)
+            try
             {
-                return Json(new { Status = 1 });
+                //Helper.WriteErrorLog("functionname : CustomerPurchaseReturnAsync function hit");
+                customerPurchaseReturn[0].BusinessId = Convert.ToInt32(Session["businessid"]);
+                ClsResponseModel responseModel = await this._product.CustomerPurchaseReturnAsync(customerPurchaseReturn);
+                if (responseModel.IsSuccess)
+                {
+                    return Json(new { Status = 1 });
+                }
+                else
+                {
+                    return Json(new { Status = 0 });
+                }
             }
-            else
+            catch(Exception ex)
             {
-                return Json(new { Status = 0 });
+                Helper.WriteErrorLog("functionname : CustomerPurchaseReturnAsync" + Environment.NewLine + "Source : " + ex.Source.Trim() + Environment.NewLine + ex.Message + Environment.NewLine + "inner exception :" + ex.InnerException);
+                return Json(new { Status = 400 });
             }
         }
 

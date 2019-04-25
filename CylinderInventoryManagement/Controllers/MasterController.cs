@@ -49,7 +49,7 @@ namespace CylinderInventoryManagement.Controllers
                 if (response.IsSuccess)
                 {
                     ViewData["ErrorMsg"] = response.Message;
-                    return RedirectToAction("SubCategory");
+                    return RedirectToAction("SubCategoryDetails");
                 }
                 else
                 {
@@ -66,8 +66,8 @@ namespace CylinderInventoryManagement.Controllers
         [HttpGet]
         public ActionResult DeleteSubCate(int id)
         {
-            this._masters.Delete_SubCategory(Convert.ToInt32(Session["businessId"]), id);
-            return RedirectToAction("SubCategory");
+            this._masters.Delete_SubCategory(Convert.ToInt32(Session["userId"]), id);
+            return RedirectToAction("SubCategoryDetails");
         }
 
         //Category Code

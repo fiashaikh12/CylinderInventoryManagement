@@ -33,6 +33,7 @@ namespace CIM.Entities
         public string ChallanNumber { get; set; }
         public int DefectQuantity { get; set; }
         public int IsHolding { get; set; }
+        public string ChallanDate { get; set; }
     }
 
     public class ClsCustomerDeposiit: ClsUser

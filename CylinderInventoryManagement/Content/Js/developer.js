@@ -1,4 +1,4 @@
-﻿ 
+﻿
 $(document).ready(function () {
     $('.overlay').hide();
     $('#dverror').hide();
@@ -65,7 +65,7 @@ $(document).ready(function () {
 
     $('.user_deposit_details').on('click', function () {
         debugger
-        var Id =7//parseInt($("#userid").val());
+        var Id = parseInt($("#hdncustid").val());
         if (Id > 0) {
             $.ajax({
                 url: "/Distributor/GetUserDepositDetails",
@@ -107,7 +107,7 @@ $(document).ready(function () {
     });
 
     var validateInput = function () {
-        var IsValid = false;
+        var IsValid = true;
         $('.validate-form').find('.textbox').each(function () {
             if ($(this).val() == "" || $(this).val() == null || $(this).val() == undefined) {
                 $(this).next().removeClass('not-required').addClass('required');
@@ -115,7 +115,7 @@ $(document).ready(function () {
             }
             else {
                 $(this).next().removeClass('required').addClass('not-required');
-                IsValid = true;
+                //IsValid = true;
             }
         })
         return IsValid;
@@ -132,28 +132,30 @@ $(document).ready(function () {
                 data: { UserId: userId, Notes: notes },
                 success: function (data) {
                     if (data = 1) {
-                        $('#dverror').hide();
-                        $('#dvsucess').show();
-                        $(function () {
-                            setTimeout(function () {
-                                $("#dvsucess").hide('blind', {}, 500)
-                            }, 5000);
-                        });
+                        //$('#dverror').hide();
+                        //$('#dvsucess').show();
+                        //$(function () {
+                        //    setTimeout(function () {
+                        //        $("#dvsucess").hide('blind', {}, 500)
+                        //    }, 5000);
+                        //});
+                        SweetAlert("Notes Update Successfully", "warning", "OK");
                     }
                     else {
-                        $('#dverror').show();
-                        $('#dvsucess').hide();
-                        $(function () {
-                            setTimeout(function () {
-                                $("#dverror").hide('blind', {}, 500)
-                            }, 5000);
-                        });
+                        //$('#dverror').show();
+                        //$('#dvsucess').hide();
+                        //$(function () {
+                        //    setTimeout(function () {
+                        //        $("#dverror").hide('blind', {}, 500)
+                        //    }, 5000);
+                        //});
+                        SweetAlert("Something Went Wrong!!!", "error", "OK");
                     }
                 }
             });
         }
         else {
-            SweetAlert("Notes cannot be blank", "warning", "OK");
+            SweetAlert("Notes cannot be blank", "error", "OK");
         }
     });
 
@@ -161,10 +163,18 @@ $(document).ready(function () {
         $('.overlay').show();
 
         var userId = parseInt($("#hdncustid").val());
-        var challanNum, depositAmt, returnAmt;
+        var challanNum, depositAmt, returnAmt, ChallanD;
         challanNum = $('#ChallanNumber').val();
         depositAmt = $('#DepositAmount').val();
         returnAmt = $('#ReturnDeposit').val();
+        ChallanD = $('#challandate_datepicker').val();
+
+        var d = new Date(ChallanD.split("/").reverse().join("-"));
+        var dd = d.getDate();
+        var mm = d.getMonth() + 1;
+        var yy = d.getFullYear();
+        ChallanD = mm + "/" + dd + "/" + yy;
+
         var chkIsHolding = 0;
         if ($('#chkHolding').is(":checked") == true) {
             chkIsHolding = 1;
@@ -195,7 +205,7 @@ $(document).ready(function () {
                         //    $(this).closest('tr').find(".returnQuantity").next().removeClass('not-required').addClass('required');
                         //}
                         else {
-                            strPurArray.push({ UserId: userId, ProductId: prodId, HoldingStock: holdingQty, PurchaseQuantity: purQty, ReturnQuantity: rtQty, ChallanNumber: challanNum, IsHolding: chkIsHolding })
+                            strPurArray.push({ UserId: userId, ProductId: prodId, HoldingStock: holdingQty, PurchaseQuantity: purQty, ReturnQuantity: rtQty, ChallanNumber: challanNum, IsHolding: chkIsHolding, ChallanDate: ChallanD })
                         }
                     }
                 }
@@ -270,10 +280,27 @@ $(document).ready(function () {
                                     $("#dvsucess").hide('blind', {}, 500)
                                 }, 5000);
                             });
+                            $('#ChallanNumber').val("");
+                            $('#DepositAmount').val(0);
+                            $('#ReturnDeposit').val(0);
+                            $('#challandate_datepicker').val("");
+                        }
+                        else if (data.Status == 400) {
+                            $('#dverror').show();
+                            $('#dvsucess').hide();
+                            $('#dverror_span').empty().append('Something went wrong');
+
+                            $(function () {
+                                setTimeout(function () {
+                                    $("#dverror").hide('blind', {}, 500)
+                                }, 5000);
+                            });
                         }
                         else {
                             $('#dverror').show();
                             $('#dvsucess').hide();
+                            $('#dverror_span').empty().append('Challan number already exists');
+                            
                             $(function () {
                                 setTimeout(function () {
                                     $("#dverror").hide('blind', {}, 500)
@@ -298,8 +325,16 @@ $(document).ready(function () {
         $('.overlay').show();
 
         var userId = parseInt($("#hdncustid").val());
-        var challanNum;
+        var challanNum, ChallanD;
         challanNum = $('#ChallanNumber').val();
+        ChallanD = $('#challandate_datepicker').val();
+
+        var d = new Date(ChallanD.split("/").reverse().join("-"));
+        var dd = d.getDate();
+        var mm = d.getMonth() + 1;
+        var yy = d.getFullYear();
+        ChallanD = mm + "/" + dd + "/" + yy;
+
         var chkIsHolding = 0;
         if ($('#chkHolding').is(":checked") == true) {
             chkIsHolding = 1;
@@ -323,7 +358,7 @@ $(document).ready(function () {
                             SweetAlert("Return quantity and Defect quantity cannot be more than holding stock", "warning", "OK");
                         }
                         else {
-                            strPurArray.push({ UserId: userId, ProductId: prodId, HoldingStock: holdingQty, PurchaseQuantity: purQty, ReturnQuantity: rtQty, ChallanNumber: challanNum, DefectQuantity: defQty, IsHolding: chkIsHolding  })
+                            strPurArray.push({ UserId: userId, ProductId: prodId, HoldingStock: holdingQty, PurchaseQuantity: purQty, ReturnQuantity: rtQty, ChallanNumber: challanNum, DefectQuantity: defQty, IsHolding: chkIsHolding, ChallanDate: ChallanD })
                         }
                     }
                 }
@@ -337,7 +372,7 @@ $(document).ready(function () {
                     success: function (data) {
                         //console.log(data);
                         if (data.Status == 1) {
-                            
+
                             $.ajax({
                                 url: "/Distributor/SearchDistributorAuto",
                                 type: "GET",
@@ -347,6 +382,10 @@ $(document).ready(function () {
                                 success: function (data) {
                                     $('.customer-cylinder').removeClass('hidden');
                                     $('#purchased-cylinder').html(data);
+
+                                    $('#ChallanNumber').val('');
+                                    $('#challandate_datepicker').val('');
+
                                 }
                             });
 
@@ -358,9 +397,22 @@ $(document).ready(function () {
                                 }, 5000);
                             });
                         }
+                        else if (data.Status == 400) {
+                            $('#dverror').show();
+                            $('#dvsucess').hide();
+                            $('#dverror_span').empty().append('Something went wrong');
+
+                            $(function () {
+                                setTimeout(function () {
+                                    $("#dverror").hide('blind', {}, 500)
+                                }, 5000);
+                            });
+                        }
                         else {
                             $('#dverror').show();
                             $('#dvsucess').hide();
+                            $('#dverror_span').empty().append('Bill number already exists');
+
                             $(function () {
                                 setTimeout(function () {
                                     $("#dverror").hide('blind', {}, 500)
@@ -397,7 +449,7 @@ $(document).ready(function () {
                     contentType: 'application/html;charset=utf-8',
                     dataType: "html",
                     //data: JSON.stringify({ CustomerReport: obj }),
-                    data: { userId: parseInt($("#hdncustid").val()), fromdate: temp[0].trim(), todate: temp[1].trim()},
+                    data: { userId: parseInt($("#hdncustid").val()), fromdate: temp[0].trim(), todate: temp[1].trim() },
                     success: function (data) {
                         $('.customer-cylinder1').removeClass('hidden');
                         $('#purchased-cylinder1').html(data);

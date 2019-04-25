@@ -5,6 +5,7 @@ using CIM.BusinessLayer.Repository;
 using CIM.BusinessLayer.Repository.Interface;
 using CIM.Entities;
 using CIM.Filter;
+using CylinderInventoryManagement.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,18 +24,18 @@ namespace CylinderInventoryManagement.Controllers
         {
             this._user = new UserRepository();
             this._product = new ProductRepository();
-        } 
+        }
 
         public ActionResult Index()
         {
-            
+
             return View();
         }
 
         [HttpGet]
         public async Task<ActionResult> GetUserDepositDetails(int userId)
         {
-            ClsResponseModel<IEnumerable<ClsUserDepositDetails>> _depositDetails=null;
+            ClsResponseModel<IEnumerable<ClsUserDepositDetails>> _depositDetails = null;
             if (userId > 0)
             {
                 _depositDetails = await this._product.GetDepositDetails(userId) as ClsResponseModel<IEnumerable<ClsUserDepositDetails>>;
@@ -75,8 +76,8 @@ namespace CylinderInventoryManagement.Controllers
             {
                 ClsResponseModel<List<ClsCustomerModel>> customerResponse = (ClsResponseModel<List<ClsCustomerModel>>)this._user.GetDistributorDetails();
                 var customers = (from customer in customerResponse.Data
-                                 where customer.CompanyName.Contains(searchText)
-                                 select new { id = customer.UserId, label = customer.CompanyName, name = customer.Name, address = customer.Address, mobile = customer.Mobile, depositamount = customer.DepositAmount,alternatenumber = customer.AlternateNumber });
+                                 where customer.CompanyName.ToLower().Contains(searchText.ToLower())
+                                 select new { id = customer.UserId, label = customer.CompanyName, name = customer.Name, address = customer.Address, mobile = customer.Mobile, depositamount = customer.DepositAmount, alternatenumber = customer.AlternateNumber });
                 return Json(customers, JsonRequestBehavior.AllowGet);
             }
             else
@@ -95,15 +96,23 @@ namespace CylinderInventoryManagement.Controllers
         [HttpPost]
         public async Task<ActionResult> DistributorPurchaseReturnAsync(List<ClsCustomerPurchaseReturn> customerPurchaseReturn)
         {
-            customerPurchaseReturn[0].BusinessId = Convert.ToInt32(Session["businessid"]);
-            ClsResponseModel responseModel = await this._product.DistributorPurchaseReturnAsync(customerPurchaseReturn);
-            if (responseModel.IsSuccess)
+            try
             {
-                return Json(new { Status = 1 });
+                customerPurchaseReturn[0].BusinessId = Convert.ToInt32(Session["businessid"]);
+                ClsResponseModel responseModel = await this._product.DistributorPurchaseReturnAsync(customerPurchaseReturn);
+                if (responseModel.IsSuccess)
+                {
+                    return Json(new { Status = 1 });
+                }
+                else
+                {
+                    return Json(new { Status = 0 });
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return Json(new { Status = 0 });
+                Helper.WriteErrorLog("functionname : DistributorPurchaseReturnAsync" + Environment.NewLine + "Source : " + ex.Source.Trim() + Environment.NewLine + ex.Message + Environment.NewLine + "inner exception :" + ex.InnerException);
+                return Json(new { Status = 400 });
             }
         }
 

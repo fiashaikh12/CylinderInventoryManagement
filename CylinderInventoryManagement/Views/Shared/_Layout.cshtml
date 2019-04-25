@@ -92,14 +92,6 @@
                             <li><a href="@Url.Action("SubCategoryDetails", "Master")"><i class="fa fa-circle-o"></i>Sub Category</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="@Url.Action("CreateRateCard", "Customer")">
-                            <i class="glyphicon glyphicon-plus"></i> <span>Rate Card</span>
-                            @*<span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>*@
-                        </a>
-                    </li>
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-dashboard"></i> <span>Product</span>
@@ -122,6 +114,7 @@
                         <ul class="treeview-menu">
                             <li class=""><a href="@Url.Action("Index", "Customer")"><i class="glyphicon glyphicon-book"></i>Company Ledger</a></li>
                             <li class=""><a href="@Url.Action("CustomerReport", "Customer")"><i class="glyphicon glyphicon-stats"></i>Company Report</a></li>
+                            <li class=""><a href="@Url.Action("CreateRateCard", "Customer")"><i class="glyphicon glyphicon-stats"></i>Company rate Card</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -188,6 +181,8 @@
     <!-- daterangepicker -->
     <script src="../../bower_components/moment/min/moment.min.js"></script>
     <script src="~/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap datepicker -->
+    <script src="~/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     @*<script src="~/bower_components/moment/min/moment.min.js"></script>
     *@
     <!-- datepicker -->
@@ -264,8 +259,11 @@
             )
 
             //Date picker
-            $('#datepicker').datepicker({
-                autoclose: true
+            $('#challandate_datepicker').datepicker({
+                autoclose: true,
+                maxDate: '0',
+                altFormat: "dd/mm/yy",
+                dateFormat: 'dd/mm/yy'
             })
 
             ////iCheck for checkbox and radio inputs

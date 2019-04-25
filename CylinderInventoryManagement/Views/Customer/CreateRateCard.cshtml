@@ -2,21 +2,21 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style type="text/css">
+@*<style type="text/css">
     .ui-autocomplete {
         top: 20% !important;
         left: 620px !important;
         right: 0 !important;
         width: 664px !important;
     }
-</style>
+</style>*@
 <section class="content">
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <div class="box box-info">
-                    @using (Html.BeginForm("AddRateCard", "Customer", FormMethod.Post, new { @class = "form-horizontal" }))
+                    @using (Html.BeginForm("CreateRateCard", "Customer", FormMethod.Post, new { @class = "form-horizontal" }))
                     {
                         @Html.AntiForgeryToken()
                         {
@@ -39,39 +39,40 @@
                                 </div>
                             }
                         }
-                        <div class="box-body">
-                            <div class="form-group has-feedback has-search">
-                                <label class="col-sm-2 control-label">Search By Company</label>
-                                <div class="col-sm-10">
-                                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control autocomplete", @placeholder = "Company Name" })
+                    <div class="box-body">
+                        <div class="form-group has-feedback has-search">
+                            <label class="col-sm-2 control-label">Search By Company</label>
+                            <div class="col-sm-10">
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                @Html.TextBoxFor(m => m.Username, new { @class = "form-control autocomplete", @placeholder = "Company Name" })
 
-                                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-                                    @Html.HiddenFor(model => model.CustomerId)
-                                </div>
+                                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.CustomerId)
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Select Category</label>
-                                <div class="col-sm-10">
-                                    @Html.DropDownListFor(model => model.CategoryId, (List<SelectListItem>)ViewBag.Category, "Select category", new { @class = "form-control", @tabindex = "-1" })
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Select Category</label>
+                            <div class="col-sm-10">
+                                @Html.DropDownListFor(model => model.CategoryId, (List<SelectListItem>
+                                    )ViewBag.Category, "Select category", new { @class = "form-control", @tabindex = "-1" })
                                     @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="Name" class="col-sm-2 control-label">Rate Card</label>
-                                <div class="col-sm-10">
-                                    @Html.TextBoxFor(m => m.RateCard, new { @class = "form-control", @placeholder = "Rate Card" })
-                                    <span class="help-block">
-                                        @Html.ValidationMessageFor(model => model.RateCard, "", new { @class = "text-danger" })
-                                    </span>
-                                </div>
                             </div>
                         </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer">
-                            <button type="submit" class="btn btn-info pull-right">Save Changes</button>
+                        <div class="form-group">
+                            <label for="Name" class="col-sm-2 control-label">Rate Card</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(m => m.RateCard, new { @class = "form-control", @placeholder = "Rate Card" })
+                                <span class="help-block">
+                                    @Html.ValidationMessageFor(model => model.RateCard, "", new { @class = "text-danger" })
+                                </span>
+                            </div>
                         </div>
-                        <!-- /.box-footer -->
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-info pull-right">Save Changes</button>
+                    </div>
+                    <!-- /.box-footer -->
                     }
                 </div>
             </div>

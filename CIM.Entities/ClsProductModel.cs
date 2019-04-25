@@ -18,7 +18,7 @@ namespace CIM.Entities
         public int UserId { get; set; }
         public int BusinessId { get; set; }
         [Required(ErrorMessage = "Please provide quantity")]
-        [Range(1,999,ErrorMessage ="Quantity cannot be less than 1")]
+        [Range(1,9999,ErrorMessage ="Quantity cannot be less than 1")]
         public int Quantity { get; set; }
         //[Required(ErrorMessage = "Please select deposit allowed")]
         [Display(Name = "Deposit Allowed")]
