@@ -50,6 +50,8 @@ namespace CIM.Entities
 
     public class CustomerReportResponse
     {
+        public int Trail_id { get; set; }
+        public int ProductId { get; set; }
         public string LedgerDate { get; set; }
         public string ChallanNumber { get; set; }
         public string CategoryName { get; set; }

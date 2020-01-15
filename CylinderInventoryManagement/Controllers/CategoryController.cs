@@ -5,8 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using CIM.BusinessLayer.Repository;
 using CIM.Entities;
+using CIM.Filter;
+
 namespace CylinderInventoryManagement.Controllers
 {
+    [SessionTimeout]
     public class CategoryController : Controller
     {
         // GET: Category

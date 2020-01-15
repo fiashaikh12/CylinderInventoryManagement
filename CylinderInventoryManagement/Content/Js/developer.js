@@ -272,7 +272,7 @@ $(document).ready(function () {
                                     $('#purchased-cylinder').html(data);
                                 }
                             });
-
+                            $("html, body").animate({ scrollTop: 0 }, "fast");
                             $('#dverror').hide();
                             $('#dvsucess').show();
                             $(function () {
@@ -286,6 +286,7 @@ $(document).ready(function () {
                             $('#challandate_datepicker').val("");
                         }
                         else if (data.Status == 400) {
+                            $("html, body").animate({ scrollTop: 0 }, "fast");
                             $('#dverror').show();
                             $('#dvsucess').hide();
                             $('#dverror_span').empty().append('Something went wrong');
@@ -298,9 +299,10 @@ $(document).ready(function () {
                         }
                         else {
                             $('#dverror').show();
+                            $("html, body").animate({ scrollTop: 0 }, "fast");
                             $('#dvsucess').hide();
                             $('#dverror_span').empty().append('Challan number already exists');
-                            
+
                             $(function () {
                                 setTimeout(function () {
                                     $("#dverror").hide('blind', {}, 500)
@@ -390,6 +392,7 @@ $(document).ready(function () {
                             });
 
                             $('#dverror').hide();
+                            $("html, body").animate({ scrollTop: 0 }, "fast");
                             $('#dvsucess').show();
                             $(function () {
                                 setTimeout(function () {
@@ -399,6 +402,7 @@ $(document).ready(function () {
                         }
                         else if (data.Status == 400) {
                             $('#dverror').show();
+                            $("html, body").animate({ scrollTop: 0 }, "fast");
                             $('#dvsucess').hide();
                             $('#dverror_span').empty().append('Something went wrong');
 
@@ -410,6 +414,7 @@ $(document).ready(function () {
                         }
                         else {
                             $('#dverror').show();
+                            $("html, body").animate({ scrollTop: 0 }, "fast");
                             $('#dvsucess').hide();
                             $('#dverror_span').empty().append('Bill number already exists');
 
@@ -436,51 +441,7 @@ $(document).ready(function () {
     $('#btnsubmitreport').click(function () {
         //alert($('#daterange-btn').text().trim());
         //var temp = $('#daterange-btn').text().trim().split('-');
-        if ($("#hdncustid").val() != "" && $("#hdncustid").val() != undefined) {
-            if ($('#daterange-btn').text().trim() != 'Date range picker') {
-                var temp = $('#daterange-btn').text().trim().split('-');
-                var obj = {};
-                obj.fromdate = temp[0].trim();
-                obj.todate = temp[1].trim();
-                obj.UserId = parseInt($("#hdncustid").val());
-                $.ajax({
-                    url: "/Customer/SearchCustomerReport",
-                    type: "GET",
-                    contentType: 'application/html;charset=utf-8',
-                    dataType: "html",
-                    //data: JSON.stringify({ CustomerReport: obj }),
-                    data: { userId: parseInt($("#hdncustid").val()), fromdate: temp[0].trim(), todate: temp[1].trim() },
-                    success: function (data) {
-                        $('.customer-cylinder1').removeClass('hidden');
-                        $('#purchased-cylinder1').html(data);
-
-                        $.ajax({
-                            url: "/Customer/SearchCustomerReportCount",
-                            type: "GET",
-                            contentType: 'application/html;charset=utf-8',
-                            dataType: "html",
-                            //data: JSON.stringify({ CustomerReport: obj }),
-                            data: { userId: parseInt($("#hdncustid").val()), fromdate: temp[0].trim(), todate: temp[1].trim() },
-                            success: function (data) {
-                                $('#purchased-cylinder1Count').html(data);
-
-
-                            }
-
-                        });
-
-                    }
-
-                });
-            }
-            else {
-                SweetAlert("Select date", "warning", "OK");
-            }
-        }
-        else {
-            $("#userid").empty();
-            SweetAlert("Search customer first", "warning", "OK");
-        }
+        fetchCustomerreport();
     });
 
     $('#btndistsubmitreport').click(function () {
@@ -531,6 +492,226 @@ $(document).ready(function () {
             SweetAlert("Search customer first", "warning", "OK");
         }
     });
+
+    var categoryname = "";
+    var fullissue = "";
+    var returnqty = "";
+    var challannumber = "";
+    var productid = "";
+    var Trailid = "";
+    $(document).on('click', '.editladger', function () {
+        categoryname = $(this).attr('data-Categoryname');
+        fullissue = $(this).attr('data-Fullissue');
+        returnqty = $(this).attr('data-ReturnStock');
+        challannumber = $(this).attr('data-Challannumber');
+        productid = $(this).attr('data-ProductId');
+        Trailid = $(this).attr('data-trailid');
+        $("#modal-Updateladger").modal('show');
+        $("#tdchallannumber").empty().append(challannumber);
+        $("#tdCategoryname").empty().append(categoryname);
+        $("#tdTrailid").empty().append(Trailid);
+        $("#tdProductid").empty().append(productid);
+        $(".TDpurchaseQuantity").val(fullissue);
+        $(".TDreturnQuantity").val(returnqty);
+    });
+
+    $(document).on('click', '.deleteladger', function () {
+        
+        challannumber = $(this).attr('data-Challannumber');
+        $('#btn_deletelager').attr('data-challannumber', challannumber);
+        $('#dverrordelete').hide();
+        $('#dvsucessdelete').hide();
+        $("#modal-Deleteladger").modal('show');
+    });
+    
+    $(document).on('click', '#btn_editlager', function () {
+        if ($("#hdncustid").val() != "" && $("#hdncustid").val() != undefined) {
+            if (validateInput()) {
+                $.ajax({
+                    url: "/Customer/UpdateCustomerLadger",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Userid: $("#hdncustid").val(), ProductId: productid, FullIssue: $(".TDpurchaseQuantity").val(), Return: $(".TDreturnQuantity").val(), Trail_id: Trailid },
+                    success: function (data) {
+                        //console.log(data);
+                        if (data.Status == 1) {
+
+                            $('#dverror').hide();
+                            $("html, body").animate({ scrollTop: 0 }, "fast");
+                            $('#dvsucess').show();
+                            $(function () {
+                                setTimeout(function () {
+                                    fetchCustomerreport();
+                                    $("#dvsucess").hide('blind', {}, 500);
+                                    $("#modal-Updateladger").modal('hide');
+                                }, 5000);
+                            });
+
+                        }
+                        else {
+                            $('#dverror').show();
+                            $("html, body").animate({ scrollTop: 0 }, "fast");
+                            $('#dvsucess').hide();
+                            $('#dverror_span').empty().append('Something went wrong');
+
+                            $(function () {
+                                setTimeout(function () {
+                                    $("#dverror").hide('blind', {}, 500)
+                                }, 5000);
+                            });
+                        }
+                    }
+
+                });
+            }
+            else {
+                $('#dverror').show();
+                $("html, body").animate({ scrollTop: 0 }, "fast");
+                $('#dvsucess').hide();
+                $('#dverror_span').empty().append('All fields are mandatory');
+
+                $(function () {
+                    setTimeout(function () {
+                        $("#dverror").hide('blind', {}, 500)
+                    }, 5000);
+                });
+
+            }
+        }
+        else {
+
+            $('#dverror').show();
+            $("html, body").animate({ scrollTop: 0 }, "fast");
+            $('#dvsucess').hide();
+            $('#dverror_span').empty().append('Search Company once again');
+
+            $(function () {
+                setTimeout(function () {
+                    $("#dverror").hide('blind', {}, 500)
+                }, 5000);
+            });
+        }
+    });
+
+    $(document).on('click', '#btn_deletelager', function () {
+        var ChallanNumber = $(this).attr('data-challannumber');
+        if ($("#hdncustid").val() != "" && $("#hdncustid").val() != undefined && ChallanNumber != "" && ChallanNumber != undefined) {
+            
+                $.ajax({
+                    url: "/Customer/DeleteCustomerLadger",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Userid: $("#hdncustid").val(), ChallanNumber: ChallanNumber },
+                    success: function (data) {
+                        //console.log(data);
+                        if (data.Status == 1) {
+
+                            $('#dverror').hide();
+                            $("html, body").animate({ scrollTop: 0 }, "fast");
+                            $('#dvsucess').show();
+                            $(function () {
+                                setTimeout(function () {
+                                    fetchCustomerreport();
+                                    $("#dvsucess").hide('blind', {}, 500);
+                                    $("#modal-Deleteladger").modal('hide');
+                                }, 5000);
+                            });
+
+                        }
+                        else {
+                            $('#dverror').show();
+                            $("html, body").animate({ scrollTop: 0 }, "fast");
+                            $('#dvsucess').hide();
+                            $('#dverror_span').empty().append('Something went wrong');
+
+                            $(function () {
+                                setTimeout(function () {
+                                    $("#dverror").hide('blind', {}, 500)
+                                }, 5000);
+                            });
+                        }
+                    }
+
+                });
+        }
+        else {
+
+            $('#dverrordelete').show();
+            $("html, body").animate({ scrollTop: 0 }, "fast");
+            $('#dvsucessdelete').hide();
+            $('#dverror_span_delete').empty().append('Search Company once again');
+
+            $(function () {
+                setTimeout(function () {
+                    $("#dverrordelete").hide('blind', {}, 500)
+                }, 5000);
+            });
+        }
+    });
+    $(document).on('click', '#btnsaveRatecard', function () {
+        var custid = $('#CustomerId').val();
+        var category = $('#CategoryId').val();
+        var rate = $('#RateCard').val();
+        var objrateCard = { CustomerId: custid, CategoryId: category, RateCard: rate };
+        if (custid != '' && category != 0 && rate != '') {
+            $.ajax({
+                url: "/Customer/CreateRateCard",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ rateCard: objrateCard }),
+                success: function (data) {
+                    if (data == 1) {
+                        $.ajax({
+                            url: "/Customer/GetRateCardDetails",
+                            type: "GET",
+                            contentType: 'application/html;charset=utf-8',
+                            dataType: "html",
+                            data: { userId: custid },
+                            success: function (data) {
+                                //$('.rateCard').('show');
+                                $('#rateCardDetails').html(data);
+                            }
+                        });
+                        $('#dverror').hide();
+                        $("html, body").animate({ scrollTop: 0 }, "fast");
+                        $('#dvsucess').show();
+                        $(function () {
+                            setTimeout(function () {
+                                $("#dvsucess").hide('blind', {}, 500);
+                            }, 5000);
+                        });
+
+                    }
+                    else {
+                        $('#dverror').show();
+                        $("html, body").animate({ scrollTop: 0 }, "fast");
+                        $('#dvsucess').hide();
+                        $('#dverror_span').empty().append('Something went wrong');
+
+                        $(function () {
+                            setTimeout(function () {
+                                $("#dverror").hide('blind', {}, 500)
+                            }, 5000);
+                        });
+                    }
+                }
+            });
+        }
+        else {
+
+            $('#dverror').show();
+            $("html, body").animate({ scrollTop: 0 }, "fast");
+            $('#dvsucess').hide();
+            $('#dverror_span').empty().append('all fields are mandatory');
+
+            $(function () {
+                setTimeout(function () {
+                    $("#dverror").hide('blind', {}, 500)
+                }, 5000);
+            });
+        }
+    });
+
 });
 function SweetAlert(message, icon, buttonText) {
     swal({
@@ -544,20 +725,25 @@ function SweetAlert(message, icon, buttonText) {
 $(function () {
     $("#userid").autocomplete({
         source: function (request, response) {
-            //debugger;
+
             $.ajax({
                 url: "/Customer/SearchCustomerAuto",
                 type: "POST",
                 dataType: "json",
                 data: { searchText: request.term },
                 success: function (data) {
-                    response($.map(data, function (item) {
-                        return { label: item.label, value: item.id, address: item.address, mobile: item.mobile, depositamount: item.depositamount, notes: item.notes, alternatenumber: item.alternatenumber };
-                        //+return { label: item.label, value: item.id, name: item.Mobile + ',' + item.DepositAmount + ',' + item.address};
-                        //address = customer.Address, mobile = customer.Mobile, depositamount = customer.DepositAmount
-                    }));
-                }
+                    // debugger;
+                    if (data != "") {
+                        response($.map(data, function (item) {
+                            return { label: item.label, value: item.id, address: item.address, mobile: item.mobile, depositamount: item.depositamount, notes: item.notes, alternatenumber: item.alternatenumber };
+                            //+return { label: item.label, value: item.id, name: item.Mobile + ',' + item.DepositAmount + ',' + item.address};
+                            //address = customer.Address, mobile = customer.Mobile, depositamount = customer.DepositAmount
+                        }));
+                    } else {
+                        alert("User dosen't exists");
 
+                    }
+                }
             });
         },
         select: function (event, ui) {
@@ -581,6 +767,17 @@ $(function () {
                 success: function (data) {
                     $('.customer-cylinder').removeClass('hidden');
                     $('#purchased-cylinder').html(data);
+                    $.ajax({
+                        url: "/Customer/GetRateCardDetails",
+                        type: "GET",
+                        contentType: 'application/html;charset=utf-8',
+                        dataType: "html",
+                        data: { userId: value },
+                        success: function (data) {
+                            //$('.rateCard').('show');
+                            $('#rateCardDetails').html(data);
+                        }
+                    });
                 }
             });
         },
@@ -597,10 +794,18 @@ $(function () {
                 dataType: "json",
                 data: { searchText: request.term },
                 success: function (data) {
-                    response($.map(data, function (item) {
-                        //console.log(item)
-                        return { label: item.label, value: item.id, address: item.address, mobile: item.mobile, depositamount: item.depositamount, notes: item.notes, alternatenumber: item.alternatenumber };
-                    }));
+                    if (data != "") {
+
+                        response($.map(data, function (item) {
+                            //console.log(item)
+                            return { label: item.label, value: item.id, address: item.address, mobile: item.mobile, depositamount: item.depositamount, notes: item.notes, alternatenumber: item.alternatenumber };
+                        }));
+                    } else {
+                        alert("User dosen't exists");
+
+                    }
+
+
                 }
             });
         },
@@ -617,7 +822,7 @@ $(function () {
                 dataType: "html",
                 data: { userId: value },
                 success: function (data) {
-                    $('.rateCard').removeClass('hidden');
+                    //$('.rateCard').('show');
                     $('#rateCardDetails').html(data);
                 }
             });
@@ -636,11 +841,18 @@ $(function () {
                 dataType: "json",
                 data: { searchText: request.term },
                 success: function (data) {
-                    response($.map(data, function (item) {
-                        return { label: item.label, value: item.id, address: item.address, mobile: item.mobile, depositamount: item.depositamount, alternatenumber: item.alternatenumber };
-                        //+return { label: item.label, value: item.id, name: item.Mobile + ',' + item.DepositAmount + ',' + item.address};
-                        //address = customer.Address, mobile = customer.Mobile, depositamount = customer.DepositAmount
-                    }));
+                    if (data != "") {
+                        response($.map(data, function (item) {
+                            return { label: item.label, value: item.id, address: item.address, mobile: item.mobile, depositamount: item.depositamount, alternatenumber: item.alternatenumber };
+                            //+return { label: item.label, value: item.id, name: item.Mobile + ',' + item.DepositAmount + ',' + item.address};
+                            //address = customer.Address, mobile = customer.Mobile, depositamount = customer.DepositAmount
+                        }));
+                    } else {
+                        alert("User dosen't exists");
+
+                    }
+
+
                 }
 
             });
@@ -690,4 +902,126 @@ function printCustomerReport() {
 
 }
 
+
+var isShift = false;
+var seperator = "/";
+window.onload = function () {
+    //Reference the Table.
+    var tblForm = document.getElementById("challandate_datepicker");
+
+    //Reference all INPUT elements in the Table.
+    var inputs = document.getElementsByTagName("input");
+
+    //Loop through all INPUT elements.
+    for (var i = 0; i < inputs.length; i++) {
+        //Check whether the INPUT element is TextBox.
+        if (inputs[i].type == "text") {
+            //Check whether Date Format Validation is required.
+            if (inputs[i].className.indexOf("date-format") >= 1) {
+
+                //Set Max Length.
+                inputs[i].setAttribute("maxlength", 10);
+
+                //Only allow Numeric Keys.
+                inputs[i].onkeydown = function (e) {
+                    return IsNumeric(this, e.keyCode);
+                };
+
+                //Validate Date as User types.
+                inputs[i].onkeyup = function (e) {
+                    ValidateDateFormat(this, e.keyCode);
+                };
+            }
+        }
+    }
+};
+
+function IsNumeric(input, keyCode) {
+    if (keyCode == 16) {
+        isShift = true;
+    }
+    //Allow only Numeric Keys.
+    if (((keyCode >= 48 && keyCode <= 57) || keyCode == 8 || keyCode <= 37 || keyCode <= 39 || (keyCode >= 96 && keyCode <= 105)) && isShift == false) {
+        if ((input.value.length == 2 || input.value.length == 5) && keyCode != 8) {
+            input.value += seperator;
+        }
+
+        return true;
+    }
+    else {
+        return false;
+    }
+};
+
+function ValidateDateFormat(input, keyCode) {
+    var dateString = input.value;
+    if (keyCode == 16) {
+        isShift = false;
+    }
+    var regex = /(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/;
+
+    //Check whether valid dd/MM/yyyy Date Format.
+    if (regex.test(dateString) || dateString.length == 0) {
+        ShowHideError(input, "none");
+    } else {
+        ShowHideError(input, "block");
+    }
+};
+
+function ShowHideError(textbox, display) {
+    var row = textbox.parentNode.parentNode;
+    var errorMsg = row.getElementsByTagName("span")[0];
+    if (errorMsg != null) {
+        errorMsg.style.display = display;
+        errorMsg.empty().append("Invalid Date. Only dd/MM/yyyy format allowed.");
+    }
+};
+
+function fetchCustomerreport() {
+    if ($("#hdncustid").val() != "" && $("#hdncustid").val() != undefined) {
+        if ($('#daterange-btn').text().trim() != 'Date range picker') {
+            var temp = $('#daterange-btn').text().trim().split('-');
+            var obj = {};
+            obj.fromdate = temp[0].trim();
+            obj.todate = temp[1].trim();
+            obj.UserId = parseInt($("#hdncustid").val());
+            $.ajax({
+                url: "/Customer/SearchCustomerReport",
+                type: "GET",
+                contentType: 'application/html;charset=utf-8',
+                dataType: "html",
+                //data: JSON.stringify({ CustomerReport: obj }),
+                data: { userId: parseInt($("#hdncustid").val()), fromdate: temp[0].trim(), todate: temp[1].trim() },
+                success: function (data) {
+                    $('.customer-cylinder1').removeClass('hidden');
+                    $('#purchased-cylinder1').html(data);
+
+                    $.ajax({
+                        url: "/Customer/SearchCustomerReportCount",
+                        type: "GET",
+                        contentType: 'application/html;charset=utf-8',
+                        dataType: "html",
+                        //data: JSON.stringify({ CustomerReport: obj }),
+                        data: { userId: parseInt($("#hdncustid").val()), fromdate: temp[0].trim(), todate: temp[1].trim() },
+                        success: function (data) {
+                            $('#purchased-cylinder1Count').html(data);
+                            
+                        }
+
+                    });
+
+                }
+
+            });
+        }
+        else {
+            SweetAlert("Select date", "warning", "OK");
+        }
+    }
+    else {
+        $("#userid").empty();
+        SweetAlert("Search customer first", "warning", "OK");
+    }
+
+}
 

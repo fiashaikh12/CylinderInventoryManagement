@@ -57,6 +57,7 @@ namespace BusinessLayer.Repository
             parameters.Add("@Address", responseModel.Address);
             parameters.Add("@userId", responseModel.UserId);
             parameters.Add("@AlternateNumber", responseModel.AlternateNumber);
+            parameters.Add("@Password", responseModel.Password);
             int returnValue = await this._dbContext.ExecuteAsync("Usp_RegisterCustomer", parameters, commandType: CommandType.StoredProcedure);
             if (returnValue > 0)
             {
@@ -161,6 +162,55 @@ namespace BusinessLayer.Repository
                 clsResponse.IsSuccess = false;
                 clsResponse.ErrorCode = 400;
                 clsResponse.Message = "Failed";
+            }
+            return clsResponse;
+        }
+
+        public async Task<ClsResponseModel> UpdateCustomerLadger(int Userid, int ProductId,int FullIssue_Update,int Return_Update,int Trail_id_Update,int Createdby)
+        {
+            ClsResponseModel clsResponse = new ClsResponseModel();
+            var parameters = new DynamicParameters();
+            parameters.Add("@Userid", Userid);
+            parameters.Add("@ProductId", ProductId);
+            parameters.Add("@FullIssue_Update", FullIssue_Update);
+            parameters.Add("@Return_Update", Return_Update);
+            parameters.Add("@Trail_id_Update", Trail_id_Update);
+            parameters.Add("@Createdby", Createdby);
+            int returnValue = await this._dbContext.ExecuteAsync("Update_TrailDetails", parameters, commandType: CommandType.StoredProcedure);
+            if (returnValue > 0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Leadger Updated successully";
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed to update notes";
+            }
+            return clsResponse;
+        }
+
+        public async Task<ClsResponseModel> DeleteCustomerLadger(int Userid, int Updatedby, string ChallanNumber)
+        {
+            ClsResponseModel clsResponse = new ClsResponseModel();
+            var parameters = new DynamicParameters();
+            parameters.Add("@Userid", Userid);
+            parameters.Add("@ProductId", Updatedby);
+            parameters.Add("@FullIssue_Update", ChallanNumber);
+            int returnValue = await this._dbContext.ExecuteAsync("Delete_challan", parameters, commandType: CommandType.StoredProcedure);
+            if (returnValue > 0)
+            {
+                clsResponse.IsSuccess = true;
+                clsResponse.ErrorCode = 200;
+                clsResponse.Message = "Leadger Deleted successully";
+            }
+            else
+            {
+                clsResponse.IsSuccess = false;
+                clsResponse.ErrorCode = 400;
+                clsResponse.Message = "Failed to delete Leadger";
             }
             return clsResponse;
         }

@@ -8,6 +8,7 @@ namespace CIM.Entities
         public string UserId { get; set; }
         [Required(ErrorMessage ="Please enter full name")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Please enter password")]
         public string Password { get; set; }
         [Required(ErrorMessage = "Please enter mobile number")]
         [RegularExpression("^[0-9]*$", ErrorMessage ="Only numeric value allowed")]

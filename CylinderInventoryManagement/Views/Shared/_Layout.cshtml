@@ -43,6 +43,10 @@
     <![endif]-->
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <!-- jQuery 3 -->
+    <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="~/bower_components/jquery-ui/jquery-ui.min.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 
@@ -80,6 +84,20 @@
 
 
                         </ul>
+                    </li>
+                    <li class="treeview">
+
+                        <a href="#">
+                            <i class="fa fa-dashboard"></i> <span>User</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="@Url.Action("Create", "User")"><i class="fa fa-circle-o"></i> Create User</a></li>
+
+                        </ul>
+                    </li>
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-dashboard"></i> <span>Master</span>
@@ -158,10 +176,6 @@
         </footer>
     </div>
     <!-- ./wrapper -->
-    <!-- jQuery 3 -->
-    <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="~/bower_components/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>$.widget.bridge('uibutton', $.ui.button);</script>
     <!-- Bootstrap 3.3.7 -->
@@ -297,5 +311,59 @@
     <script src="~/plugins/iCheck/icheck.min.js"></script>
     <script src="~/Content/Js/jquery.validate.js"></script>
     <script src="~/Content/Js/jquery.validate.unobtrusive.js"></script>
+    @RenderSection("Scripts", required: false)
+
+    @if (ViewBag.UserMessage != null)
+    {
+        if (Convert.ToInt32(ViewBag.UserMessage) == 200)
+        {
+            <script type="text/javascript">
+                window.onload = function () {
+                    $("html, body").animate({ scrollTop: 0 }, "slow");
+                    $('#dverror').hide();
+                    $('#dvsucess').show();
+                    $(function () {
+                        setTimeout(function () {
+                            $("#dvsucess").hide('blind', {}, 500)
+                        }, 5000);
+                    });
+                }
+            </script>
+        }
+        else if (Convert.ToInt32(ViewBag.UserMessage) == 0)
+        {
+            <script type="text/javascript">
+                window.onload = function () {
+                    $("html, body").animate({ scrollTop: 0 }, "slow");
+                    $('#dverror').show();
+                    $('#dvsucess').hide();
+                    $('#dverror_span').empty().append('User aready exists');
+
+                    $(function () {
+                        setTimeout(function () {
+                            $("#dverror").hide('blind', {}, 500)
+                        }, 5000);
+                    });
+                }
+            </script>
+        }
+        else
+        {
+            <script type="text/javascript">
+                window.onload = function () {
+                    $("html, body").animate({ scrollTop: 0 }, "slow");
+                    $('#dverror').show();
+                    $('#dvsucess').hide();
+                    $('#dverror_span').empty().append('Something went wrong!!');
+
+                    $(function () {
+                        setTimeout(function () {
+                            $("#dverror").hide('blind', {}, 500)
+                        }, 5000);
+                    });
+                }
+            </script>
+        }
+    }
 </body>
 </html>

@@ -17,7 +17,7 @@ namespace CylinderInventoryManagement.Controllers
     public class CustomerController : Controller
     {
 
-        private readonly IUser _user; 
+        private readonly IUser _user;
         private readonly IProduct _product;
         private readonly IMasters _masters;
         private ClsResponseModel<List<ClsCategoryMasterModel>> clsResponse;
@@ -58,38 +58,41 @@ namespace CylinderInventoryManagement.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateRateCard(ClsRateCard rateCard)
+        public async Task<ActionResult> CreateRateCard(ClsRateCard rateCard)
         {
             if (rateCard != null)
             {
                 rateCard.UserId = (int)Session["userId"];
-                //var response = await this._user.AddRateCardAsync(rateCard);
-                //if (response.IsSuccess)
-                //{
-                    ViewBag.Message = "Rate card created successfully";
-                //}
-                //else
-                //{
-                //    ViewBag.Message = "Failed to create rate card for this user";
-                //}
+                var response = await this._user.AddRateCardAsync(rateCard);
+                if (response.IsSuccess)
+                {
+                    return Json(1, JsonRequestBehavior.AllowGet);
+                    //ViewBag.Message = "Rate card created successfully";
+                }
+                else
+                {
+                    return Json(0, JsonRequestBehavior.AllowGet);
+                    //ViewBag.Message = "Failed to create rate card for this user";
+                }
             }
             else
             {
-                ViewBag.Message = "Something went wrong";
+                return Json(400, JsonRequestBehavior.AllowGet);
+                //ViewBag.Message = "Something went wrong";
             }
-            return View();
         }
 
         [HttpGet]
         public async Task<ActionResult> GetRateCardDetails(int userId)
         {
-            ClsResponseModel<IEnumerable<ClsRateCard>> lstRateCards =await this._user.GetRateCardDetailsByUser(userId) as ClsResponseModel<IEnumerable<ClsRateCard>>;
-            return PartialView("_RateCardDetailsPartial.cshtml", lstRateCards.Data);
+            ClsResponseModel<IEnumerable<ClsRateCard>> lstRateCards = await this._user.GetRateCardDetailsByUser(userId) as ClsResponseModel<IEnumerable<ClsRateCard>>;
+            return PartialView("/Views/_RateCardDetailsPartial.cshtml", lstRateCards.Data);
         }
 
         [HttpPost, ValidateAntiForgeryToken, ValidateOnlyIncomingValues]
         public async Task<ActionResult> CreateCustomer(ClsCustomerModel clsCustomerModel)
         {
+            clsCustomerModel.Password = "NA";
             if (ModelState.IsValid)
             {
                 clsCustomerModel.UserId = Convert.ToString(Session["userId"]);
@@ -98,17 +101,19 @@ namespace CylinderInventoryManagement.Controllers
                 ClsResponseModel clsResponse = await this._user.CreateCustomerAsync(clsCustomerModel);
                 if (clsResponse.IsSuccess)
                 {
+                    ViewBag.UserMessage = 200;
                     ViewBag.Message = clsResponse.Message;
-                    return RedirectToAction("Index", "Customer");
+                    return View("Index");
                 }
                 else
                 {
-                    ViewBag.Message = clsResponse.Message;
+                    ViewBag.UserMessage = 0;
                     return View("Index");
                 }
             }
             else
             {
+                ViewBag.UserMessage = 400;
                 return View();
             }
         }
@@ -130,17 +135,22 @@ namespace CylinderInventoryManagement.Controllers
         }
         [HttpPost]
         public ActionResult SearchCustomerAuto(string searchText)
-       {
+        {
             if (searchText != null)
             {
                 ClsResponseModel<List<ClsCustomerModel>> customerResponse = (ClsResponseModel<List<ClsCustomerModel>>)this._user.GetCustomerDetails();
                 var customers = (from customer in customerResponse.Data
-                                 where customer.CompanyName.ToLower().Contains(searchText.ToLower())
-                                 select new {
-                                     id = customer.UserId, label = customer.CompanyName,
-                                     name = customer.CompanyName, address= customer.Address ,
-                                     mobile =customer.Mobile,depositamount=customer.DepositAmount,
-                                     notes =customer.Notes, alternatenumber = customer.AlternateNumber
+                                 where customer.CompanyName.ToLower().Contains(searchText.ToLower()) && customer.BusinessId.Contains(Convert.ToString(Session["businessId"]))
+                                 select new
+                                 {
+                                     id = customer.UserId,
+                                     label = customer.CompanyName,
+                                     name = customer.CompanyName,
+                                     address = customer.Address,
+                                     mobile = customer.Mobile,
+                                     depositamount = customer.DepositAmount,
+                                     notes = customer.Notes,
+                                     alternatenumber = customer.AlternateNumber
                                  }).ToList();
                 return Json(customers, JsonRequestBehavior.AllowGet);
             }
@@ -152,16 +162,44 @@ namespace CylinderInventoryManagement.Controllers
 
 
         [HttpPost]
-        public ActionResult CustomerNote(int UserId,string Notes)
+        public ActionResult CustomerNote(int UserId, string Notes)
         {
             if (Notes != null && UserId != 0)
             {
-                var response = this._user.UpdateCustomerNote(UserId,Notes);
+                var response = this._user.UpdateCustomerNote(UserId, Notes);
                 return Json(1, JsonRequestBehavior.AllowGet);
             }
             else
             {
                 return Json(0, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateCustomerLadger(int Userid, int ProductId, int FullIssue, int Return, int Trail_id)
+        {
+            ClsResponseModel responseModel = await this._user.UpdateCustomerLadger(Userid, ProductId, FullIssue, Return, Trail_id, Convert.ToInt32(Session["userId"]));
+            if (responseModel.IsSuccess)
+            {
+                return Json(new { Status = 1 });
+            }
+            else
+            {
+                return Json(new { Status = 0 });
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteCustomerLadger(int Userid, string ChallanNumber)
+        {
+            ClsResponseModel responseModel = await this._user.DeleteCustomerLadger(Userid, Convert.ToInt32(Session["userId"]), ChallanNumber);
+            if (responseModel.IsSuccess)
+            {
+                return Json(new { Status = 1 });
+            }
+            else
+            {
+                return Json(new { Status = 0 });
             }
         }
 
@@ -189,7 +227,7 @@ namespace CylinderInventoryManagement.Controllers
                     return Json(new { Status = 0 });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Helper.WriteErrorLog("functionname : CustomerPurchaseReturnAsync" + Environment.NewLine + "Source : " + ex.Source.Trim() + Environment.NewLine + ex.Message + Environment.NewLine + "inner exception :" + ex.InnerException);
                 return Json(new { Status = 400 });
@@ -224,12 +262,12 @@ namespace CylinderInventoryManagement.Controllers
         }
 
         [HttpGet]
-        public ActionResult SearchCustomerReport(int Userid,string fromdate,string todate)
+        public ActionResult SearchCustomerReport(int Userid, string fromdate, string todate)
         {
             //try
             //{
-                //ClsResponseModel<List<CustomerReport>> customerResponse = (ClsResponseModel<List<CustomerReport>>)this._user.GetCustomerReport(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]),CustomerReport.UserId, Convert.ToDateTime(CustomerReport.fromdate), Convert.ToDateTime(CustomerReport.todate));
-                //ViewBag.CustomerReport = customerResponse;
+            //ClsResponseModel<List<CustomerReport>> customerResponse = (ClsResponseModel<List<CustomerReport>>)this._user.GetCustomerReport(Convert.ToInt32(System.Web.HttpContext.Current.Session["businessId"]),CustomerReport.UserId, Convert.ToDateTime(CustomerReport.fromdate), Convert.ToDateTime(CustomerReport.todate));
+            //ViewBag.CustomerReport = customerResponse;
             //return Json(customerResponse, JsonRequestBehavior.AllowGet);
             //}
             //catch(Exception ex)

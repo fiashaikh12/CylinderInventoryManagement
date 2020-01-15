@@ -3,16 +3,21 @@
 
 @if (Model != null)
 {
-    foreach (var item in Model) 
+    foreach (var item in Model)
     {
-        <tr>
-            <td>@item.LedgerDate</td>
-            <td>@item.ChallanNumber</td>
-            <td>@item.CategoryName</td>
-            <td>@item.FullIssue</td>
-            <td>@item.ReturnStock</td>
-            <td>@item.HoldingStock</td>
-        </tr>
+<tr>
+    <td>@item.LedgerDate</td>
+    <td>
+        <a href="#" class="editladger" data-trailid="@item.Trail_id" data-ProductId="@item.ProductId" data-Categoryname="@item.CategoryName" data-Fullissue="@item.FullIssue"
+           data-ReturnStock="@item.ReturnStock" data-Challannumber="@item.ChallanNumber">@item.ChallanNumber</a>
+    </td>
+
+    <td>@item.CategoryName</td>
+    <td>@item.FullIssue</td>
+    <td>@item.ReturnStock</td>
+    <td>@item.HoldingStock</td>
+    <td><a href="#" class="deleteladger" data-Challannumber="@item.ChallanNumber">Delete</a></td>
+</tr>
     }
 }
  

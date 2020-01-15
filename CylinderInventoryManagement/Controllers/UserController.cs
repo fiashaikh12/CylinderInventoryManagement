@@ -4,6 +4,7 @@ using BusinessLayer.Repository.Interface;
 using CIM.Entities;
 using CIM.Entities.ResponseModel;
 using CIM.Filter;
+using System;
 using System.Threading.Tasks;
 using System.Web; 
 using System.Web.Mvc;
@@ -20,6 +21,11 @@ namespace CylinderInventoryManagement.Controllers
         }
         [AllowAnonymous]
         public ActionResult Login()
+        {
+            return View();
+        }
+
+        public ActionResult Create()
         {
             return View();
         }
@@ -60,5 +66,38 @@ namespace CylinderInventoryManagement.Controllers
                 return View();
             }
         }
+
+        [SessionTimeout]
+        [HttpPost, ValidateAntiForgeryToken, ValidateOnlyIncomingValues]
+        public async Task<ActionResult> Create(ClsCustomerModel clsCustomerModel)
+        {
+            clsCustomerModel.Address = "NA";
+            clsCustomerModel.AlternateNumber = "9999999999";
+            clsCustomerModel.CompanyName = Convert.ToString(Session["businessName"]);
+            clsCustomerModel.GSTNo = "0";
+            if (ModelState.IsValid)
+            {
+                clsCustomerModel.UserId = Convert.ToString(Session["userId"]);
+                clsCustomerModel.BusinessId = Convert.ToString(Session["businessId"]);
+                clsCustomerModel.TypeId = 2;
+                ClsResponseModel clsResponse = await this._user.CreateCustomerAsync(clsCustomerModel);
+                if (clsResponse.IsSuccess)
+                {
+                    ViewBag.UserMessage = 200;
+                    return View();
+                }
+                else
+                {
+                    ViewBag.UserMessage = 0;
+                    return View();
+                }
+            }
+            else
+            {
+                ViewBag.UserMessage = 0;
+                return View();
+            }
+        }
+
     }
 }

@@ -46,6 +46,7 @@ namespace CylinderInventoryManagement.Controllers
         [HttpPost, ValidateAntiForgeryToken, ValidateOnlyIncomingValues]
         public async Task<ActionResult> CreateCustomer(ClsCustomerModel clsCustomerModel)
         {
+            clsCustomerModel.Password = "NA";
             if (ModelState.IsValid)
             {
                 clsCustomerModel.UserId = Convert.ToString(Session["userId"]);
@@ -54,17 +55,20 @@ namespace CylinderInventoryManagement.Controllers
                 ClsResponseModel clsResponse = await this._user.CreateCustomerAsync(clsCustomerModel);
                 if (clsResponse.IsSuccess)
                 {
+                    ViewBag.UserMessage = 200;
                     ViewBag.Message = clsResponse.Message;
-                    return RedirectToAction("Index", "Customer");
+                    return View("Index");
                 }
                 else
                 {
+                    ViewBag.UserMessage = 0;
                     ViewBag.Message = clsResponse.Message;
                     return View("Index");
                 }
             }
             else
             {
+                ViewBag.UserMessage = 400;
                 return View();
             }
         }
@@ -76,7 +80,7 @@ namespace CylinderInventoryManagement.Controllers
             {
                 ClsResponseModel<List<ClsCustomerModel>> customerResponse = (ClsResponseModel<List<ClsCustomerModel>>)this._user.GetDistributorDetails();
                 var customers = (from customer in customerResponse.Data
-                                 where customer.CompanyName.ToLower().Contains(searchText.ToLower())
+                                 where customer.CompanyName.ToLower().Contains(searchText.ToLower()) && customer.BusinessId.Contains(Convert.ToString(Session["businessId"]))
                                  select new { id = customer.UserId, label = customer.CompanyName, name = customer.Name, address = customer.Address, mobile = customer.Mobile, depositamount = customer.DepositAmount, alternatenumber = customer.AlternateNumber });
                 return Json(customers, JsonRequestBehavior.AllowGet);
             }

@@ -209,6 +209,7 @@ namespace CIM.BusinessLayer.Repository
             try
             {
                 int returnValue = 0;
+                string uniqueid = Guid.NewGuid().ToString();
                 ClsResponseModel clsResponse = new ClsResponseModel();
                 foreach (var item in customerPurchaseReturn)
                 {
@@ -220,9 +221,10 @@ namespace CIM.BusinessLayer.Repository
                     parameters.Add("@ReturnQuantity", item.ReturnQuantity);
                     parameters.Add("@HoldingStock", item.HoldingStock);
                     parameters.Add("@Businessid", customerPurchaseReturn[0].BusinessId);
-                    parameters.Add("@ChallanNumber", "C" + "-"+ customerPurchaseReturn[0].BusinessId+"-"+ item.ChallanNumber);
+                    parameters.Add("@ChallanNumber", "C"+ customerPurchaseReturn[0].BusinessId+"-"+ item.ChallanNumber);
                     parameters.Add("@IsHolding", item.IsHolding);
                     parameters.Add("@ChallanDate", Convert.ToDateTime(item.ChallanDate));
+                    parameters.Add("@UniqueId", uniqueid);
                     returnValue = await this._dbContext.ExecuteAsync("USP_CustPurchaseReturn", parameters, commandType: CommandType.StoredProcedure);
                 }
                 if (returnValue > 0)
@@ -331,6 +333,7 @@ namespace CIM.BusinessLayer.Repository
         {
             int returnValue = 0;
             ClsResponseModel clsResponse = new ClsResponseModel();
+            string uniqueid = Guid.NewGuid().ToString();
             foreach (var item in customerPurchaseReturn)
             {
                 var parameters = new DynamicParameters(); 
@@ -341,10 +344,11 @@ namespace CIM.BusinessLayer.Repository
                 parameters.Add("@ReturnQuantity", item.ReturnQuantity);
                 parameters.Add("@HoldingStock", item.HoldingStock);
                 parameters.Add("@Businessid", customerPurchaseReturn[0].BusinessId);
-                parameters.Add("@ChallanNumber", "B" + "-" + customerPurchaseReturn[0].BusinessId + "-" + item.ChallanNumber);
+                parameters.Add("@ChallanNumber", item.ChallanNumber);
                 parameters.Add("@DefectQuantity", item.DefectQuantity);
                 parameters.Add("@IsHolding", item.IsHolding);
                 parameters.Add("@ChallanDate", Convert.ToDateTime(item.ChallanDate));
+                parameters.Add("@UniqueId", uniqueid);
                 returnValue = await this._dbContext.ExecuteAsync("USP_DistPurchaseReturn", parameters, commandType: CommandType.StoredProcedure);
             }
             if (returnValue > 0)

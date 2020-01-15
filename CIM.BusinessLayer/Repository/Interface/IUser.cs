@@ -16,5 +16,7 @@ namespace BusinessLayer.Repository.Interface
         Task<ClsResponseModel> UpdateCustomerNote(int Userid, string Notes);
         Task<ClsResponseModel> AddRateCardAsync(ClsRateCard rateCard);
         Task<ClsResponseModel> GetRateCardDetailsByUser(int userId);
+        Task<ClsResponseModel> UpdateCustomerLadger(int Userid, int ProductId, int FullIssue_Update, int Return_Update, int Trail_id_Update, int Createdby);
+        Task<ClsResponseModel> DeleteCustomerLadger(int Userid, int Updatedby, string ChallanNumber);
     }
 }

@@ -20,6 +20,16 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
+            <div id="dverror" class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                <span id="dverror_span">Something went wrong</span>
+            </div>
+            <div id="dvsucess" class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                Success
+            </div>
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="form-group">
@@ -182,6 +192,19 @@
             </div>
         </div>
     </div>
+
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Company RateCard</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="customer-cylinder hidden validate-form">
+                <div class="col-xs-12" id="rateCardDetails">
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <section class="content customer-cylinder hidden" style="min-height: 0px !important;">
@@ -192,16 +215,7 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-            <div id="dverror" class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
-                <span id="dverror_span">Something went wrong</span>
-            </div>
-            <div id="dvsucess" class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-check"></i> Alert!</h4>
-                Success
-            </div>
+            
             <div class="customer-cylinder hidden validate-form">
                 <div class="row">
                     <div class="col-md-3">
@@ -215,7 +229,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" autocomplete="off" class="form-control pull-right textbox" name="ChallanDate" id="challandate_datepicker" placeholder="Challan Date" />
+                            <input type="text" autocomplete="off" class="form-control pull-right textbox date-format" name="ChallanDate" id="challandate_datepicker" placeholder="Challan Date" />
                             <span class="not-required error">Challan date required</span>
                         </div>
                     </div>
@@ -237,7 +251,10 @@
                             <div id="purchased-cylinder">
                             </div>
                         </div>
-                        <input type="checkbox" id="chkHolding" value="IsHolding"> Is Holding<br />
+                        <div id="divHolding">
+                            <input type="checkbox" id="chkHolding" value="IsHolding"> Is Holding
+                        </div>
+                        <br />
                         <input type="button" class="btn btn-primary submit" value="Submit" />
                     </div>
                 </div>

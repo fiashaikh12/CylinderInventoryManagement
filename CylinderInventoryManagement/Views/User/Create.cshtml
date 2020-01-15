@@ -1,0 +1,63 @@
+﻿@model CIM.Entities.ClsCustomerModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content" style="min-height: 0px !important;">
+    <!-- SELECT2 EXAMPLE -->
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Create user to access software</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            @using (Html.BeginForm("Create", "User", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.AntiForgeryToken();
+
+                <div id="dverror" class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                    <span id="dverror_span">Something went wrong</span>
+                </div>
+                <div id="dvsucess" class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                    Success
+                </div>
+
+                <div class="form-group">
+                    <label for="Name" class="col-sm-3 control-label">Name</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Full Name", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="mobilenumber" class="col-sm-3 control-label">Mobile Number</label>
+
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control numeric-without-decimal", placeholder = "Mobile Number", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="gstnumber" class="col-sm-3 control-label">Password</label>
+
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control", placeholder = "Password", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            }
+
+
+            
+
+        </div>
+    </div>
+</section>
+

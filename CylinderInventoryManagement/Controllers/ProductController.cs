@@ -1,6 +1,7 @@
 ﻿using CIM.BusinessLayer.Repository;
 using CIM.BusinessLayer.Repository.Interface;
 using CIM.Entities;
+using CIM.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace CylinderInventoryManagement.Controllers
 {
+    [SessionTimeout]
     public class ProductController : Controller
     {
         private readonly IMasters _masters;
