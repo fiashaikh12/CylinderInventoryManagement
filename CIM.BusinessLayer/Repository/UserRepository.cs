@@ -196,9 +196,9 @@ namespace BusinessLayer.Repository
         {
             ClsResponseModel clsResponse = new ClsResponseModel();
             var parameters = new DynamicParameters();
-            parameters.Add("@Userid", Userid);
-            parameters.Add("@ProductId", Updatedby);
-            parameters.Add("@FullIssue_Update", ChallanNumber);
+            parameters.Add("@UserId", Userid);
+            parameters.Add("@Updateby", Updatedby);
+            parameters.Add("@ChallanNumber", ChallanNumber);
             int returnValue = await this._dbContext.ExecuteAsync("Delete_challan", parameters, commandType: CommandType.StoredProcedure);
             if (returnValue > 0)
             {

@@ -606,27 +606,27 @@ $(document).ready(function () {
                         //console.log(data);
                         if (data.Status == 1) {
 
-                            $('#dverror').hide();
+                            $('#dverrordelete').hide();
                             $("html, body").animate({ scrollTop: 0 }, "fast");
-                            $('#dvsucess').show();
+                            $('#dvsucessdelete').show();
                             $(function () {
                                 setTimeout(function () {
                                     fetchCustomerreport();
-                                    $("#dvsucess").hide('blind', {}, 500);
+                                    $("#dvsucessdelete").hide('blind', {}, 500);
                                     $("#modal-Deleteladger").modal('hide');
                                 }, 5000);
                             });
 
                         }
                         else {
-                            $('#dverror').show();
+                            $('#dverrordelete').show();
                             $("html, body").animate({ scrollTop: 0 }, "fast");
-                            $('#dvsucess').hide();
-                            $('#dverror_span').empty().append('Something went wrong');
+                            $('#dvsucessdelete').hide();
+                            $('#dverror_span_delete').empty().append('Something went wrong');
 
                             $(function () {
                                 setTimeout(function () {
-                                    $("#dverror").hide('blind', {}, 500)
+                                    $("#dverrordelete").hide('blind', {}, 500)
                                 }, 5000);
                             });
                         }
